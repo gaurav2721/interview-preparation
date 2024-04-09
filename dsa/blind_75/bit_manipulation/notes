@@ -1,5 +1,5 @@
 Golang functionality
-1. when >>,<< operator is used with & or | operator you can get to know the 
+1. when >>,<< operator is used with & or | that is bitwise AND and bitwise OR operator you can get to know the 
 
 Libraries to remember 
 "math/bits"
