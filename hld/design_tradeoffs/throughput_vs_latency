@@ -1,0 +1,5 @@
+// throughput = application work / processing power , if throughput is high that is the background tasks are bunched together , which will lead to high throughput , causing the
+// worst case time complexity to increase a lot
+// so usually high throughput means high latency
+// when you have a lot of threads running concurrently , there is a lot of context switch so in such scenarios , throughput will become low because of the context switch
+// As requests are processed in parallel more parts of a system are likely to be hit resulting in higher availability. Concurrent processing is expected to have lower latency and lower throughput.

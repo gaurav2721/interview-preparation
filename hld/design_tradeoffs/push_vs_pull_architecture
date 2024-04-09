@@ -1,0 +1,10 @@
+User segmentation is important on the basis of 
+1. user activity - passive followers can usually use pull notification model
+2. time of the day 
+3. is there any special occassion
+4. what is the time zone
+
+// push architecture have a high load for a small time whereas latency is low 
+// pull architecture have gradual load increase till peak of the day and then it decreases
+// batched push notification is how you balance 
+// between push and pull , you can have a message queue for pace handling , the consumers of the message queue

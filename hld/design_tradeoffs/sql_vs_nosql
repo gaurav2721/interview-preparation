@@ -1,0 +1,8 @@
+// there does not need to be a tradeoff but there certainly are differences
+// NoSql(usually relaxed consistency) - Sql(usually high consistency)
+// NoSql(Cluster Architecture, there is some sort of routing being done for read and write request , any node can respond to read/write request) - Sql(master/slave architecture , write request to master , read request to slave)
+// NoSql(Can have Leader election (node which syncs up other nodes) or Consensus Algorithm) vs Sql(There is a fixed leader , if that crashes the replica becomes the master)
+// NoSql(Sharding) vs Sql(No Sharding)
+// NoSql(BASE) vs Sql(SAFE)
+// NoSql(Scalable and Available usually with no ACID support) vs SQL(less scalable, but supports ACID)
+// NoSql(MongoDb, Cassandra) vs Sql(PgSQL , SQL)

@@ -1,0 +1,1 @@
+// accuracy is basically data consistency , you can apply certain approximations , along with using the cache instead of the exact db to create the 

@@ -1,0 +1,1 @@
+// cache is inversly proportional to latency , but you can have a balance by putting only hot entries in the cache and having a replacement algorithm 

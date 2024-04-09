@@ -1,0 +1,4 @@
+// Consistency : if you ping any node , it will return the most successfull recent write 
+// Availability : whenever you ping any node , it will give you some response within the timeframe specified in the service level agreement
+// usually when there is a single source of truth ,then consistency is high .
+// whenever you have parallelism or concurrency you have to choose between consistency and availability

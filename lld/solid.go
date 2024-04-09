@@ -13,16 +13,16 @@ package lld
 // Dependency inversion principle :- a class should depend on interfaces , rather that concrete classes , for eg if there is a macbook class , it should use iMouse and iKeyboard,
 // for eg these can be mouse can be a wired and bluetooth one
 
-type Marker struct {
-	id     string
-	colour string
-	price  int
-}
+// type Marker struct {
+// 	id     string
+// 	colour string
+// 	price  int
+// }
 
-func (m *Marker) GetInvoice(quantity int) int {
-	return m.price * quantity
-}
+// func (m *Marker) GetInvoice(quantity int) int {
+// 	return m.price * quantity
+// }
 
-func (m *Marker) SaveInvoice(invoice_amount int) error {
+// func (m *Marker) SaveInvoice(invoice_amount int) error {
 
-}
+// }
