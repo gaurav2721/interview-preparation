@@ -11,7 +11,8 @@ package lld
 // 	fmt.Println(Shape.area, Shape.perimeter)
 // }
 
-// --------------------->    example of encapsulation
+// --------------------->    example of encapsulation , encapsulation = bundling of a member variables and member functions into a single entity ,
+// --------------------->    encapsulation = data hiding (using access modifiers , in case of golang it is capital and small letters) + abstraction (you should be able to interact with an object only by using functions)
 
 // type Shape struct {
 // 	area      int

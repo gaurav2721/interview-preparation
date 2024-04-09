@@ -17,7 +17,14 @@ TO-DO
 
 GOLANG 
 1. What is the difference between GOROOT and GOPATH
-2. 
+2. How to do implement enums in golang 
+3. What are generics in golang 
 
 DSA 
 1. Complete the blind 75 end to end 
+
+LLD
+1. Parking lot 
+2. Elevator 
+3. Bookmyshow
+4. code for a cache
