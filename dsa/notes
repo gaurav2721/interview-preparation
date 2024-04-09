@@ -1,0 +1,15 @@
+Following is the quick strategy that you can implement to clear DSA rounds 
+
+1. Repeat the problem
+2. Ask Clarifying questions and cover edge cases
+3. Check for input output , check the constraints
+4. Tell your approach(if you are stuck , you can say hmm that is interesting I am sort of blocked here, could you help me out) , then ask the interviewer if you can start to write the code 
+5. Tell them you will improve readability later(by renaming variables , divide into various functions, implement design patterns , usually when you are asked Leetcode easy problem they might expect that) , while writing the code , keep the interviewer engaged as to what you are doing 
+6. Run it by testcases 
+7. Think about space and time complexity
+8. You can atleast return the sample values provided
+9. You are judged on the following parameters : Algorithm , Coding , Communication , Problem Solving
+10. You can specifically ask if that answers your questions
+11. Even ask them if you can google  
+12. In the end thank them for giving the opportunity and ask them about the tech stack they are using 
+

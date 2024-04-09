@@ -1,0 +1,20 @@
+Golang functionality
+1. when >>,<< operator is used with & or | operator you can get to know the 
+
+Libraries to remember 
+"math/bits"
+- “OnesCount” , gives you the number of bits which are there
+- Logb
+- Power
+
+Algorithms 
+1. LCM*HCF = a*b
+2. to find HCF (find smaller of a,b and then lets say b is the bigger number calculate b%a then again call the hcf function with b%a and a)
+2. To find the prime number from 2 to root of n we have to check if it is divisible by that number 
+
+
+Tricks to remember 
+1. missing number = n(n+1)/2 - sum 
+
+
+
