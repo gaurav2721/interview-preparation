@@ -5,7 +5,7 @@ Libraries to remember
 "math/bits"
 - “OnesCount” , gives you the number of bits which are there
 - Logb
-- Power
+- Pow(a,b) for a^b
 
 Algorithms 
 1. LCM*HCF = a*b

@@ -4,6 +4,8 @@ Making notes for interview preparation
 TO-DO
 1. cover what is ACID and CAP
 2. how to execute json in golang project
+3. learn how does SSL/TLS , server side verification happens 
+4. learn about ecc,rsa and diffie hellman
 
 Strategy 
 1. For LLD we have to finish 14 videos 

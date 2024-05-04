@@ -20,5 +20,5 @@ func hammingWeight(n int) int {
     //return bits.OnesCount(uint(n))
 }
 
-Time Complexity : O(1)
-Space Complexity : O(1)
+Time Complexity : O(1) - the logic is that atmost 32 loops will be run since there are 32 bits
+Space Complexity : O(1) 
