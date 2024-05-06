@@ -1,0 +1,48 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "id": "hGdK0yUg96q7aigIHW7yB",
+      "type": "text",
+      "x": 366,
+      "y": 105,
+      "width": 938.019287109375,
+      "height": 275,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b0Y",
+      "roundness": null,
+      "seed": 1424915811,
+      "version": 681,
+      "versionNonce": 1015612813,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1714907090652,
+      "link": null,
+      "locked": false,
+      "text": "Protection\n1.Hackers \n    a. DDOS Attack : distributed denial of service attack\n        - Distributed Rate Limiting \n        - Web application firewall (most cloud providers give this) \n2.Employees \n    a. to prevent employees from doing malicious things use Access control lists \n    b. reduce the surface area of that attack vector for eg not exposing a lot of ports \n3. Virtual Private Network\n    a. when employee connects to the system , there is end to end. encryption because of VPN\n4. Malicious Code : Always take back ups of your code base, review well.",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "Protection\n1.Hackers \n    a. DDOS Attack : distributed denial of service attack\n        - Distributed Rate Limiting \n        - Web application firewall (most cloud providers give this) \n2.Employees \n    a. to prevent employees from doing malicious things use Access control lists \n    b. reduce the surface area of that attack vector for eg not exposing a lot of ports \n3. Virtual Private Network\n    a. when employee connects to the system , there is end to end. encryption because of VPN\n4. Malicious Code : Always take back ups of your code base, review well.",
+      "lineHeight": 1.25
+    }
+  ],
+  "appState": {
+    "gridSize": null,
+    "viewBackgroundColor": "#ffffff"
+  },
+  "files": {}
+}
