@@ -1,0 +1,87 @@
+func searchRow(matrix [][]int, col int, rowMin int, rowMax int, target int) int {
+	fmt.Println("searchRow", col, rowMin, rowMax, target)
+	m := len(matrix)
+	n := len(matrix[0])
+	if col < 0 || col >= n {
+		return -1
+	}
+	if (rowMin < 0 || rowMax >= m) && (rowMin <= rowMax) {
+		return -1
+	}
+	mid := (rowMax + rowMin) / 2
+	if target == matrix[mid][col] {
+		return mid
+	}
+	if mid == rowMin {
+		return mid
+	}
+	if target < matrix[mid][col] {
+		return searchRow(matrix, col, rowMin, mid-1, target)
+	} else {
+		return searchRow(matrix, col, mid, rowMax, target)
+	}
+	return -1
+}
+
+func searchColumn(matrix [][]int, row int, colMin int, colMax int, target int) int {
+	fmt.Println("searchColumn", row, colMin, colMax, target)
+	m := len(matrix)
+	n := len(matrix[0])
+	if row < 0 || row >= m {
+		return -1
+	}
+	if (colMin < 0 || colMin >= n) && (colMin <= colMax) {
+		return -1
+	}
+	mid := (colMax + colMin) / 2
+	if target == matrix[row][mid] {
+		return mid
+	}
+	if mid == colMin {
+		return mid
+	}
+	if target < matrix[row][mid] {
+		return searchColumn(matrix, row, colMin, mid, target)
+	} else {
+		return searchColumn(matrix, row, mid, colMax, target)
+	}
+	return -1
+}
+
+func searchMatrix(matrix [][]int, target int) bool {
+	m := len(matrix)
+	n := len(matrix[0])
+	rowEnd := m - 1
+	colEnd := n - 1
+	if matrix[rowEnd][colEnd] == target {
+		return true
+	}
+	row := searchRow(matrix, colEnd, 0, rowEnd, target)
+	fmt.Println("row", row)
+	if row == -1 {
+		row = row + 1
+	}
+	fmt.Println("row", row, "m", m)
+	if row >= m {
+		return false
+	}
+	if matrix[row][colEnd] == target {
+		return true
+	} else if target > matrix[row][colEnd] {
+		row = row + 1
+		if row >= m {
+			return false
+		}
+	}
+	col := searchColumn(matrix, row, 0, colEnd, target)
+	fmt.Println("col", col)
+	if col == -1 {
+		fmt.Println("col", col)
+		col = col + 1
+	}
+	fmt.Println("col", col, "row", row)
+	if matrix[row][col] == target {
+		return true
+	}
+	return false
+}

@@ -1,0 +1,16 @@
+Verification(mechanism by which you can tell , is the request coming from a human being )
+- Captcha(can be broken by the ai's now)
+- SSL/TLS(something to look into later)
+- Encryption algorithms
+    1. ECC(Elliptic curve cryptography)
+    2. RSA
+    3. Diffie Helman
+- Digital rights management(how to ensure videos are only viewed by only paid customers)
+    1. Fairplay
+
+Authentication
+- SSO and OAuth 
+- Token based auth 
+
+Authorization
+- Access control list 
