@@ -41,3 +41,7 @@ LLD
 HLD 
 1. what happens when you hit google.com in the url
 
+Interview Preparation
+1. Preplaced - a website to get a mentor 
+ 
+

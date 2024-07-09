@@ -1,0 +1,13 @@
+Dynamic Programming 
+You can assign 2-D array 
+You can assign a 2 single dimensional array , iterate from forward and backward 
+You can have length of 2d or 1d array as n or n+1
+
+If you can break the problem into recursion then you can have the db store each state
+
+Bottom up 
+1. build the problem from the simplest scenario
+2. f(n) = f(n-1) + f(n-2)
+
+Top Down
+1. 
