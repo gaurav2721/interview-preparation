@@ -1,0 +1,87 @@
+
+
+/*
+So as part of strategy we have broken the problem to a recursion problem
+*/
+func wordBreakTemp(s string, wordDictMap map[string]bool) bool {
+	// some input validation
+	fmt.Println(s)
+	ns := len(s)
+	output := false
+	for k, _ := range wordDictMap {
+		nk := len(k)
+		if ns < nk {
+			continue
+		} else {
+			if s[:nk] == k {
+				if nk == ns {
+					return true
+				}
+				output = wordBreakTemp(s[nk:], wordDictMap)
+				if output == true {
+					return output
+				}
+			}
+		}
+	}
+	fmt.Println(s, output)
+	return output
+}
+
+func wordBreak(s string, wordDict []string) bool {
+	wordDictMap := make(map[string]bool, len(wordDict))
+	for _, word := range wordDict {
+		wordDictMap[word] = true
+	}
+	output := wordBreakTemp(s, wordDictMap)
+	return output
+}
+
+/*
+Now to optimize futher we will use
+Bottom up dp approach
+1-d array
+iterate from the last index
+*/
+
+func wordBreakTemp(s string, wordDictMap map[string]bool) bool {
+	// some input validation
+	fmt.Println(s)
+	ns := len(s)
+	breakWord := make([]bool, len(s))
+	for i := ns - 1; i >= 0; i-- {
+		parts := s[i:]
+		nparts := len(parts)
+		for k, _ := range wordDictMap {
+			nk := len(k)
+			if nparts < nk {
+				continue
+			} else {
+				if parts[:nk] == k {
+					if nk == nparts {
+						breakWord[i] = true
+						break
+					}
+					//wordBreakTemp(parts[nk:],wordDictMap)
+					if breakWord[i+nk] == true {
+						breakWord[i] = true
+						break
+					}
+				}
+			}
+		}
+	}
+	//fmt.Println(s)
+	return breakWord[0]
+}
+
+func wordBreak(s string, wordDict []string) bool {
+	wordDictMap := make(map[string]bool, len(wordDict))
+	for _, word := range wordDict {
+		wordDictMap[word] = true
+	}
+	// breakWord:=make([]int,len(s))
+	output := wordBreakTemp(s, wordDictMap)
+	return output
+}
+

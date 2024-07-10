@@ -1,0 +1,19 @@
+/*
+we identify the negative prefix that is negative sum and then reject if prefix is negative
+*/
+func maxSubArray(nums []int) int {
+	//n:=len(nums)
+	maxSum := nums[0]
+	currSum := 0
+	for _, num := range nums {
+		if currSum < 0 {
+			currSum = 0
+		}
+		currSum += num
+		if maxSum < currSum {
+			maxSum = currSum
+		}
+
+	}
+	return maxSum
+}
