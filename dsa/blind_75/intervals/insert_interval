@@ -1,0 +1,45 @@
+/*
+the trick here is to implement canMerge and merge function and sorting
+and then we simply have to sun a for loop
+*/
+func canMerge(interval1 []int, interval2 []int) bool {
+	fmt.Println("canMerge", interval1, interval2)
+	if (interval1[0] >= interval2[0] && interval1[0] <= interval2[1]) || (interval1[1] >= interval2[0] && interval1[1] <= interval2[1]) {
+		return true
+	}
+	return false
+}
+
+func merge(interval1 []int, interval2 []int) []int {
+	fmt.Println("merge", interval1, interval2)
+	interval := make([]int, 2)
+	interval[0] = min(interval1[0], interval2[0])
+	interval[1] = max(interval1[1], interval2[1])
+	return interval
+}
+func insert(intervals [][]int, newInterval []int) [][]int {
+	i := 0
+	n := len(intervals)
+	output := make([][]int, 0)
+	for ; i < n; i++ {
+		if intervals[i][1] < newInterval[0] {
+			output = append(output, intervals[i])
+		} else {
+			break
+		}
+	}
+	for ; i < n; i++ {
+		if canMerge(newInterval, intervals[i]) || canMerge(intervals[i], newInterval) {
+			newInterval = merge(intervals[i], newInterval)
+		} else {
+			break
+		}
+	}
+	output = append(output, newInterval)
+	fmt.Println(i, output)
+	for ; i < n; i++ {
+		output = append(output, intervals[i])
+	}
+	fmt.Println(output)
+	return output
+}

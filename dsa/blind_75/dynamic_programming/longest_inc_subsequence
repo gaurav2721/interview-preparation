@@ -1,0 +1,23 @@
+/*
+here basically we do a bottom up change
+*/
+func lengthOfLIS(nums []int) int {
+	n := len(nums)
+	dp := make([]int, n)
+	dp[0] = 1
+	maxLength := 1
+	for i := 1; i < n; i++ {
+		ret := 1
+		for j := 0; j < i; j++ {
+			if nums[j] < nums[i] {
+				ret = max(ret, 1+dp[j])
+			} else {
+				continue
+			}
+		}
+		dp[i] = ret
+		maxLength = max(maxLength, ret)
+	}
+	fmt.Println(dp)
+	return maxLength
+}

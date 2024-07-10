@@ -1,0 +1,39 @@
+/*
+amount , index is the arguments passed in the parameters
+now we can ignore the index by bringing in a parameter and running a for loop
+*/
+func coinChange(coins []int, amount int) int {
+	n := len(coins)
+	ret := math.MaxInt32
+	var dfs func(remain int) int
+	memo := make(map[int]int, 0)
+	dfs = func(res int) int {
+		if res == 0 {
+			return 0
+		} else if res < 0 {
+			return math.MaxInt32
+		}
+		ret := math.MaxInt32
+		for i := n - 1; i >= 0; i-- {
+			if res < coins[i] {
+				continue
+			}
+			inc := 0
+			_, ok := memo[res-coins[i]]
+			if ok {
+				inc = 1 + memo[res-coins[i]]
+			} else {
+				inc = 1 + dfs(res-coins[i])
+			}
+			ret = min(ret, inc)
+		}
+		memo[res] = ret
+		return ret
+	}
+	ret = dfs(amount)
+	if ret == math.MaxInt32 {
+		return -1
+	}
+	fmt.Println(ret)
+	return ret
+}
