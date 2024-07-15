@@ -1,0 +1,120 @@
+/*
+You can either adopt an approach to maintain a visited array
+and then to keep on parsing the outer layer
+*/
+
+/*
+This approach is easier to solve
+func spiralOrder(matrix [][]int) []int {
+	if matrix == nil || len(matrix) == 0 {
+		return []int{}
+	}
+
+	result := make([]int, 0)
+	top, bottom, left, right := 0, len(matrix)-1, 0, len(matrix[0])-1
+
+	for {
+		// right
+		for i := left; i <= right; i++ {
+			result = append(result, matrix[top][i])
+		}
+		top++
+		if top > bottom {
+			break
+		}
+
+		// down
+		for i := top; i <= bottom; i++ {
+			result = append(result, matrix[i][right])
+		}
+		right--
+		if left > right {
+			break
+		}
+
+		// left
+		for i := right; i >= left; i-- {
+			result = append(result, matrix[bottom][i])
+		}
+		bottom--
+		if top > bottom {
+			break
+		}
+
+		// up
+		for i := bottom; i >= top; i-- {
+			result = append(result, matrix[i][left])
+		}
+		left++
+		if left > right {
+			break
+		}
+	}
+
+	return result
+}
+*/
+
+func spiralOutside(matrix [][]int, output *[]int, visited *[][]bool, top, bottom, left, right int) {
+	fmt.Println(top, bottom, left, right)
+	m := len(matrix)
+	n := len(matrix[0])
+	i, j := top, left
+	if bottom < top || right < left {
+		return
+	}
+	if bottom >= m || right >= n {
+		return
+	}
+	for ; j <= right; j++ {
+		if !(*visited)[i][j] {
+			*output = append(*output, matrix[i][j])
+		}
+		(*visited)[i][j] = true
+	}
+	//fmt.Println(output)
+	j--
+	i++
+	for ; i <= bottom; i++ {
+		if !(*visited)[i][j] {
+			*output = append(*output, matrix[i][j])
+		}
+		(*visited)[i][j] = true
+	}
+	i--
+	j--
+	for ; j >= left; j-- {
+		if !(*visited)[i][j] {
+			*output = append(*output, matrix[i][j])
+		}
+		(*visited)[i][j] = true
+	}
+	j++
+	i--
+	for ; i > top; i-- {
+		if !(*visited)[i][j] {
+			*output = append(*output, matrix[i][j])
+		}
+		(*visited)[i][j] = true
+	}
+}
+
+func spiralOrder(matrix [][]int) []int {
+	m := len(matrix)
+	n := len(matrix[0])
+	output := make([]int, 0)
+	visited := make([][]bool, m)
+	for i := 0; i < m; i++ {
+		visited[i] = make([]bool, n)
+	}
+	for top, bottom, left, right := 0, m-1, 0, n-1; top <= bottom && left <= right; {
+		spiralOutside(matrix, &output, &visited, top, bottom, left, right)
+		fmt.Println(output)
+		top++
+		bottom--
+		left++
+		right--
+	}
+	return output
+}
+

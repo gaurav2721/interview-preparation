@@ -1,0 +1,83 @@
+/*
+In this type of problem this structure is important
+func combinationSumTemp(candidates []int,target int,index int,out *[]int,output *[][]int){
+
+And for golang
+this structure of slice which leads to this condition
+        if out!=nil{
+            tempOut:=make([]int,len(*out))
+            copy(tempOut,*out)
+            if !check(tempOut,*output){
+                *output=append(*output,tempOut)
+            }
+            //fmt.Println("add",candidates,target,index,*out,*output)
+        }
+*/
+
+func isSliceEqual(a []int, b []int) bool {
+	if len(a) == len(b) {
+		for j := 0; j < len(b); j++ {
+			if a[j] == b[j] {
+				continue
+			} else {
+				return false
+			}
+		}
+		return true
+	} else {
+		return false
+	}
+
+}
+func check(out []int, output [][]int) bool {
+	exist := false
+	n := len(output)
+	for i := 0; i < n; i++ {
+		if isSliceEqual(output[i], out) {
+			exist = true
+			break
+		}
+	}
+	return exist
+}
+func combinationSumTemp(candidates []int, target int, index int, out *[]int, output *[][]int) {
+	n := len(candidates)
+	//fmt.Println(candidates,target,index,*out,*output)
+	if target < 0 {
+		return
+	}
+	if index < 0 || index >= n {
+		return
+	}
+	if target == 0 {
+		if out != nil {
+			tempOut := make([]int, len(*out))
+			copy(tempOut, *out)
+			if !check(tempOut, *output) {
+				*output = append(*output, tempOut)
+			}
+			//fmt.Println("add",candidates,target,index,*out,*output)
+		}
+		return
+	}
+
+	for i := index; i >= 0; i-- {
+		if target < candidates[i] {
+			continue
+		} else {
+			*out = append(*out, candidates[i])
+			combinationSumTemp(candidates, target-candidates[i], i, out, output)
+			*out = (*out)[:len(*out)-1]
+			combinationSumTemp(candidates, target, i-1, out, output)
+		}
+	}
+	return
+}
+
+func combinationSum(candidates []int, target int) [][]int {
+	n := len(candidates)
+	output := make([][]int, 0)
+	out := make([]int, 0)
+	combinationSumTemp(candidates, target, n-1, &out, &output)
+	return output
+}

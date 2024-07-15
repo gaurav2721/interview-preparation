@@ -1,0 +1,46 @@
+/*
+1 0 0 0 1
+0 0 0 0 1
+1 0 0 0 0
+*/
+func longestOnes(nums []int, k int) int {
+	n := len(nums)
+	if n <= k {
+		return n
+	}
+	start := 0
+	end := 0
+	maxOne := 0
+	tempk := k
+	for end < n && start <= end {
+		if nums[end] == 1 {
+			end++
+			maxOne = max(maxOne, end-start)
+			continue
+		} else {
+			if tempk > 0 {
+				end++
+				tempk--
+				maxOne = max(maxOne, end-start)
+				continue
+			} else {
+				if start == end {
+					start++
+					end++
+					continue
+				} else {
+					maxOne = max(maxOne, end-start)
+					if nums[start] == 1 {
+						start++
+						continue
+					} else {
+						tempk++
+						start++
+						continue
+					}
+				}
+			}
+		}
+	}
+	return maxOne
+}

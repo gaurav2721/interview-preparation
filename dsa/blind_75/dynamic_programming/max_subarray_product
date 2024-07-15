@@ -1,3 +1,36 @@
+/*
+You still have to deeply understand this algo
+*/
+
+/*
+2 3 -2 4
+1 2 3 0 -2 -8
+1 2 6 0 1 16
+1 1 1 0 -2 -8
+*/
+func maxProduct(nums []int) int {
+	n := len(nums)
+	maxProd := nums[0]
+	currMinProd := 0
+	currMaxProd := 0
+	for i := 0; i < n; i++ {
+		if currMinProd == 0 {
+			currMinProd = 1
+		}
+		if currMaxProd == 0 {
+			currMaxProd = 1
+		}
+		if nums[i] < 0 {
+			currMinProd, currMaxProd = currMaxProd, currMinProd
+		}
+		currMinProd = min(nums[i], currMinProd*nums[i])
+		currMaxProd = max(nums[i], currMaxProd*nums[i])
+		maxProd = max(maxProd, currMaxProd)
+		fmt.Println(i, currMinProd, currMaxProd, maxProd)
+	}
+	return maxProd
+}
+
 func maxProduct(nums []int) int {
 	minval := nums[0]
 	maxval := nums[0]
@@ -14,3 +47,4 @@ func maxProduct(nums []int) int {
 	}
 	return maxproduct
 }
+
