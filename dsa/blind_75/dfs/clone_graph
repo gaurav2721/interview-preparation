@@ -1,0 +1,56 @@
+/*
+Adjacency List : List of all the neihbouring nodes
+is a good way of representing connected graphs
+
+dfs can generally be done using stack/recursion
+hashmaps can be used
+bfs requires queue
+*/
+
+/*
+*
+  - Definition for a Node.
+  - type Node struct {
+  - Val int
+  - Neighbors []*Node
+  - }
+*/
+func Temp(node *Node, m map[int]*Node) *Node {
+	if node == nil {
+		return nil
+	}
+	var newNode *Node
+	newNode = nil
+	_, ok := m[node.Val]
+	if ok {
+		newNode = m[node.Val]
+		return newNode
+	} else {
+		newNode = &Node{
+			Val:       node.Val,
+			Neighbors: make([]*Node, 0),
+		}
+		m[newNode.Val] = newNode
+	}
+	for _, nei := range node.Neighbors {
+		var newNei *Node = nil
+		_, ok := m[nei.Val]
+		if ok {
+			newNei = m[nei.Val]
+		} else {
+			newNei = Temp(nei, m)
+		}
+		newNode.Neighbors = append(newNode.Neighbors, newNei)
+	}
+	return newNode
+}
+
+func cloneGraph(node *Node) *Node {
+	if node == nil {
+		return nil
+	}
+
+	m := make(map[int]*Node, 0)
+	newNode := Temp(node, m)
+	return newNode
+}

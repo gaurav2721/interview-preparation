@@ -13,71 +13,55 @@ this structure of slice which leads to this condition
             //fmt.Println("add",candidates,target,index,*out,*output)
         }
 */
-
-func isSliceEqual(a []int, b []int) bool {
-	if len(a) == len(b) {
-		for j := 0; j < len(b); j++ {
-			if a[j] == b[j] {
-				continue
-			} else {
-				return false
-			}
-		}
-		return true
-	} else {
+func IsSame(c []int, nums []int) bool {
+	ret := true
+	if len(c) != len(nums) {
 		return false
 	}
-
-}
-func check(out []int, output [][]int) bool {
-	exist := false
-	n := len(output)
-	for i := 0; i < n; i++ {
-		if isSliceEqual(output[i], out) {
-			exist = true
+	for i, _ := range nums {
+		if c[i] != nums[i] {
+			ret = false
 			break
 		}
 	}
-	return exist
+	return ret
 }
-func combinationSumTemp(candidates []int, target int, index int, out *[]int, output *[][]int) {
-	n := len(candidates)
-	//fmt.Println(candidates,target,index,*out,*output)
-	if target < 0 {
-		return
-	}
-	if index < 0 || index >= n {
-		return
-	}
-	if target == 0 {
-		if out != nil {
-			tempOut := make([]int, len(*out))
-			copy(tempOut, *out)
-			if !check(tempOut, *output) {
-				*output = append(*output, tempOut)
-			}
-			//fmt.Println("add",candidates,target,index,*out,*output)
-		}
-		return
-	}
 
-	for i := index; i >= 0; i-- {
-		if target < candidates[i] {
-			continue
-		} else {
-			*out = append(*out, candidates[i])
-			combinationSumTemp(candidates, target-candidates[i], i, out, output)
-			*out = (*out)[:len(*out)-1]
-			combinationSumTemp(candidates, target, i-1, out, output)
+func Append(c []int, m *[][]int) {
+	for _, nums := range *m {
+		if IsSame(c, nums) {
+			return
 		}
 	}
+	*m = append(*m, c)
 	return
 }
 
+func Temp(can []int, target, index int, result []int, m *[][]int) {
+	//fmt.Println(target,index,result,m)
+	n := len(can)
+	if index < 0 || index >= n {
+		return
+	}
+
+	if target < 0 {
+		return
+	} else if target == 0 {
+		//fmt.Println("target0",target,index,result,m)
+		c := make([]int, len(result))
+		copy(c, result)
+		sort.Ints(c)
+		Append(c, m)
+		return
+	}
+	result = append(result, can[index])
+	Temp(can, target-can[index], index, result, m)
+	result = result[:len(result)-1]
+	Temp(can, target, index-1, result, m)
+}
+
 func combinationSum(candidates []int, target int) [][]int {
-	n := len(candidates)
-	output := make([][]int, 0)
-	out := make([]int, 0)
-	combinationSumTemp(candidates, target, n-1, &out, &output)
-	return output
+	m := make([][]int, 0)
+	Temp(candidates, target, len(candidates)-1, make([]int, 0), &m)
+	return m
 }
