@@ -1,0 +1,25 @@
+/*
+Floyd marshal algorithm , of having fast and slow pointer , lets you detect the cycle and if you want to check where that cycle
+is getting formed reset slow pointer to initial pointer and then increment fast and slow pointer one by one
+*/
+func findDuplicate(nums []int) int {
+	slow := nums[0]
+	fast := nums[0]
+	//fmt.Println(slow,fast)
+	for true {
+		slow = nums[slow]
+		fast = nums[nums[fast]]
+		//fmt.Println(slow,fast)
+		if slow == fast {
+			break
+		}
+	}
+	slow = nums[0]
+	//fmt.Println("duplicate",slow,fast)
+	for slow != fast {
+		slow = nums[slow]
+		fast = nums[fast]
+		//fmt.Println(slow,fast)
+	}
+	return slow
+}

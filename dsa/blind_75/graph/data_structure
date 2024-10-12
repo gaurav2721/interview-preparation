@@ -1,0 +1,29 @@
+Graph is collection of vertices and edges (v,e)
+
+For an undirected/directed graph use an adjacency list / adjacency matrix
+
+Assuming all the val of nodes are unique
+
+type Node struct{
+    val int,
+    edges map[int]bool
+}
+
+type Graph map[int]*Node
+
+For a undirected/directed graph with weights
+
+type Graph map[int]*Node
+
+type Node struct{
+    val int
+    edges map[int]*Edges
+}
+
+type Edges struct{
+    weight int
+    destination_node *Node
+}
+
+
+

@@ -1,0 +1,474 @@
+---------->
+What is golang?
+1. Golang is a statically typed , compiled language
+2. Built in concurrency support and garbage collector
+3. Cross platform language
+
+---------->
+1. How do you implement concurrency in go ?
+2.Using goroutines and channels
+3.goroutine are simple light weight threads -> go func (s string){}("gaurav")
+4.channels -> these are used for communication between the goroutines and synchronization ch:= make(chan string,1) , there are buffered channels and non buffered channels
+
+----------->
+How does go do error handling?
+Explicit error handling by returning "error" type ,
+err:=err.New("Something went wrong")
+msg=err.Error()
+err1.Is(err2)
+there is also a function called panic() --> when panic is executed , it starts unwinding the stack and calling defer functions along the way , in order to recover from panic 
+Things to take care of --> defer func(){}() has to be put in an executable manner 
+func Demo(){
+        defer func(){
+            fmt.Println("recover")
+            val:=recover()
+                fmt.Println("ok" , val)
+        }()
+        for i:=0;i<=4;i++{
+            fmt.Println("i",i)
+            if i==1{
+                panic(fmt.Sprintf("i is %d",i))
+            }
+        }
+    }
+How does panic and recover work 
+
+
+----------->
+Interface helps to achieve polymorphism
+
+----------->
+How to improve performance of the go code ?
+Reduce space complexity 
+Reduce time complexity 
+Profile the code 
+Use built in concurrency
+
+------------> 
+How are init functions used in golang
+func init(){} are called before calling any other function in that package 
+They are called for the package in which package are imported 
+There can be multiple init functions in a package in different files, they will be called in order 
+They are used to define global variables , setup logging or preparing other resources
+
+------------>
+What is static and dynamic type declarations 
+Static Declaration --> compiler knows exactly what type it is , for eg var i int
+Dynamic Declaration --> from the value provided to the variable , compiler has to decide what what type of variable it is from the value
+provided to it 
+
+------------->
+What are go packages ?
+They are directories in the go project
+Every source file should be assiciated with a package
+
+------------->
+Arrays , fixed size contiguous elements
+var a [5]int
+a:=[5]{1,2,3,4,5}
+a:=[...]{1,2,3,4,5} -> Let go infer the size of the array 
+
+------------->
+Constants
+const Pi=3.14
+
+------------->
+Variables types 
+In doubt so confirm this 
+Pass by value :
+1. Slice : but ends up behaving like pass by reference
+2. Structs
+3. Function: but ends up behaving like pass by reference  , you can define a variable of function type also 
+        var x func(i int)
+            x = func(i int){
+            fmt.Println("x",i)
+        }
+        x(1)
+4. Numeric : byte(uint8) , rune(int32)
+5. Interfaces are pass by value and pass by reference 
+6. Channels: ch:= make(chan string) , it is pass by value and but because the underlying data structure reference is there , it behaves like pass by reference
+7. Maps are also pass by value but behave like pass by reference 
+
+Pass by reference 
+1. 
+
+--------------->
+Channels , are a data structure that allows communication and synchronization between various go routines
+Unbuffered channel -> the size of the buffer is zero --> it is used for synchronization between 
+Buffered channel -> the size of the buffer is non zero
+How to close a channel -> close(ch)
+You can receive the data from a closed channel using val,ok:=<-ch if ok is false that means channel is closed , if channel is closed you cannot send data in it
+for value:=range ch{
+    fmt.Println(value)
+}
+
+---------------> 
+String literals 
+Sequence of character used to represent string values
+Raw string literals / Uninterrupted string literals-> strings enclosed in backticks ``` -> do not interpret escape sequences (\n , \t , \" , \\)
+Double Quoted string literals / Interpreted string literals -> string enclosed in double quotes  , they interpret escape sequences
+
+-------------->
+What are goroutines
+Goroutines are simple light weight thread managed by go runtime 
+How to stop goroutine ?
+1. using context cancellation 
+ctx,cancel:=context.WithCancel(context.Background())
+cts.Done() gives a channel which points when cancel() has been called 
+2. Using signal channel
+3. Using Waitgroups for synchronization
+sync and context packages are used 
+
+--------------->
+Benefits of using go
+1. Inbuillt support for concurrency and garbage collection
+2. cross platform
+3. Faster compile time 
+4. Simpler dependency analysis 
+
+--------------->
+Inheritance 
+Golang does not directly support inheritance 
+It supports struct embedding 
+The fields and methods of the embedded struct are promoted to the outer struct 
+If there is a functionName conflict in the inner struct and outer struct the function of outer struct will be executed 
+
+package main
+import "fmt"
+
+type Person struct{
+    firstName string
+    lastName string
+}
+
+func (p Person)PrintName(){
+    fmt.Println("name : ", p.firstName , p.lastName)
+}
+
+type Employee struct{
+    Person
+    Id int
+}
+
+func (e Employee)PrintName(){
+    fmt.Println(e.Id)
+}
+
+func main() {
+    fmt.Println("main")
+    e := Employee{
+        Person:Person{
+            firstName : "Gaurav",
+            lastName : "Singh",
+        },
+        Id : 1,
+    }
+    e.PrintName()
+    fmt.Println(e.Id,e.firstName,e.lastName)
+}
+
+------------------>
+Goroutines in Go are lightweight, concurrent functions managed by the Go runtime 
+    These are managed by go runtime 
+
+------------------>
+In go package , directory name == package name and a package can be imported in a project 
+module is a collection of packages that is versioned
+
+------------------->
+to create custom type in golang use type keyword
+type MinHeap []int
+
+------------------->
+Blank identifier
+_,ok:=m[key] _ is blank identifier , if you dont want to use a variable and dont want the compiler to throw a runtime error
+
+------------------->
+Pointer variable 
+type Person struct{
+    name string
+}
+var p *Person = &Person{name:"yes"}
+fmt.Println(p.name)
+
+------------------->
+Closure function
+Definition of closure functions are :
+1. Inner function can access the variable of outer variable 
+2. Maintains state between function call 
+
+func closure()func()int{
+    counter:=0
+    return func()int{
+        counter++
+        fmt.Println("counter",counter)
+    }
+}
+
+closure() ---> This will print counter=1
+closure() ---> This will print counter=2
+
+------------------>
+Function literals 
+function literals are nothing but function pointers
+package main
+import "fmt"
+
+func Print(a int)int{
+    fmt.Println("a",1)
+    a++
+    return a
+}
+func main() {
+  fmt.Println("main")
+  var f func(a int)int
+  f=Print
+  f(1)
+  
+}
+
+------------------>
+How to use select statement 
+select statement is used when we are expecting to read messages from multiple channels 
+select can be used to block until one of the channel is ready for the read 
+
+func main() {
+  fmt.Println("main")
+  
+  ch1 := make(chan string)
+  ch2 := make(chan string)
+  
+  go func(){
+      ch1 <- "main 1"
+  }()
+  
+  go func(){
+      ch2<- "main 2"
+  }()
+  
+  for i:=0;i<2;i++{
+    select {
+        case msg1:=<-ch1:
+            fmt.Println("msg1",msg1)
+        case msg2:=<-ch2:
+            fmt.Println("msg2",msg2)
+        case <-time.After(1*time.Second):
+            fmt.Println("timeout")
+        default :
+            fmt.Println("default")
+    }
+  }
+}
+
+------------------->
+Type Assertion in go
+
+var s interface{}="main"
+val,ok:=s.(string)
+if ok{
+    fmt.Println(val)
+}
+
+------------------->
+What is type switch in golang ?
+type switch is used to execute conditional statements based on the type of variable 
+func main() {
+  fmt.Println("main")
+  
+  var s interface{} = "main"
+  
+  switch s.(type){
+    case string:
+        fmt.Println("var is string")
+    case int:
+        fmt.Println("var is int")
+    default :
+        fmt.Println("unable to identify type")
+  }
+}
+
+-------------------->
+type conversion
+convert variable of one type to another 
+f := 3.14
+var i int = int(f)
+
+-------------------->
+How can sync package be used 
+sync package has mutex
+Here an interesting thing to notice is we dont use (p *Person) the value does not update which means to permanently change you need * in function
+type Person struct{
+    mu sync.Mutex
+    age int
+}
+
+func (p *Person)Inc(){
+    p.mu.Lock()
+    defer p.mu.Unlock()
+    p.age++
+    fmt.Println("age",p.age)
+}
+
+func main() {
+  fmt.Println("main")
+  p:=Person{
+      mu : sync.Mutex{},
+      age : 1,
+  }
+  
+  for i:=0;i<5;i++{
+        j:=i
+      go func(){
+          fmt.Println("j",j)
+          p.Inc()
+      }()
+  }
+  
+  time.Sleep(1*time.Second)
+}
+
+
+---------------------->
+How do you use "sync/atomic" package to implement atomicity , can be used to maintain data integrity and sync between concurrent go routines
+atomic.AddInt32
+atomic.AddInt64
+atomic.LoadInt32
+atomic.LoadInt64
+atomic.StoreInt32
+atomic.Store 
+at
+    for i := 0; i < 5; i++ {
+        wg.Add(1)
+        go func() {
+            defer wg.Done()
+            for j := 0; j < 1000; j++ {
+                atomic.AddInt64(&counter, 1) // Atomic increment
+            }
+        }()
+    }
+
+--------------------->
+Context 
+1. immutable data structure , every time a new context is returned
+2. Can be used to maintain the goroutine lifecycle
+
+import "time"
+import "context"
+
+func Launch(ctx context.Context){
+    defer ctx.Done()
+    for i:=0;i<5;i++{
+        time.Sleep(1*time.Second)
+        fmt.Println("i",i,ctx.Value("id").(int),ctx.Value("roll_number").(int))
+        select{
+            case <-ctx.Done():
+                fmt.Println("routine closed")
+                return
+            default :
+                fmt.Println("routine default")
+        }
+    }
+}
+
+func main() {
+    ctx:=context.TODO() // context.Background()
+    ctx = context.WithValue(ctx,"id",1)
+    ctx = context.WithValue(ctx,"roll_number",1)
+    ctx,cancel := context.WithCancel(ctx)
+    //ctx,cancel := context.WithTimeout(ctx) --> after a set time cancel will be automatically called
+    go Launch(ctx)
+    time.Sleep(3*time.Second)
+    cancel()
+    time.Sleep(6*time.Second)
+    fmt.Println("Try programiz.pro")
+}
+
+-------------------->
+Build an http server in go using net/http 
+
+package main
+
+import "fmt"
+import "net/http"
+
+func handler(h http.ResponseWriter ,r *http.Request){
+    fmt.Fprintf(h , "hi")
+}
+
+func main(){
+    http.HandlerFunc("/",handler)
+    fmt.Println(Setting up the router)
+    http.ListenAndServe(:8000,nil)
+}
+
+--------------------->
+"encoding/json"
+is used to call json.Marshal-> stringifies, json.Unmarshal -> unstringifies
+
+type User struct {
+    Name  string `json:"name"`
+    Age   int    `json:"age"`
+    Email string `json:"email"`
+}
+
+--------------------->
+Reflect package 
+to get the type of and value of the variable 
+// CanSet , SetFloat , SetInt are also some functions
+func main() {
+    var x float64 = 3.14
+
+    // Get the reflect.Type of x
+    t := reflect.TypeOf(x)
+    fmt.Println("Type:", t)
+
+    // Get the reflect.Value of x
+    v := reflect.ValueOf(x)
+    fmt.Println("Value:", v)
+
+    // Get the kind of type
+    fmt.Println("Kind:", v.Kind())
+
+    // Convert reflect.Value back to a float64
+    y := v.Float()
+    fmt.Println("Float:", y)
+}
+
+----------------------------->
+How to write unitests using "testing" package
+Create a file with name _test.go
+import "testing"
+name a function like TestAddition(t *testing.T)
+Log and assert using 
+	//testing logs + assertion
+	t.Log(resp.Result().StatusCode)
+	t.Log(resp.Body)
+	assert.Equal(t, 200, resp.Result().StatusCode)
+
+------------------------------>
+"net" package -> used for communication over networking protocols such as TCP / UDP
+net.Dial("this is to create TCP connection")
+net.Listen()
+net.Accept()
+
+------------------------------->
+"time" package in golang
+time.Now()
+time.Now().Format("")
+time.After(1*time.Second) -> can be used to check for a signal after 1 sec
+time.Add and time.Subtract can also be used 
+time.Sleep(1*time.Second)
+
+-------------------------------->
+"crypto" package to perform cryptographic operations such as taking hash
+import "crypto/sha256"
+h := sha256.Sum256([]byte(message))
+
+-------------------------------->
+"os" package can be used for doing CRUD for directories and files
+os.Open()
+os.MkDir()
+
+
+
+    

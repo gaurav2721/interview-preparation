@@ -1,0 +1,57 @@
+/*
+   mid:=(high+low)/2
+   There are 2 ways to do it , that is using recursion or a for loop
+*/
+
+func binarySearch(matrix [][]int, low int, high int, target int) bool {
+	fmt.Println(low, high, target)
+	m := len(matrix)
+	n := len(matrix[0])
+	f := func(index int) int {
+		row := index / n
+		column := index % n
+		return matrix[row][column]
+	}
+	if low < 0 || low >= (m*n) || high < 0 || high >= (m*n) || low > high {
+		return false
+	} else if low == high {
+		return f(low) == target
+	}
+
+	mid := (high + low) / 2
+	if f(mid) == target {
+		return true
+	} else if f(mid) > target {
+		return binarySearch(matrix, low, mid-1, target)
+	} else {
+		return binarySearch(matrix, mid+1, high, target)
+	}
+}
+
+func searchMatrix(matrix [][]int, target int) bool {
+	m := len(matrix)
+	n := len(matrix[0])
+	return binarySearch(matrix, 0, m*n-1, target)
+}
+
+/* This is the recursive method */
+
+func searchMatrix(matrix [][]int, target int) bool {
+	m := len(matrix)
+	n := len(matrix[0])
+	left, right := 0, m*n-1
+
+	for left <= right {
+		mid := left + (right-left)/2
+		mid_val := matrix[mid/n][mid%n]
+
+		if mid_val == target {
+			return true
+		} else if mid_val < target {
+			left = mid + 1
+		} else {
+			right = mid - 1
+		}
+	}
+	return false
+}

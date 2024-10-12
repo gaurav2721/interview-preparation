@@ -1,0 +1,21 @@
+This project should be built on GoLong
+
+We expect an Individual or team to build the API according to our program structure
+
+The Project is to Send, Record Messages and Calculate the Cost of it. 
+
+For Sending Messages, We will be using the following Communication medium, and the developer is supposed to implement it 
+
+1. Email
+2. SMS (It should be flexible enough to choose the provider)
+3. WhatsApp 
+4. Telegram
+5. Line App
+
+The API should be written in the most generic way to accept the messages and it can send in multiple communication medium 
+
+We should also record how many messages are sent by the tenant, what messages are sent, delivered, and read receipt of the message, etc 
+
+It should also record whether it should be chargeable to the tenant and its price based on the tenant's details 
+
+The video is here about our existing platform

@@ -1,0 +1,76 @@
+Isolation : It basically means , if there are two transactions running they basically dont affect each other.
+Lets take a scenario where we are updating a key lets owner1 balance 
+
+Read Write Set of T1 (Increase owner1 balance by 10 , with intial balance 10) , A represents account balance
+Read A 
+A=A+10
+Write A
+commit 
+
+Read Write Set of T1 (decrease owner1 balance by 20 , with intial balance 10) , A represents account balance
+Read A 
+A=A-20
+Write A
+commit 
+
+What are the anomalies that can happen with concurrent transaction
+
+1. Dirty Read (You basically can read the attribute/key value from another transaction before it is committed)
+
+T1			T2
+Read A 		
+A=A+10
+Write A 	
+			Read A 
+			A=A-20
+-> T1 fails
+and
+rollback
+A=10
+			Write A 
+			Commit A 
+			A = 0
+			but since transaction was rolled back it should be -10 but due to dirty read it did not happen
+
+2. Non Repeatable Read(You basically can read the attribute/key value from another transaction before it is committed)
+T1			T2
+Read A
+			Read A 
+			A=A+20
+			Write A 
+			Commit
+Read A 
+Now this read will be 
+having a different value of A 
+
+3. Phantom Reads (When another transaction T2 modifies the record(by adding or deleting the rows) after the Transaction T1 has fetched a bunch of records)
+T1													T2
+Read(query)-> This fetches 2 records				
+													Write(query) , this deletes one of the rows
+This will perform operations thinking 
+2 records are there
+
+
+Isolation Levels
+1. Read Uncommitted : lowest isolation level 
+	T1 can read uncommitted data from T2
+	Here the following anomalies can happen
+		1. Dirty Reads 
+		2. Non Repeatable Read
+		3. Phantom Read
+
+2. Read Committed (Read can by T1 can only happen if the commit happens in 2)
+	T1 can read committed data from T2
+	Here the following anomalies can happen
+		1. Non Repeatable Read
+		2. Phantom Read
+
+3. Repeatable Read 
+	T1 will read the same data , even if it has been modified by a commit by T2, T1 will have the same value , but T2 can add extra rows 
+	though 
+	Here the following anomalies can happen
+		1. Phantom Read can happen
+
+3. Serializable : Only after T1 finishes T2 can start, this has most extent of isolation.
+	No anomalies are detected here
+

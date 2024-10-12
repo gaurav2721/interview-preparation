@@ -1,2 +1,2 @@
 the trick here is to implement canMerge and merge function and sorting
-and then we simply have to sun a for loop
+and then we simply have to run a for loop

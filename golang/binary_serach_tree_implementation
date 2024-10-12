@@ -1,0 +1,84 @@
+// Online Go compiler to run Golang program online
+// Print "Try programiz.pro" message
+
+package main
+
+import "fmt"
+
+/*
+This just deals with add and search , ideally if you have time mention delete also
+The logic to delete is as follows
+*/
+type Node struct {
+	val   int
+	left  *Node
+	right *Node
+}
+
+func (this *Node) search(a int) bool {
+	if this.val == a {
+		return true
+	} else if a < this.val {
+		if this.left == nil {
+			return false
+		}
+		return this.left.search(a)
+	} else {
+		if this.right == nil {
+			return false
+		}
+		return this.right.search(a)
+	}
+}
+
+func (this *Node) preorder() {
+	fmt.Println(this.val)
+	if this.left != nil {
+		this.left.preorder()
+	}
+	if this.right != nil {
+		this.right.preorder()
+	}
+}
+
+func (this *Node) add(a int) *Node {
+	if this.val == a {
+		return this
+	} else if a < this.val {
+		if this.left != nil {
+			return this.left.add(a)
+		} else {
+			this.left = &Node{
+				val: a,
+			}
+			return this.left
+		}
+	} else {
+		if this.right != nil {
+			return this.right.add(a)
+		} else {
+			this.right = &Node{
+				val: a,
+			}
+			return this.right
+		}
+	}
+}
+
+func main() {
+	root := &Node{
+		val: 1,
+	}
+	root.add(3)
+	root.add(2)
+	root.add(5)
+	root.add(4)
+	root.add(6)
+
+	root.preorder()
+
+	fmt.Println(root.search(5))
+	fmt.Println(root.search(-1))
+
+	fmt.Println("Try programiz.pro")
+}

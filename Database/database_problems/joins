@@ -1,0 +1,44 @@
+What are joins ?
+When you are trying to combine rows of different tables based on a common , related or shared or common column, that is called a join.
+There are 4 types of join:
+1. Inner Join 
+2. Outer Join(Left Join , Right Join , Cross Join)
+3. Self Join 
+4. Cross Join
+
+Is foreign key important for joins?
+Foreign key is not a must for performing join , we can use a common or shared column
+
+Inner Join - Common Values that is A intersection B
+select <table1>.<col1>,<table2>.<col2> from <table1> inner join <table 2> on table1.col1=table2.col2 
+
+Outer Join
+    Left Join - takes the left table completely , whatever values it is not able to find from the right , it assigns it nil
+    for eg select * from table1 left join table2 table1.col1=table2.col2
+        Left exclusive join  - it does not include the matching rows , select * from table1 left join table2 on table1.col1=table2.col2 where table2.col3=nil
+            for eg select * from table1 left join table2 on table1.col1=table2.col2 where table2.col2 is NULL;
+    Right Join - takes the right table completely , whatever values it is not able to find from the left table it assigns it nil
+        select * from table1 right join table2 table1.col1=table2.col2
+        Right Exclusive join
+            for eg select * from table1 right join table2 on table1.col1=table2.col2 where table1.col1 is NULL;
+    Full Join - all the value of left table and right table are taken , whatever values it is not able to find it takes it as null
+        This is A + B
+        for eg select * from table1 full join table2 on table1.col1=table2.col2 -> this is for postgres , union is used between left and right join in case of sql 
+
+
+
+Self Join - Any join operation on the same table , it is a type of inner join . this is same as cross product + condition
+    for eg lets say a table student is having information about student and mentor
+    1. create table student(
+        s_id int primary key,
+        name varchar(50),
+        mentor_id int
+    )
+
+    2. insert into student(s_id,name,mentor_id) values (1,ram,null),(2,shyam,1),(3,reeti,1),(4,yes,2);
+
+    3. select s1.name as student_name,s2.id as mentor_name  from student as s1 join student as s2 on s1.mentor_id=s2.student_id
+
+Cross Join - Cartesian Product happens between the two tables -> row1 of left forms pairing with all the rows from the right
+    for eg select * from table1 cross join table2; -> result_number_of_rows = m*n where m,n are number of rows of table1 and table2
+

@@ -1,0 +1,20 @@
+/*
+When you have put things in ascending order and there is spike in between it causes some issue
+if you are comparing
+[1,3,2,5,25,24,5]
+*/
+func maxArea(height []int) int {
+	n := len(height)
+	maxWater := math.MinInt64
+	for i, j := 0, n-1; i < j; {
+		minHeight := min(height[i], height[j])
+		maxWater = max(maxWater, minHeight*(j-i))
+		fmt.Println(maxWater, minHeight, i, j)
+		if height[i] < height[j] {
+			i++
+		} else {
+			j--
+		}
+	}
+	return maxWater
+}

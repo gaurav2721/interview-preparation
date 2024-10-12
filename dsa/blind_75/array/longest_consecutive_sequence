@@ -1,0 +1,31 @@
+/*
+you have to decide if start=end or start<end during initialize
+*/
+func longestConsecutive(nums []int) int {
+	ret := 0
+	n := len(nums)
+	if n == 0 {
+		return ret
+	} else if n == 1 {
+		return 1
+	}
+	sort.Ints(nums)
+	window := 1
+	end := 1
+	ret++
+	for end < n && window >= 1 {
+		if nums[end]-nums[end-1] == 1 {
+			window++
+			end++
+			ret = max(ret, window)
+		} else if nums[end] == nums[end-1] {
+			end++
+			ret = max(ret, window)
+		} else {
+			ret = max(ret, window)
+			end++
+			window = 1
+		}
+	}
+	return ret
+}

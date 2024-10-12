@@ -1,0 +1,79 @@
+// Online Go compiler to run Golang program online
+// Print "Try programiz.pro" message
+/*
+You will get to know that how to use doubly linked list to create a queue and queue operation , making for forward and backward links while
+enqueue and dequeue operations
+*/
+// Online Go compiler to run Golang program online
+// Print "Try programiz.pro" message
+
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+type Node struct {
+	val  int
+	next *Node
+	prev *Node
+}
+
+type Queue struct {
+	start *Node
+	end   *Node
+}
+
+func (this *Queue) enqueue(a int) {
+	if this.start == nil {
+		this.start = &Node{
+			val: a,
+		}
+		this.end = this.start
+	} else {
+		temp := this.end
+		this.end = &Node{
+			val:  a,
+			next: temp,
+		}
+		temp.prev = this.end
+	}
+}
+
+func (this *Queue) dequeue() (int, error) {
+	if this.start == nil {
+		return math.MinInt32, fmt.Errorf("queue is empty")
+	} else {
+		temp := this.start
+		this.start = temp.prev
+		if this.start == nil {
+			this.end = this.start
+			return temp.val, nil
+		}
+		this.start.next = nil
+		return temp.val, nil
+	}
+}
+
+func main() {
+	queue := Queue{}
+	queue.enqueue(1)
+	queue.enqueue(2)
+	queue.enqueue(3)
+	queue.enqueue(4)
+	queue.enqueue(5)
+
+	fmt.Println(queue)
+
+	a, err := queue.dequeue()
+	fmt.Println(a, err)
+	a, err = queue.dequeue()
+	fmt.Println(a, err)
+	a, err = queue.dequeue()
+	fmt.Println(a, err)
+	a, err = queue.dequeue()
+	fmt.Println(a, err)
+	a, err = queue.dequeue()
+	fmt.Println(a, err)
+}

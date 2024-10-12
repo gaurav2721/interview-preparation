@@ -1,0 +1,32 @@
+func isValid(s string) bool {
+	stack := make([]byte, 0)
+	n := len(s)
+	m := make(map[byte]byte, 0)
+	m['('] = ')'
+	m['['] = ']'
+	m['{'] = '}'
+	ret := true
+	for i := 0; i < n; i++ {
+		if len(stack) == 0 {
+			if _, ok := m[s[i]]; !ok {
+				ret = false
+				break
+			} else {
+				stack = append(stack, s[i])
+				continue
+			}
+		}
+		if _, ok := m[s[i]]; ok {
+			stack = append(stack, s[i])
+		} else {
+			peek := stack[len(stack)-1]
+			if m[peek] == s[i] {
+				stack = stack[:len(stack)-1]
+			} else {
+				ret = false
+				break
+			}
+		}
+	}
+	return ret && len(stack) == 0
+}

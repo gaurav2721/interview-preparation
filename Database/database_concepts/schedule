@@ -1,0 +1,47 @@
+Schedule : Sequence of concurrent/multiple transactions 
+
+Complete Schedule : Commit / Abort is there for the all the transactions.
+Incomple Schedule : Anything that is not complete 
+
+Schedules are of following type:
+1. Serial Schedule : T2 is started only if T1 is completed(committed/aborted)
+    Pros:
+        1.ACID compliant
+    Cons:
+        1. Throughput (No of transaction per unit time) is less , CPU utilization is low
+
+2. Concurrent Schedule : Multiple transactions are executing simultaneously 
+    Pros:
+        1. High Throughput , high CPU utilization
+    Cons:
+        1. Consistency and Integrity issues come : Need to emply concurrency control mechanism 
+        
+3. Conflict Serializable : Transforming concurrent schedule to serial schedule by swapping adjacent non conflicting pair
+Confict Pair:
+Read A , Write A
+Write A, Read A
+Write A, Write A
+Non-Conflict Pair
+Read A , Read A
+or atleast 1 write operation on a different queue
+Conflict graph does not have a cycle 
+
+4. View Serializable 
+In conflict graph if a cycle has been detected , we check if it is serializable or not 
+
+5. Recoverable schedule :
+If T2 read a data from another uncommitted transaction T1, you can commit T2 only after T1 is committed.
+Here if T1 aborts/fails then also T2 is not impacted since it is not committed.
+
+6. Irrecoverable Schedule:
+If T2 read a data from another uncommitted transaction T1, you dont have to wait for T1 to commit , to commit T2.
+Here if T1 aborts/fails then also T2 is impacted since it is not committed, hence causing inconsistencies
+
+7. Cascading Schedule 
+Failure or 1 transaction , leads to abort of all the other transaction .
+
+8. Cascade less schedule :
+When multiple concurrent transactions are there , txi reads from tx2 only after txj has been committed 
+
+9. Strict Schedule :
+It basically says that if two txs are accessing a key , txi cannot read/write value of A till txj is committed

@@ -1,0 +1,73 @@
+Concurrency Control Mechanisms 
+1. Locking mechanism 
+    a. Binary Lock : (way to remember is sync.Mutex) , if a transaction has occupied a binary lock only that transaction can read/write that
+        value
+    b. 
+        Shared Lock: A lock which can be acquired on a critical section by multiple transactions where they can only read the resource , if there is no exclusive lock on the section
+        Exclusive Lock: If an exclusive lock is acquired on a critical section then only that transaction can read/write on it , no other transaction can acquire a shared/exlusive lock , till a previous lock is released 
+    
+    Pros:
+    1. Helps in maintaining consistency 
+    
+    Cons:
+    1. Performance : 
+        performance hit is there : increses latency, since aquiring and releasing locks takes time and computational resource
+    2. Concurrency :
+        Concurrency too takes a hit
+    3. DeadLock : If T1 -> R1 -> T2->R2-> T1 -> this situation causes deadlock
+        T1              T2
+        Lock(A)
+        Read(A)
+        Write(A)
+                        Lock(B)
+                        Read(B)
+                        Write(B)
+        Read(B)
+        Write(B)
+                        Read(A)
+                        Write(A)
+                        Unlock(A)
+                        Unlock(B)
+        Unlock(A)
+        Unlock(B)
+    4. Starvation : The lower priority threads/transactions are never able to acquire all the locks
+    5. Irrecoverable: If you unlock in T1 based on the write , if T1 Reads and Writes and commits but T1 fails and rollback happens ,
+        now the database state is irrecoverable
+
+2. 2 Phase Locking 
+    There are two phases
+        1. Growing Phase : Transaction Acquires all the lock it needs
+        2. Reducing Phase : It releases all the locks it has acquired before commiting
+    Pros:
+        1. Consistency is maintained
+    Cons:
+        1. Low through put and 
+        2. Deadlocks , startvation and cascading failures can happen 
+    
+    Strict 2 Phase locking 
+        Exlusive locks are released only once the transaction is committed
+        Pros:
+        1. Cascading failures are avoided 
+
+        Cons:
+        1. Deadlock , statvation
+        2. Low throughput 
+    
+    Rigourous 2 phase lock 
+    Exclusive and shared locks are held till transaction is committed 
+    Pros:
+    1. Cascading aborts and dirty reads are avoided 
+    Cons:
+    2. Deadlock and startvation is there 
+
+    Conservative 2 phase locks 
+    Before starting any transaction you acquire all the locks 
+    Pros:
+    1. Deadlocks are avoided 
+
+    dgnhdthetheth
+
+    q 1
+
+
+

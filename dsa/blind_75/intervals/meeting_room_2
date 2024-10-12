@@ -1,0 +1,92 @@
+// Online Go compiler to run Golang program online
+// Print "Try programiz.pro" message
+/*
+The trick here is to write the overlapped interval logic
+the sorting logic and sliding window algorithm
+
+Also you can create a sorted start time anhd end time array
+have start pointer for start array , iterate through this till it is less than end and increase count
+have end pointer for end array , when a[start]>a[end] , count -- , calculate max count every time
+*/
+package main
+
+import (
+	"fmt"
+	"sort"
+)
+
+func max(a int, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+func min(a int, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+func sorting(a [][]int) {
+	sort.Slice(a, func(i int, j int) bool {
+		if a[i][0] < a[j][0] {
+			return true
+		} else if a[i][0] == a[j][0] {
+			return a[i][1] < a[j][1]
+		} else {
+			return false
+		}
+	})
+}
+
+func overlap(a []int, b []int) []int {
+	if a[0] >= b[1] || a[1] <= b[0] {
+		return []int{-1, -1}
+	} else {
+		ret := make([]int, 2)
+		ret[0] = max(a[0], b[0])
+		ret[1] = min(a[1], b[1])
+		return ret
+	}
+}
+
+func solve(a [][]int) int {
+	n := len(a)
+	sorting(a)
+	fmt.Println(a)
+
+	start := 0
+	end := 0
+	o := a[start]
+	room := 1
+	for start <= end && end < n {
+		o = overlap(o, a[end])
+		fmt.Println(start, end, o, room)
+		if o[0] == -1 || o[1] == -1 {
+			start = end
+			o = a[start]
+		} else {
+			room = max(room, end-start+1)
+			end++
+		}
+	}
+	return room
+}
+
+func main() {
+	fmt.Println("Try programiz.pro")
+	a := [][]int{
+		// {1, 18},
+		// {18, 23},
+		// {15, 29},
+		// {4, 15},
+		// {2, 11},
+		// {5, 13},
+		{0, 30},
+		{5, 10},
+		{15, 20},
+	}
+	fmt.Println(solve(a))
+}

@@ -1,0 +1,89 @@
+/*
+   The important thing here is that after identifying the approach the edge cases are tricky i.e,
+   if lowk>highk{
+       k=lowk
+       break
+   }
+   if lowk==highk{
+       if f(lowk)<h{
+           k=lowk+1
+       }else{
+           k=lowk
+       }
+   }
+
+       if midh==h{
+        fmt.Println("break 2",midk,midh)
+        temp:=midk
+        for temp>=1&&f(temp)==midh{
+            temp--
+        }
+        k=temp+1
+        break
+    }
+*/
+
+func minEatingSpeed(piles []int, h int) int {
+	n := len(piles)
+	sort.Ints(piles)
+
+	if n == 1 {
+		count := 0
+		count += piles[0] / h
+		if piles[0]%h != 0 {
+			count++
+		}
+		return count
+	}
+
+	f := func(k int) int {
+		count := 0
+		for _, pile := range piles {
+			count += pile / k
+			if pile%k != 0 {
+				count++
+			}
+		}
+		return count
+	}
+
+	k := 1
+	lowk, highk := 1, piles[n-1]
+	for highk >= 1 && lowk >= 1 {
+		fmt.Println(lowk, highk, f(lowk), f(highk))
+		if lowk > highk {
+			k = lowk
+			break
+		}
+		if lowk == highk {
+			lowh := f(lowk)
+			fmt.Println("break1", lowh)
+			if lowh > h {
+				k = lowk + 1
+			} else {
+				k = lowk
+			}
+			break
+		}
+		midk := (lowk + highk) / 2
+		midh := f(midk)
+		fmt.Println("midk", midk, midh)
+		if midh == h {
+			fmt.Println("break 2", midk, midh)
+			temp := midk
+			for temp >= 1 && f(temp) == midh {
+				temp--
+			}
+			k = temp + 1
+			break
+		} else if h > midh {
+			highk = midk - 1
+			continue
+		} else {
+			lowk = midk + 1
+			continue
+		}
+	}
+
+	return k
+}

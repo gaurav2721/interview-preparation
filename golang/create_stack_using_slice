@@ -1,0 +1,65 @@
+// Online Go compiler to run Golang program online
+// Print "Try programiz.pro" message
+
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+type Stack struct {
+	a []int
+}
+
+func createStack() *Stack {
+	return &Stack{
+		a: make([]int, 0),
+	}
+}
+
+func (this *Stack) Push(x int) {
+	this.a = append(this.a, x)
+}
+
+func (this *Stack) Pop() (int, error) {
+	n := len(this.a)
+	if n == 0 {
+		return math.MinInt32, fmt.Errorf("stack is empty")
+	}
+	x := this.a[n-1]
+	this.a = this.a[:n-1]
+	return x, nil
+}
+
+func (this *Stack) Peek() (int, error) {
+	n := len(this.a)
+	if n == 0 {
+		return math.MinInt32, fmt.Errorf("stack is empty")
+	}
+	x := this.a[n-1]
+	return x, nil
+}
+func main() {
+	stack := createStack()
+	stack.Push(1)
+	stack.Push(2)
+	stack.Push(3)
+	stack.Push(4)
+	stack.Push(5)
+
+	x, err := stack.Pop()
+	fmt.Println(x, err)
+	x, err = stack.Pop()
+	fmt.Println(x, err)
+	x, err = stack.Pop()
+	fmt.Println(x, err)
+	x, err = stack.Pop()
+	fmt.Println(x, err)
+	x, err = stack.Pop()
+	fmt.Println(x, err)
+	x, err = stack.Pop()
+	fmt.Println(x, err)
+	x, err = stack.Pop()
+	fmt.Println(x, err)
+}

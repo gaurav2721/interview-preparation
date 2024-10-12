@@ -1,0 +1,64 @@
+Tricks to remember
+1. Database command is not case sensitive 
+2. strings are usually enclosed with '', unless it is dbname , user name , 
+3. we have to specify "db" and "table" string when we are doing create,delete for db and table
+4. strings are always enclosed with ''
+
+Commands and keywords
+
+Dbcommands
+createdb
+dropdb - deleting the db 
+\l -> lists all the db
+use ---> use <dbname> ; ---> for pgsql we use ---> psql <dbname> --> to log into the db
+alter database <old_database_name> rename to <new_database_name>
+
+
+User Commands
+create user gaurav with password 'gaurav_singh'
+
+Priviledge
+1. grant all privileges on test to gaurav
+2. revoke
+
+Table
+1. Create 
+2. Alter
+3. Drop 
+4. Truncate
+5. Rename
+
+create table student(
+id int primary key,
+name varchar(50)
+);
+
+Alter (Can change schema , indexes and constraints)
+
+1. alter table <table_name> add <column_name> <data_type> <constraint>; for eg alter table student add marks int;
+2. alter table <table_name> drop <column_name>; for eg alter table student drop marks;
+3. alter table <table_name> alter <column_name> type <data_type>; for eg alter table student alter money type int;
+4. alter table <table_name> rename <old_column_name> to <new_column_name>
+5. alter table <table_name> alter <old_column_name> set data type <data_type>; for eg alter table student alter money set data type int;
+
+Rename 
+1. alter table <table_name> rename to <new_table_name>
+
+Truncate 
+1. Truncate table <table_name>
+
+CRUD data 
+
+1. insert into student(id,name) values (1,'gaurav') ,(2,'yes');
+2. update student set name='gauravisok' where id=1;  --> update <table_name> set <column_name>=<value> , <column_name>=<value> where id=1; 
+3. delete from student where id=1; ----> the reason columnNames are not specified here as only complete rows can be deleted
+4. select columnName1 , columnName2 from student where <condition>;
+
+Conditional Commands
+1. If exists , if not exists
+2. Set
+
+Some Random questions that may be asked 
+1. set sql_safe_updates=0;
+
+

@@ -1,0 +1,64 @@
+// here it seems that dynamic programming will solve it , but it wont
+// basically you do dfs at the edges based on the height , then you will get to know what nodes can reach it
+func dfs(heights [][]int, i int, j int, visited [][]bool, prev int) {
+	m := len(heights)
+	n := len(heights[0])
+
+	if i < 0 || i >= m || j < 0 || j >= n || visited[i][j] || prev > heights[i][j] {
+		return
+	}
+	visited[i][j] = true
+	dfs(heights, i-1, j, visited, heights[i][j])
+	dfs(heights, i, j+1, visited, heights[i][j])
+	dfs(heights, i+1, j, visited, heights[i][j])
+	dfs(heights, i, j-1, visited, heights[i][j])
+}
+
+func pacificAtlantic(heights [][]int) [][]int {
+	m := len(heights)
+	n := len(heights[0])
+
+	pacific := make([][]bool, m)
+	for i := 0; i < m; i++ {
+		pacific[i] = make([]bool, n)
+	}
+	// for i:=0;i<m;i++{
+	//     pacific[i][0]=true
+	// }
+	// for j:=0;j<n;j++{
+	//     pacific[0][j]=true
+	// }
+
+	atlantic := make([][]bool, m)
+	for i := 0; i < m; i++ {
+		atlantic[i] = make([]bool, n)
+	}
+	// for i:=0;i<m;i++{
+	//     atlantic[i][n-1]=true
+	// }
+	// for j:=0;j<n;j++{
+	//     atlantic[m-1][j]=true
+	// }
+
+	for i := 0; i < m; i++ {
+		dfs(heights, i, 0, pacific, -1)
+		dfs(heights, i, n-1, atlantic, -1)
+	}
+	for j := 0; j < n; j++ {
+		dfs(heights, 0, j, pacific, -1)
+		dfs(heights, m-1, j, atlantic, -1)
+	}
+
+	fmt.Println(pacific, atlantic)
+	ret := make([][]int, 0)
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			if pacific[i][j] && atlantic[i][j] {
+				ret = append(ret, []int{i, j})
+			}
+		}
+	}
+
+	return ret
+
+}

@@ -1,0 +1,16 @@
+Subquery 
+1. If there is a sql query nested in another sql query , usually there is a outer query and inner query .
+2. used with CRUD statements for eg select , insert , update, delete for eg select colName,<sub_query> from tableName 
+3. it can be used with where select * from tableName where <sub_query>
+4. it can be used with 'from' for eg select * from <sub_query> as altName;
+
+for eg 
+find all the employees having salary greater than current min salary
+
+to find min salary subquery is -> select min(salary) from employee
+to find all the employees -> select name,salary from employee where salary > (subquery) 
+    select name,salary from employee where salary > (select min(salary) from employee)
+    there is another way to do it which is to use alias
+    select min(age) as min_age from employee -> subquery 
+    select emp.name from employee emp , (<sub_query>) as subquery where emp.age > subquery.min_age;
+    select (select min(age) from employees) as avg_age,age from employee

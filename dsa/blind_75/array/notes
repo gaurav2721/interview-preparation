@@ -1,0 +1,7 @@
+1. In go the map keys can be of primitive type , struct type where member variables are comparable , array types ,pointer types .
+    And they cannot be slices , map or function
+2. Whenever you are thinking of array -> think about hashmap , sort, search , two pointer ,sliding window, greedy ,recursion backtracking 
+3. Increasing space complexity is another approach
+4. A lot of the times you should start with brute force as that can work as well for eg valid sudoku
+5. How to use the map variable in golang is very important
+6. To come up with edge cases use positive , negative , zero , duplicates and extreme scenario such as 0 length , math.IntMax and math.IntMin

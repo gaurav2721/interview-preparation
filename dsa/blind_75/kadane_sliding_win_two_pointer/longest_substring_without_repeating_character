@@ -1,0 +1,26 @@
+/*
+sliding window approach
+*/
+func lengthOfLongestSubstring(s string) int {
+	n := len(s)
+	if n == 0 || n == 1 {
+		return n
+	}
+	start, end := 0, 0
+	m := make(map[byte]bool, 0)
+	maxString := 1
+	for start <= end && end < n {
+		if !m[s[end]] {
+			m[s[end]] = true
+			end++
+			if end == n {
+				maxString = max(maxString, end-start)
+			}
+		} else {
+			maxString = max(maxString, end-start)
+			m[s[start]] = false
+			start++
+		}
+	}
+	return maxString
+}

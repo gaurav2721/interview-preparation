@@ -1,0 +1,50 @@
+Recommentations
+1. You can use error package for error handling 
+1. Implement a stack using a slice or an array 
+
+// Online Go compiler to run Golang program online
+// Print "Try programiz.pro" message
+
+package main
+import "fmt"
+
+type stack []int
+func (s stack)Len()int{return len(s)}
+
+func (s stack)Peek()int{
+    if len(s)>0 {
+        return s[len(s)-1]
+        
+    }else{
+         panic("stack is empty cannot peek")
+    }
+}
+
+func (s *stack)Push(x int){
+    *s=append(*s,x)
+}
+
+func (s *stack)Pop()int{
+        if len(*s)>0{
+            x:=(*s)[len(*s)-1]
+            *s=(*s)[:len(*s)-1]
+            return x
+        }else{
+            panic("stack is empty cannot pop")
+        }
+    }
+
+func main() {
+    s:=stack{}
+    fmt.Println("len",s.Len())
+    s.Push(1)
+    s.Push(2)
+    s.Push(3)
+    fmt.Println("len",s.Len(),"peek",s.Peek())
+    s.Pop()
+    fmt.Println("len",s.Len(),"peek",s.Peek())
+    s.Pop()
+    s.Pop()
+    s.Pop()
+    fmt.Println("end main")
+}

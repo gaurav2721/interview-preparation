@@ -1,0 +1,11 @@
+func sortColors(a []int)  {
+    n:=len(a)
+    for i:=n-1;i>=1;i--{
+        for j:=0;j<i;j++{
+            if a[j+1]<a[j]{
+                a[j],a[j+1]=a[j+1],a[j]
+            }
+        }
+        fmt.Println(a)
+    }
+}

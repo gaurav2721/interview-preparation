@@ -1,0 +1,33 @@
+Name the database starting with _
+1. Come up with entity
+2. Make sure to split the data so that redendant data is not there 
+3. Make sure that each column is storing only one information
+4. Make sure that the primary key does not contain any business data 
+5. Make sure to create database constraint , primary key , unique key and foreign key 
+
+
+
+One to one relationship -> Primary key to unique foreign key constraint
+
+Data Model -> How data is structured within a database 
+    -> what are the entities , attributes , constraints 
+    -> schema is the implementation using a data model
+
+There are different type of models 
+    -> Entity relationship data models are very important from the perspective of data models
+
+1. Heirarchial Data Model
+    -> this resembles tree structure ,each record maintains a parent child relationship for eg xml
+
+2.    Network Data Model    
+    -> this resembles graph , each record can have multiple parent and multiple child
+
+3. Relational Data models
+    -> Tables are organized in the form of columns/attributes and rows/tuple
+
+4. Entity Relationship model : multiple entities(which have attributes) , relationship is basically how these entities are related to one another 
+
+5. Object Oriented Data Model : Models depicts data as object on which all the principles of OOPS apply i.e abstraction , encapsulation ,
+    inheritance , polymorphism 
+
+6. 

@@ -1,0 +1,29 @@
+Edge cases to think about 
+Alpha numeric character ,spaces, uppercase and lowercase 
+
+Commonly used function in the strings module
+1. strings.Contains(str1,str2) -> returns bool if str2 exists in str1
+2. strings.Index(str1,str2) -> returns the index of the first occurence of str2 in str1 else returns -1
+3. for a rune element unicode.IsDigit() and unicode.IsLetter() and unicode.IsUpper() and unicode.IsLower() and unicode.IsSpace()return value bool can help you as well
+4. you can compare runes like characters for eg if r=='a'
+5. 
+For rune string … is added at last in the string unicode.IsDigit unicode.IsLetter
+ Var b strings.Builder , sb.WriteRune(rune[i])
+Learn how to get the proper inputs 
+str[i] resolves to bytes, range works for string
+import “strings” s
+    p("Contains:  ", s.Contains("test", "es"))
+    p("Count:     ", s.Count("test", "t"))
+    p("HasPrefix: ", s.HasPrefix("test", "te"))
+    p("HasSuffix: ", s.HasSuffix("test", "st"))
+    p("Index:     ", s.Index("test", "e"))
+    p("Join:      ", s.Join([]string{"a", "b"}, "-"))
+    p("Repeat:    ", s.Repeat("a", 5))
+    p("Replace:   ", s.Replace("foo", "o", "0", -1))
+    p("Replace:   ", s.Replace("foo", "o", "0", 1))
+    p("Split:     ", s.Split("a-b-c-d-e", "-"))
+    p("ToLower:   ", s.ToLower("TEST"))
+    p("ToUpper:   ", s.ToUpper("test"))
+    Strings.TrimSpace
+
+

@@ -1,0 +1,76 @@
+/*
+this structure is very important to remember
+trie = root->A
+       root->B
+       the key of map is the character
+
+type Trie struct {
+    end bool
+    alpha map[byte]*Trie
+}
+*/
+
+type Trie struct {
+	end   bool
+	alpha map[byte]*Trie
+}
+
+func Constructor() Trie {
+	return Trie{
+		end:   false,
+		alpha: make(map[byte]*Trie, 0),
+	}
+}
+
+func (this *Trie) Insert(word string) {
+	n := len(word)
+	if n == 0 {
+		return
+	}
+	temp := this
+	for i := 0; i < n; i++ {
+		_, ok := temp.alpha[word[i]]
+		if !ok {
+			temp.alpha[word[i]] = &Trie{
+				alpha: make(map[byte]*Trie, 0),
+			}
+		}
+		temp = temp.alpha[word[i]]
+	}
+	temp.end = true
+}
+
+func (this *Trie) Search(word string) bool {
+	n := len(word)
+	if n == 0 {
+		return false
+	}
+	temp := this
+	for i := 0; i < n; i++ {
+		_, ok := temp.alpha[word[i]]
+		if !ok {
+			return false
+		}
+		temp = temp.alpha[word[i]]
+	}
+	if temp.end == true {
+		return true
+	}
+	return false
+}
+
+func (this *Trie) StartsWith(prefix string) bool {
+	n := len(prefix)
+	if n == 0 {
+		return false
+	}
+	temp := this
+	for i := 0; i < n; i++ {
+		_, ok := temp.alpha[prefix[i]]
+		if !ok {
+			return false
+		}
+		temp = temp.alpha[prefix[i]]
+	}
+	return true
+}

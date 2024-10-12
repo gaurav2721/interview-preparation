@@ -1,0 +1,22 @@
+// logic is going to be pretty much the same as in detecting cycles in directed graph except , we keep track of previous node , so that we dont go back to it
+
+func detectCycles(graph Graph, visited map[int]int, start int, prev int) bool {
+	//fmt.Println("detectCycles",graph,visited,start)
+	if visited[start] == -1 {
+		return false
+	} else if visited[start] == 1 {
+		return true
+	} else {
+		visited[start] = 1
+		for k, _ := range graph[start].edges {
+			if k == prev {
+				continue
+			}
+			if detectCycles(graph, visited, k) {
+				return true
+			}
+		}
+		visited[start] = -1
+		return false
+	}
+}

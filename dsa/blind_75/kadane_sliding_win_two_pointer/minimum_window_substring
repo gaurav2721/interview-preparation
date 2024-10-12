@@ -1,0 +1,63 @@
+/*
+Again in this problem the most critical aspect was
+
+*/
+func isContains(smap map[byte]int, tmap map[byte]int) bool {
+	for k, v := range tmap {
+		if smap[k] < v {
+			return false
+		}
+	}
+	return true
+}
+
+func minWindow(s string, t string) string {
+	m := len(s)
+	n := len(t)
+	if n > m {
+		return ""
+	}
+	//fmt.Println(m,n)
+	tmap := make(map[byte]int, 0)
+	smap := make(map[byte]int, 0)
+	for i := 0; i < n; i++ {
+		tmap[t[i]]++
+	}
+	start, end := 0, 0
+	minStart := math.MaxInt64
+	minEnd := math.MaxInt64
+	minLen := math.MaxInt64
+	smap[s[0]]++
+	for start <= end && end < m {
+		//fmt.Println("start",start,end,smap,tmap)
+		if isContains(smap, tmap) {
+			if minLen > (end - start + 1) {
+				minLen = end - start + 1
+				minStart = start
+				minEnd = end
+				//fmt.Println("contains",minLen,minStart,minEnd)
+			}
+			if start < end {
+				smap[s[start]]--
+				if isContains(smap, tmap) {
+					start++
+					continue
+				} else {
+					smap[s[start]]++
+				}
+			}
+		}
+		end++
+		if end == m {
+			end--
+			break
+		}
+		smap[s[end]]++
+		//fmt.Println("finish",start,end,smap,tmap)
+	}
+	if minStart == math.MaxInt64 {
+		return ""
+	} else {
+		return s[minStart : minEnd+1]
+	}
+}

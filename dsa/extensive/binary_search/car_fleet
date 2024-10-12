@@ -1,0 +1,42 @@
+/*
+The important thing here is that after sorting based on the position,
+starting from back , the only way the car who is behind another car from target , if it reaches the target before is if it has greater speed
+so we dont put that car onto the stack , this way atlast the length of the stack is what is the number of car fleet arriving at the target
+*/
+type Car struct {
+	pos   int
+	speed int
+}
+
+func carFleet(target int, position []int, speed []int) int {
+	n := len(position)
+	car := make([]Car, 0)
+	for i := 0; i < n; i++ {
+		car = append(car, Car{
+			pos:   position[i],
+			speed: speed[i],
+		})
+	}
+	sort.Slice(car, func(i int, j int) bool {
+		if car[i].pos < car[j].pos {
+			return true
+		}
+		return false
+	})
+	stack := make([]Car, 0)
+	stack = append(stack, car[n-1])
+	//fmt.Println("car",car)
+	for i := n - 2; i >= 0; i-- {
+		//fmt.Println("stack",stack)
+		top := stack[len(stack)-1]
+		tprev := (float64(target - top.pos)) / float64(top.speed)
+		tnew := (float64(target - car[i].pos)) / float64(car[i].speed)
+		if tnew <= tprev {
+			continue
+		} else {
+			stack = append(stack, car[i])
+		}
+	}
+	fmt.Println(stack)
+	return len(stack)
+}

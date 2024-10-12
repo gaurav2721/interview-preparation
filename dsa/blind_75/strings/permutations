@@ -1,0 +1,19 @@
+/*
+A recursion tree gets created by swapping the char at "index" with all the other following indexes
+*/
+
+func permutations(s []rune, index int, output map[string]bool) {
+	n := len(s)
+	if index == n-1 {
+		temp := string(s)
+		output[temp] = true
+		return
+	}
+	i := index
+	for j := index; j < n; j++ {
+		s[i], s[j] = s[j], s[i]
+		permutations(s, index+1, output)
+		s[i], s[j] = s[j], s[i]
+	}
+	return
+}

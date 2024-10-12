@@ -1,0 +1,45 @@
+/*
+what we can learn from here is how to use ok variable and if condition in the same line
+Knowing how to implement search function is very important
+        index:=sort.Search(len(temp),func (j int)bool{
+            if temp[j]>=rem{
+                return true
+            }
+            return false
+        })
+*/
+func twoSum(nums []int, target int) []int {
+	result := make([]int, 0)
+	visited := make(map[int]int, 0)
+	for i, num := range nums {
+		if index, ok := visited[target-num]; ok {
+			result = append(result, i)
+			result = append(result, index)
+		} else {
+			visited[num] = i
+		}
+	}
+	return result
+}
+
+/*
+Modified 2 sum
+*/
+func twoSum(nums []int, target int) []int {
+	n := len(nums)
+	for i := 0; i < n-1; i++ {
+		rem := target - nums[i]
+		temp := nums[i+1:]
+		index := sort.Search(len(temp), func(j int) bool {
+			if temp[j] >= rem {
+				return true
+			}
+			return false
+		})
+		//fmt.Println(temp,rem,index,i)
+		if (index >= 0 && index < len(temp)) && nums[index+i+1] == rem {
+			return []int{i + 1, index + i + 2}
+		}
+	}
+	return []int{}
+}

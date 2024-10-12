@@ -1,0 +1,6 @@
+Views- views are used for data abstraction 
+for eg in the below example you can use it to hide password details of employees
+
+create table employee(id,name,password,address)
+create view employee_view as select id,name,address from employee;
+select id from employee;

@@ -1,0 +1,37 @@
+/* There is trick of using dummyHeads
+and then keeping two pointers n jumps apart
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+*/
+func removeNthFromEnd(head *ListNode, n int) *ListNode {
+	dummyHead := &ListNode{}
+	dummyHead.Next = head
+	start := dummyHead
+	last := dummyHead
+	tempk := 0
+	for tempk < n {
+		tempk++
+		last = last.Next
+	}
+
+	for last.Next != nil {
+		start = start.Next
+		last = last.Next
+	}
+
+	temp := start.Next.Next
+	start.Next = temp
+
+	if start == dummyHead {
+		if start.Next == nil {
+			return nil
+		} else {
+			head = start.Next
+		}
+	}
+	return head
+}

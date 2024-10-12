@@ -1,0 +1,66 @@
+/*
+The trick here is to modify the recursive search if '.' is encountered
+*/
+type WordDictionary struct {
+    end bool
+    alpha map[byte]*WordDictionary
+}
+
+
+func Constructor() WordDictionary {
+    return WordDictionary{
+        alpha : make(map[byte]*WordDictionary),
+    }
+}
+
+
+func (this *WordDictionary) AddWord(word string)  {
+    n:=len(word)
+    if n==0{
+        return
+    }
+    temp:=this
+    for i:=0;i<n;i++{
+        _,ok:=temp.alpha[word[i]]
+        if !ok{
+            temp.alpha[word[i]]=&WordDictionary{
+                alpha:make(map[byte]*WordDictionary),
+            }
+        }
+        temp=temp.alpha[word[i]]
+    }
+    temp.end=true
+}
+
+
+func (this *WordDictionary) Search(word string) bool {
+    n:=len(word)
+    if n==0{
+        return this.end
+    }
+    if word[0]=='.'{
+        //search:=false
+        for _,v:=range this.alpha{
+            temp:=v.Search(word[1:])
+            if temp{
+                return true
+            }
+        }
+        return false
+    }else{
+        _,ok:=this.alpha[word[0]]
+        if !ok{
+            return false
+        }else{
+            return this.alpha[word[0]].Search(word[1:])
+        }
+    }
+}
+
+
+/**
+ * Your WordDictionary object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.AddWord(word);
+ * param_2 := obj.Search(word);
+ */

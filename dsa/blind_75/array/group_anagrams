@@ -1,0 +1,26 @@
+/*
+In this example it is very important to come up with the data structure that allows us to club different anagrams
+for eg in this the key of map is of array type of size 6
+*/
+func groupAnagrams(strs []string) [][]string {
+	mm := make(map[[26]int][]string)
+	for _, str := range strs {
+		var m [26]int
+		rs := []rune(str)
+		//fmt.Println(str,rs)
+		for _, r := range rs {
+			index := int(r) - int('a')
+			//fmt.Println("index",index)
+			m[index]++
+		}
+		//fmt.Println("m",m)
+		mm[m] = append(mm[m], str)
+		//fmt.Println("mm",mm)
+	}
+
+	ret := make([][]string, 0)
+	for _, v := range mm {
+		ret = append(ret, v)
+	}
+	return ret
+}

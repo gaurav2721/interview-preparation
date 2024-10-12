@@ -1,0 +1,31 @@
+sql clauses - clauses basically mean conditions
+as - this basically is used to establish alias
+
+where - filters the rows based on certain conditions
+limit - limit the number of rows returned in a query -> select * from student limit 2;
+
+order by - provides the record in ascending and descending order -> select * from student order by class desc; -> default is ascending 
+you can sort on the basis of 2 parameters are provided like this 
+elect name from students where marks>75 order by substr(name,-3,3),id;
+
+select city,length(city) as l from station group by city,length(city) order by length(city),city limit 1;
+select city,length(city) as l from station group by city,length(city) order by length(city) desc,city limit 1;
+
+group by - basically indicates on which group the aggregation will by applied
+
+difference between having and where ?
+where command is applied to filter rows based on the condition ,before aggregation -> where is used with select , update and delete 
+for eg select * from <table_name> where <condition>
+where as having is applied to filter rows based on the condition after aggregating -> having is generally used with group by and aggregator clauses
+select <col1> <col2> agg(col3) from <table_name> groupby <col1> <col2> having condition;
+
+for eg , write a query to provide number of employees in each city
+select city,count(name) as number from student group by city
+
+for eg write a query to display the department names along side the total count of employees in each department, sorting the results by total 
+count of employees in descending order
+
+select department,count(no_of_employees) as count_employees from employees group by department order by count_employees desc;
+
+for eg write a query to list the departments where the average salary is greater than 1200 and also display salary name and average salary
+select department,avg(salary) as emp_salary from employee group by department having emp_salary>1200 order by emp_salary desc;

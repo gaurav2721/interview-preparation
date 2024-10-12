@@ -1,0 +1,4 @@
+1. Recursion , two pointer and three pointer approach , for eg the one used in reversing the linked list is important to see 
+2. Using Hashmaps and multiple iteration
+3. Floyd marshal algorithm , of having fast and slow pointer , lets you detect the cycle and if you want to check where that cycle
+    is getting formed reset slow pointer to initial pointer and then increment fast and slow pointer one by one

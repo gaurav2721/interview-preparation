@@ -1,0 +1,38 @@
+1. If a slice of size 1 and you want to remove the element at index 0 q=q[:0] will work
+2. You can use error package for error handling 
+3. panic and recover is used to handle errors
+4. Operations related to a channel
+	Unbuffered channels
+		1. ch:=make(chan string) //Note ch:=make(chan string,1)-> this is actually a buffered channel with size 1
+		2. close(ch) will close a channel
+		3. val,ok:=<-ch if ok is false then channel is closed , a buffered channel will still give out message it has stored even after
+		getting closed
+	Buffered Channel
+		1. ch:=make(cha string,1)
+5. Passing -race flag during building and running can help you detect data race
+6. Difference between concurrency and parallelism - 
+		1. concurrency is illusion of parallelism , as tasks are not run simultaneously , they are interleaved but do appean
+		2. in parallelism threads run on a different core 
+7. Learn about pass by value and pass by reference 
+8. Printing a variable : str:="gaurav" fmt.Printf("address %p",&str)
+9. Use of defer -> usually to run a function at the end of the function , ususally done to perform the cleanup
+10. Anonymous structs -> usually used when object is used only at one place 
+	person := struct { 
+		name string 
+		address string
+	}("gaurav","india")
+10. "io/ioutil" -> is there for file management operation ReadFile , WriteFile "file/filepath" is another package
+11. var a [5]int --> this is how you declare and define an array 
+12. var a []int --> slice https://medium.com/@ninucium/go-interview-questions-part-2-slices-87f5289fb7eb visit this page 
+					https://medium.com/@ninucium/go-interview-questions-part-3-size-of-slices-and-int-25080e51cf72
+13. strings are immutable in golang , so whenever we make change to a string a newstring is created and previous one is destroyed
+14. gofmt can be used to format the code 
+15. To build the go code you can "GOOS=darwinmac GOARCH=amd64 go build main.go -o main"
+16. Difference between byte and rune  --> byte is 1 byte, rune is 4 bytes , can contain symbols of other languages
+17. Knowing how to implement search function is very important
+	index:=sort.Search(len(temp),func (j int)bool{
+		if temp[j]>=rem{
+			return true
+		}
+		return false
+	})

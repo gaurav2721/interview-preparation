@@ -1,0 +1,203 @@
+// Online Go compiler to run Golang program online
+// Print "Try programiz.pro" message
+
+/*
+	The dfs where we do backtracking and visited array is postorderDFS, and also detect cycle
+
+The following is the chatGPT approach
+package main
+
+import (
+
+	"fmt"
+
+)
+
+	func alienOrder(words []string) string {
+		// Step 1: Create a graph and visited map
+		graph := make(map[byte][]byte)
+		visited := make(map[byte]int) // 0 = unvisited, 1 = visiting, 2 = visited
+
+		// Initialize graph with each unique character
+		for _, word := range words {
+			for i := range word {
+				graph[word[i]] = []byte{}
+			}
+		}
+
+		// Step 2: Build the graph by comparing adjacent words
+		for i := 0; i < len(words)-1; i++ {
+			word1 := words[i]
+			word2 := words[i+1]
+			minLen := len(word1)
+			if len(word2) < minLen {
+				minLen = len(word2)
+			}
+
+			for j := 0; j < minLen; j++ {
+				if word1[j] != word2[j] {
+					graph[word1[j]] = append(graph[word1[j]], word2[j])
+					break
+				}
+				// Special case where prefix is longer than the following word, which is invalid
+				if j == minLen-1 && len(word1) > len(word2) {
+					return ""
+				}
+			}
+		}
+
+		// Step 3: Perform DFS
+		var result []byte
+		var dfs func(byte) bool
+		dfs = func(node byte) bool {
+			if visited[node] == 1 {
+				return false // cycle detected
+			}
+			if visited[node] == 2 {
+				return true // already visited
+			}
+
+			visited[node] = 1 // mark as visiting
+			for _, neighbor := range graph[node] {
+				if !dfs(neighbor) {
+					return false
+				}
+			}
+			visited[node] = 2 // mark as visited
+			result = append(result, node)
+			return true
+		}
+
+		// Step 4: Call DFS on all nodes
+		for node := range graph {
+			if visited[node] == 0 {
+				if !dfs(node) {
+					return "" // cycle detected
+				}
+			}
+		}
+
+		// Step 5: Reverse the result
+		for i, n := 0, len(result); i < n/2; i++ {
+			result[i], result[n-1-i] = result[n-1-i], result[i]
+		}
+
+		return string(result)
+	}
+
+	func main() {
+		words := []string{"wrt", "wrf", "er", "ett", "rftt"}
+		order := alienOrder(words)
+		fmt.Println(order) // Expected output: "wertf"
+	}
+*/
+package main
+
+import "fmt"
+
+type Node struct {
+	val   byte
+	edges map[byte]*Node
+}
+
+type Graph map[byte]*Node
+
+func buildEdges(word1 string, word2 string, graph Graph) {
+	//fmt.Println("buildEdges",word1,word2,graph)
+	n1 := len(word1)
+	n2 := len(word2)
+	for i := 0; i < n1 && i < n2; i++ {
+		if word1[i] == word2[i] {
+			_, ok := graph[word1[i]]
+			if !ok {
+				graph[word1[i]] = &Node{
+					val:   word1[i],
+					edges: make(map[byte]*Node),
+				}
+			}
+			continue
+		} else {
+			_, ok := graph[word1[i]]
+			if !ok {
+				graph[word1[i]] = &Node{
+					val:   word1[i],
+					edges: make(map[byte]*Node),
+				}
+			}
+			_, ok = graph[word2[i]]
+			if !ok {
+				graph[word2[i]] = &Node{
+					val:   word2[i],
+					edges: make(map[byte]*Node),
+				}
+			}
+			//fmt.Println("buildEdges","unequal",word1[i],word2[i],graph[word1[i]].edges,graph[word2[i]])
+			graph[word1[i]].edges[word2[i]] = graph[word2[i]]
+			break
+		}
+	}
+}
+
+func dfs(graph Graph, a byte, visited map[byte]bool, traverse []byte, ret map[string]bool) {
+	fmt.Println("dfs", a, visited, traverse, ret)
+	if visited[a] {
+		return
+	}
+	_, ok := graph[a]
+	if ok {
+		visited[a] = true
+		traverse = append(traverse, a)
+		if len(graph[a].edges) == 0 {
+			ret[string(traverse)] = true
+			return
+		}
+		for key, _ := range graph[a].edges {
+			dfs(graph, key, visited, traverse, ret)
+		}
+		traverse = traverse[:len(traverse)-1]
+		visited[a] = false
+	}
+	return
+}
+
+func printGraph(graph Graph) {
+	for k, v := range graph {
+		fmt.Println("printGraph", k, v)
+	}
+}
+func dict(words []string, n int, k int) []byte {
+	fmt.Println("dict", words, n, k)
+	graph := Graph{}
+	for i := 1; i < len(words); i++ {
+		buildEdges(words[i-1], words[i], graph)
+	}
+
+	printGraph(graph)
+	ret := make(map[string]bool, 0)
+	for key, _ := range graph {
+		visited := make(map[byte]bool, 0)
+		traverse := make([]byte, 0)
+		dfs(graph, key, visited, traverse, ret)
+	}
+
+	for key, _ := range ret {
+		if len(key) == k {
+			return []byte(key)
+		}
+	}
+	return []byte("")
+}
+
+func main() {
+	n := 5
+	k := 4
+	words := []string{
+		"baa",
+		"abcd",
+		"abca",
+		"cab",
+		"cad",
+	}
+	order := dict(words, n, k)
+	fmt.Println("order", order)
+}

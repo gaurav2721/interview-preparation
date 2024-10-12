@@ -19,3 +19,26 @@ To generate testcases
 Points where you might fail
 1. It is very important that you go and checkout a problem with a fresh mind , and not be bound to a particular approach 
 2. You dont need to think fast as in the interviews the questions will not be repeated
+
+Following is the way to approach leetcode
+1. Goldilocks approach - flow state - hard and easy problem 
+2. There is time till which you have to try and then you have to read solution and implement them - 60 mins time limit 
+3. Read through different and better solution and see how you can improve , try to code up the solution yourself , if you are not understanding it remove that code line and see what testcases fail and why they fail
+4. Quality over quantity -> try to understand the underlying problem and also neetcode 75,150, interview 150 are some problems that you need to know -> leetcode 20 80 , 20 percent of the problems get asked 80% of the times 
+5. mock interviews
+6. Focus on patterns
+
+1. Clarity of thought - pseudo code
+2. Clarity of communication
+3. Clarity of code - code readability and maintainability
+
+
+How to improve as a programmer
+1. Do not try to do everything
+2. Go Deep and not wide : as that is the tech stack that your will be working for and interviewing for 
+3. Developing a problem solving mindset : 5 whys(different ordered thinking ) , Divide and conquer 
+4. Stop obsessing over syntax , language is irrelevant , practicing with pseudo-code 
+5. Write code for humans/ that is code should be readable with proper naming , try , catch , comment logs 
+6. Debugging is also an important skill , unitests , attached debuggers
+7. You need to improve everyday (1% improvement)
+

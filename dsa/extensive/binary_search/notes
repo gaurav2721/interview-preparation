@@ -1,0 +1,2 @@
+1. Just remember mid=low+(high-low/2)=(high+low)/2
+2. Having just 2 conditions f(mid)<=h , or f(mid)==h , matters a lot in simplifying the solutions 

@@ -1,0 +1,56 @@
+// adding the code to make sure visited[int]int , is there where we have already checked if the node has been detected for cycles
+// checkout visited[start]=-1
+// this logic detects cycles in the directed graph
+
+type Node struct {
+	val   int
+	edges map[int]bool
+}
+
+type Graph map[int]*Node
+
+func detectCycles(graph Graph, visited map[int]int, start int) bool {
+	//fmt.Println("detectCycles",graph,visited,start)
+	if visited[start] == -1 {
+		return false
+	} else if visited[start] == 1 {
+		return true
+	} else {
+		visited[start] = 1
+		for k, _ := range graph[start].edges {
+			if detectCycles(graph, visited, k) {
+				return true
+			}
+		}
+		visited[start] = -1
+		return false
+	}
+}
+
+func canFinish(num int, req [][]int) bool {
+	graph := Graph{}
+	for i := 0; i < num; i++ {
+		node := &Node{
+			val:   i,
+			edges: make(map[int]bool),
+		}
+		graph[i] = node
+	}
+	//fmt.Println("canFinish",graph)
+
+	for i := 0; i < len(req); i++ {
+		graph[req[i][1]].edges[req[i][0]] = true
+	}
+
+	visited := make(map[int]int)
+	for i := 0; i < num; i++ {
+		if detectCycles(graph, visited, i) {
+			return false
+		}
+		visited[i] = -1
+		//fmt.Println("node done",i)
+	}
+
+	return true
+
+}

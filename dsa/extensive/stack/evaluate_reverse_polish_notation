@@ -1,0 +1,69 @@
+/*
+closure functions are a good way to do it , and more readable also
+
+But the second approach is more intuitive as if now
+*/
+func evalRPN(tokens []string) int {
+	stack := []int{}
+	operators := map[string]func(int, int) int{
+		"+": func(a, b int) int { return a + b },
+		"-": func(a, b int) int { return a - b },
+		"*": func(a, b int) int { return a * b },
+		"/": func(a, b int) int { return a / b },
+	}
+	for _, token := range tokens {
+		if calculate, exist := operators[token]; exist {
+			a, b := stack[len(stack)-2], stack[len(stack)-1]
+			stack = append(stack[:len(stack)-2], calculate(a, b))
+		} else {
+			num, _ := strconv.Atoi(token)
+			stack = append(stack, num)
+		}
+	}
+	return stack[0]
+}
+
+/*
+using the stack in a simple manner
+*/
+func operation(a int, b int, operator string) int {
+	switch operator {
+	case "+":
+		return a + b
+	case "-":
+		return a - b
+	case "*":
+		return a * b
+	case "/":
+		return a / b
+	}
+	return math.MinInt64
+}
+
+func Contains(expressions []string, str string) bool {
+	ret := false
+	for _, expression := range expressions {
+		if expression == str {
+			ret = true
+		}
+	}
+	return ret
+}
+
+func evalRPN(tokens []string) int {
+	stack := make([]int, 0)
+	n := len(tokens)
+	expressions := []string{"+", "-", "*", "/"}
+	for i := 0; i < n; i++ {
+		if !Contains(expressions, tokens[i]) {
+			num, _ := strconv.Atoi(tokens[i])
+			stack = append(stack, num)
+			continue
+		}
+		a := stack[len(stack)-2]
+		b := stack[len(stack)-1]
+		stack = stack[:len(stack)-2]
+		stack = append(stack, operation(a, b, tokens[i]))
+	}
+	return stack[0]
+}

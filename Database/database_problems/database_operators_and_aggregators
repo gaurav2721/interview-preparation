@@ -1,0 +1,81 @@
+Arithematic Operators 
+
++ , - , * , / %
+
+select * from <table_name> where <column_name> <operator> <number> = 1;
+for eg select * from student where age+1=2;
+
+Comparison Operators
+
+> , >= , <= , !=
+select * from <table_name> where <column_name> <operator> <number>;
+for eg select * from student where age>1;
+
+Logical operator
+
+AND , OR , NOT (reverses the result of the condition)
+select * from student where city not in ('delhi');
+
+String Operators
+upper and lower , will convert characters to upper case 
+
+Other Operators
+in 
+is null , is not null
+like
+between
+regexp
+
+in 
+Query the list of CITY names from STATION which have vowels (i.e., a, e, i, o, and u) as both their first and last characters
+select distinct(city) from station where substr(lower(city),1,1) in ('a','e','i','o','u') and substr(lower(city),-1,1) in ('a','e','i','o','u') ; --> understanding how substr works choosing initial index and length of string
+SELECT DISTINCT CITY FROM STATION WHERE LEFT(CITY, 1) IN ('A', 'E', 'I', 'O', 'U', 'a', 'e', 'i', 'o', 'u') AND RIGHT(CITY, 1) IN ('A', 'E', 'I', 'O', 'U', 'a', 'e', 'i', 'o', 'u'); --> understanding how left and right work and how the length is passed
+
+like
+% means zero or more characters will follow it 
+1. select * from student where name like 'G%' -> this indicates a name starting with G
+2. select * from student where name like '_o%' -> this will check names having second character as 
+3. for the ending character select distinct(city) from station where city like '%a' or city like '%e' or city like '%i' or city like '%o' or city like '%u';
+Query the list of CITY names starting with vowels (i.e., a, e, i, o, or u) from STATION. Your result cannot contain duplicates.
+select distinct(city) from station where city like 'a%' or city like 'e%' or city like 'i%' or city like 'o%' or city like 'u%';
+
+regexp
+SELECT * FROM employees WHERE first_name REGEXP '^J'; --> strings starting with J
+SELECT * FROM employees WHERE email REGEXP 'example\.com$'; --> strings ending with example.com
+
+
+
+between
+select * from student where class between 1 and 4;
+
+Bitwise operator 
+& , |
+
+Aggregators
+These perform an operation on a rows of a table and return a single value 
+
+1. count
+2. min
+3. max
+4. sum
+5. avg
+6. group_concat
+7. distint
+8. length
+
+1.count
+select count(name) from student 
+same for the otherss
+
+Distinct -> this keyword is used to remove the duplicate column values from the result set 
+    select distint(city) from station where city%2=0;
+
+length 
+Query the two cities in STATION with the shortest and longest CITY names, as well as their respective lengths (i.e.: number of characters in the name). If there is more than one smallest or largest city, choose the one that comes first when ordered alphabetically.
+
+select city,length(city) as l from station group by city,length(city) order by length(city),city limit 1;
+select city,length(city) as l from station group by city,length(city) order by length(city) desc,city limit 1;
+
+
+
+

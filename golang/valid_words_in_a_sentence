@@ -1,0 +1,43 @@
+func isValidToken(word string) bool {
+	token := []rune(word)
+	count := 0
+	n := len(token)
+	fmt.Println(word)
+	for i, r := range token {
+		if unicode.IsDigit(r) {
+			return false
+		}
+		//fmt.Println("condition1",i,r,word)
+		if r == '-' {
+			count++
+			if count > 1 || (i == 0 || i == n-1) {
+				return false
+			}
+			if !unicode.IsLower(token[i-1]) || !unicode.IsLower(token[i+1]) {
+				return false
+			}
+		}
+		//fmt.Println("condition2",i,r,word)
+		if r == '!' || r == '.' || r == ',' {
+			if i != n-1 {
+				return false
+			}
+		}
+		//fmt.Println("condition3",i,r,word)
+	}
+	return true
+}
+func countValidWords(sentence string) int {
+	tokens := strings.Split(sentence, " ")
+	count := 0
+	for _, token := range tokens {
+		if token == " " || token == "" {
+			continue
+		}
+		if isValidToken(token) {
+			count++
+		}
+
+	}
+	return count
+}

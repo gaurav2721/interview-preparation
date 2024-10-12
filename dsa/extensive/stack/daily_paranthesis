@@ -1,0 +1,37 @@
+
+func genPara(str []rune, n int, closed int, open int, result map[string]bool) {
+	//fmt.Println(string(str),n,closed,open,result)
+	if closed == n && open == n {
+		temp := make([]rune, 2*n)
+		copy(temp, str)
+		result[string(temp)] = true
+		return
+	}
+
+	if open < n {
+		str = append(str, '(')
+		open++
+		genPara(str, n, closed, open, result)
+		str = str[:len(str)-1]
+		open--
+	}
+
+	if closed < open {
+		str = append(str, ')')
+		closed++
+		genPara(str, n, closed, open, result)
+		str = str[:len(str)-1]
+		closed--
+	}
+}
+
+func generateParenthesis(n int) []string {
+	str := make([]rune, 0)
+	result := make(map[string]bool)
+	ret := make([]string, 0)
+	genPara(str, n, 0, 0, result)
+	for k, _ := range result {
+		ret = append(ret, k)
+	}
+	return ret
+}

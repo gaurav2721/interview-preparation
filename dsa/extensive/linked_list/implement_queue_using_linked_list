@@ -1,0 +1,80 @@
+// Online Go compiler to run Golang program online
+// Print "Try programiz.pro" message
+
+/*
+Use two front and rear pointers
+rear will be used for enqueuing
+front will be used for dequeuing
+*/
+package main
+
+import "fmt"
+
+type Node struct {
+	val  int
+	next *Node
+}
+
+type Queue struct {
+	l     int
+	rear  *Node
+	front *Node
+}
+
+func (q *Queue) IsEmpty() bool {
+	if q.l == 0 {
+		return true
+	}
+	return false
+}
+
+func (q *Queue) Enqueue(x int) {
+	if q.IsEmpty() {
+		node := &Node{
+			val: x,
+		}
+		q.front = node
+		q.rear = node
+		q.l = 1
+	} else {
+		node := &Node{
+			val: x,
+		}
+		q.rear.next = node
+		q.rear = node
+		(q.l)++
+	}
+}
+
+func (q *Queue) Dequeue() int {
+	if q.IsEmpty() {
+		panic("Dequeue")
+	} else {
+		x := q.front.val
+		q.front = q.front.next
+		(q.l)--
+		if q.l == 0 {
+			q.front = nil
+			q.rear = nil
+		}
+		return x
+	}
+
+}
+
+func main() {
+	q := Queue{
+		l: 0,
+	}
+
+	q.Enqueue(1)
+	q.Enqueue(2)
+	q.Enqueue(3)
+	q.Enqueue(4)
+	q.Enqueue(5)
+	fmt.Println("check", q.Dequeue())
+	fmt.Println("check", q.Dequeue())
+	fmt.Println("check", q.Dequeue())
+	fmt.Println("check", q.Dequeue())
+	fmt.Println("check", q.Dequeue())
+}

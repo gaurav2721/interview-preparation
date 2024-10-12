@@ -1,0 +1,73 @@
+/*
+A good approach is to find the mid pointer
+reverse the list lying on the right had side of mid pointer and then combining the left and the right list
+*/
+
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func getMid(head *ListNode) *ListNode {
+	if head == nil {
+		return nil
+	}
+	slow := head
+	fast := head.Next
+	for fast != nil {
+		fast = fast.Next
+		if fast != nil {
+			fast = fast.Next
+		} else {
+			break
+		}
+		slow = slow.Next
+	}
+	return slow
+}
+
+func reverse(head *ListNode) *ListNode {
+	if head == nil {
+		return nil
+	} else if head.Next == nil {
+		return head
+	}
+	var prev *ListNode = nil
+	temp := head
+	for temp != nil {
+		next := temp.Next
+		temp.Next = prev
+		prev = temp
+		temp = next
+	}
+	return prev
+}
+
+func mergeList(head1 *ListNode, head2 *ListNode) *ListNode {
+	if head1 == nil && head2 == nil {
+		return nil
+	} else if head2 == nil {
+		return head1
+	} else if head1 == nil {
+		return head2
+	}
+	nextHead1 := head1.Next
+	nextHead2 := head2.Next
+	head1.Next = head2
+	head2.Next = mergeList(nextHead1, nextHead2)
+	return head1
+}
+
+func reorderList(head *ListNode) {
+	if head == nil || head.Next == nil {
+		return
+	}
+	mid := getMid(head)
+	left := head
+	right := mid.Next
+	mid.Next = nil
+	right = reverse(right)
+	mergeList(left, right)
+}

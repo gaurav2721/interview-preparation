@@ -1,0 +1,72 @@
+ACID properties are properties of RDMBS
+
+1. Atomicity
+
+All the operation in a transaction is either fully commited or not at all . for eg 
+person_id       amount
+1               200
+2               300
+
+If person1 -> person2 100 Rs , following is the read-write set which is generated 
+Read Set
+Read person1 balance = 200
+Read person2 balance = 300
+Write Set
+Write person1 balance = 100
+Write person1 balance = 400
+
+Now either this transaction is fully committed or completely rolled back
+
+2. Consistency
+
+While doing the read , you get the most recent write
+While doing write you maintain the integrity constraints that is foreign key constraints , unique constraints
+
+Taking the same example
+If person1 -> person2 100 Rs , following is the read-write set which is generated 
+Read Set
+Read person1 balance = 200
+Read person2 balance = 300
+Write Set
+Write person1 balance = 100
+Write person1 balance = 400
+
+The total amount remains the same 
+And you get most recent writes
+
+3. Integrity 
+Multiple transactions running concurrently dont really impact each other for eg 
+
+person_id       amount
+1               200
+2               300
+3               400
+
+If there are two transactions running parallely 
+Tx1 - person1->person2 100
+Tx2 - person1->person3 100
+
+Read/Write set for Tx1
+Read person1 balance = 200
+Read person2 balance = 300
+Write Set
+Write person1 balance = 100
+Write person1 balance = 400
+
+Read/Write set for Tx2
+Read person1 balance = 200
+Read person3 balance = 400
+Write Set
+Write person1 balance = 100
+Write person1 balance = 500
+
+So if you see a data inconsistency happens for account 1 balance as that is the common key getting updated 
+
+Durability
+Even if the database switches off or crashes data is preserved 
+Write Ahead Strategy is used in a time series logs , to store the transitory commands so that before the transaction is committed if failure
+happens we have a record of what operations to run if database instance comes back up 
+
+
+
+

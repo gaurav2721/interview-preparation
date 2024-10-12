@@ -1,0 +1,9 @@
+Union
+Combines the result of two or more select statements and remove the duplicate rows
+
+Properties
+1. select statment should have same number of columns
+2. type and order of the columns should be same as well 
+
+Union all 
+does not exclude duplicate rows, that is the only difference between union and union all
