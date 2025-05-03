@@ -1,2 +1,44 @@
 DFS
 
+Clone graph is the simple problem , while dfs we need to maintain a visited array so that we dont visit a node that we have not visited before
+
+/**
+ * Definition for a Node.
+ * type Node struct {
+ *     Val int
+ *     Neighbors []*Node
+ * }
+ */
+type Graph map[int]*Node
+
+func util(node *Node,graph Graph)*Node{
+    if node==nil{
+        return nil
+    }
+    var newNode *Node
+    if _,ok:=graph[node.Val]; !ok{
+        newNode=&Node{
+            Val: node.Val,
+            Neighbors : make([]*Node,0),
+        }
+        graph[newNode.Val]=newNode
+    }
+    for _,neighbor:= range node.Neighbors{
+        if neighbor!=nil{
+            val:=neighbor.Val
+            if _,ok:=graph[val];ok{
+                newNode.Neighbors=append(newNode.Neighbors,graph[val])
+            }else{
+                neighbourCopy:=util(neighbor,graph)
+                newNode.Neighbors=append(newNode.Neighbors,neighbourCopy)
+            }
+        }
+    }
+    return newNode
+}
+
+func cloneGraph(node *Node) *Node {
+    graph:=make(Graph)
+    newNode:=util(node,graph)
+    return newNode
+}

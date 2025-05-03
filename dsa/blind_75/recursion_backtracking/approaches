@@ -1,5 +1,15 @@
 1. index
 2. visited
 3. map pointer
-4. termininating and input validation
+4. termininating and input validation [this is called base case handling]
 5. recursion and backtracking
+
+How to write recursion
+1. Express everything in terms i and j
+2. Explore all possibilities 
+3. Explore base cases 
+4. Return sum of all possibilities 
+
+Backtracking 
+1. take and not take
+2. or a for loop and combination of take and not take , and comparing with the previous elements to see if you have picked it or not 

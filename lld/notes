@@ -67,3 +67,22 @@ Entities and Relationships: What are the main entities involved, such as product
 Cart Operations: How would you handle adding, updating, and removing items in the cart? What methods ensure these operations are efficient?
 Checkout Process: How do you manage the checkout process, including payment processing and order confirmation?
 User Experience: How would you design the user experience to be intuitive and user-friendly?
+
+
+Programming - coding accross time 
+Factors influencing code 
+1. Readability
+2. Extensible
+3. Correctness
+  - Guiding Principles
+    - SOLID
+    - Inheritance and Composition
+  - Design Patterns
+
+  Turn Based AI Game
+
+  Strategy
+  - Write simple function with I/O (which may have objects as well)
+  - While defining objects start to think about OOPS and SOLID
+  - Move all the classes in separate files
+  - Think about apis to your system 

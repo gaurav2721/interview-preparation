@@ -1,0 +1,92 @@
+/*
+you sort intervals and queries
+then use minHeap to find out the smallest interval, by using push and pop
+*/
+
+type Record struct {
+	size int
+	end  int
+}
+
+type MinHeap []Record
+
+func (h MinHeap) Len() int { return len(h) }
+func (h MinHeap) Less(i, j int) bool {
+	return h[i].size < h[j].size || ((h[i].size == h[j].size) && h[i].end < h[j].end)
+}
+func (h MinHeap) Swap(i, j int) {
+	h[i], h[j] = h[j], h[i]
+}
+func (h *MinHeap) Push(x interface{}) {
+	*h = append(*h, x.(Record))
+}
+func (h *MinHeap) Pop() interface{} {
+	n := len(*h)
+	x := (*h)[n-1]
+	*h = (*h)[:n-1]
+	return x
+}
+func (h *MinHeap) Peek() interface{} {
+	return (*h)[0]
+}
+
+func minInterval(intervals [][]int, queries []int) []int {
+	n := len(intervals)
+	sort.Slice(intervals, func(i, j int) bool {
+		return intervals[i][0] < intervals[j][0] || (intervals[i][0] == intervals[j][0] && intervals[i][1] <= intervals[j][1])
+	})
+	tempQueries := append([]int{}, queries...)
+	//fmt.Println(intervals, tempQueries)
+	sort.Ints(tempQueries)
+	result := make(map[int]int, 0)
+	h := make(MinHeap, 0)
+	heap.Init(&h)
+	i := 0
+	for _, query := range tempQueries {
+		if _, ok := result[query]; ok {
+			continue
+		}
+
+		for i < n && intervals[i][0] <= query {
+			//fmt.Println("add",intervals[i],h)
+			heap.Push(&h, Record{
+				size: intervals[i][1] - intervals[i][0] + 1,
+				end:  intervals[i][1],
+			})
+			i++
+			if i >= n {
+				break
+			}
+		}
+
+		//fmt.Println("query add",query,h)
+
+		for h.Len() > 0 {
+			x := h.Peek()
+			xrecord := x.(Record)
+			if xrecord.end < query {
+				heap.Pop(&h)
+			} else {
+				break
+			}
+		}
+
+		//fmt.Println("query add",query,h)
+
+		if h.Len() > 0 {
+			result[query] = h.Peek().(Record).size
+		} else {
+			result[query] = -1
+		}
+	}
+
+	ret := make([]int, 0)
+	for i := 0; i < len(queries); i++ {
+		if _, ok := result[queries[i]]; !ok {
+			ret = append(ret, -1)
+		} else {
+			ret = append(ret, result[queries[i]])
+		}
+	}
+	return ret
+}

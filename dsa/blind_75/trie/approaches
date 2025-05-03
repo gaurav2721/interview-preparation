@@ -1,0 +1,12 @@
+think of edge cases for eg  
+    empty input
+
+this structure is very important to remember
+trie = root->A
+       root->B
+       the key of map is the character
+
+type Trie struct {
+    end bool
+    alpha map[byte]*Trie
+}

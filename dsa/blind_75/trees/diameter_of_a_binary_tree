@@ -1,0 +1,37 @@
+/*
+There are layer1 problems and layer2 problems , for eg layer1 problem is depth and layer2 problems in diameter
+*/
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func depth(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+	return 1 + max(depth(root.Left), depth(root.Right))
+}
+
+func diameterOfBinaryTree(root *TreeNode) int {
+	if root == nil || root.Left == nil && root.Right == nil {
+		return 0
+	}
+
+	left := diameterOfBinaryTree(root.Left)
+	right := diameterOfBinaryTree(root.Right)
+	center := 0
+	if root.Left == nil {
+		center = depth(root.Right)
+	} else if root.Right == nil {
+		center = depth(root.Left)
+	} else {
+		center = depth(root.Left) + depth(root.Right)
+	}
+
+	return max(max(left, right), center)
+
+}

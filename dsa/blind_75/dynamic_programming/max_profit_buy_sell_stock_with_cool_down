@@ -1,0 +1,41 @@
+// At first we might think of writing a recursion logic then going ahead with memoization
+// this works but it has a time complexity of O(n2) and same space complexty O(n2)
+
+func maxProfitUtil(prices []int, index int, dp []int) int {
+	//fmt.Println("maxProfitUtil",index)
+	n := len(prices)
+	if index >= n-1 {
+		return 0
+	}
+	maxProfit := 0
+	tempIndex := index
+	for tempIndex < n-1 && prices[index] < prices[tempIndex+1] {
+		if dp[tempIndex+3] == -1 {
+			dp[tempIndex+3] = maxProfitUtil(prices, tempIndex+3, dp)
+		}
+		maxProfit = max(maxProfit, prices[tempIndex+1]-prices[index]+dp[tempIndex+3])
+		tempIndex++
+	}
+	if dp[index+1] == -1 {
+		dp[index+1] = maxProfitUtil(prices, index+1, dp)
+	}
+	maxProfit = max(maxProfit, dp[index+1])
+	dp[index] = maxProfit
+	//fmt.Println("maxProfit",maxProfit)
+	return maxProfit
+}
+
+func maxProfit(prices []int) int {
+	n := len(prices)
+	if n == 1 {
+		return 0
+	}
+	dp := make([]int, n+3)
+	for i := 0; i < n; i++ {
+		dp[i] = -1
+	}
+	dp[n] = 0
+	dp[n+1] = 0
+	dp[n+2] = 0
+	return maxProfitUtil(prices, 0, dp)
+}

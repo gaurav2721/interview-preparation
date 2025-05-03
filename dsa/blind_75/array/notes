@@ -5,3 +5,16 @@
 4. A lot of the times you should start with brute force as that can work as well for eg valid sudoku
 5. How to use the map variable in golang is very important
 6. To come up with edge cases use positive , negative , zero , duplicates and extreme scenario such as 0 length , math.IntMax and math.IntMin
+
+Sorting function 
+1. sort.Ints(person) - sorts in ascending order 
+
+Maps
+1. Anything that can be compared can be put as a key in a map
+
+slices
+1. How do slices behave 
+2. edge cases 
+    a[:0] --> will result in empty slice
+    a[1:1] --> will result in empty slice
+    a[n:] --> will result in empty slice if n==len(a)

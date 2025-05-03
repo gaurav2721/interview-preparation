@@ -1,0 +1,104 @@
+/*
+Prims algorithm or minimum spanning tree
+
+BFS + Priority queue + visited 
+/*
+func abs(x int)int{
+    if x<0{
+        return -x
+    }
+    return x
+}
+
+type Point struct{
+    x int
+    y int
+}
+
+func distance(a Point,b Point)int{
+    distance:= abs(a.x-b.x)+abs(a.y-b.y)
+    return distance
+}
+
+type PointDist struct{
+    point Point
+    dist int
+}
+
+type MinHeap []PointDist
+func (h MinHeap)Len()int{return len(h)}
+func (h MinHeap)Less(i,j int)bool{return h[i].dist<h[j].dist}
+func (h MinHeap)Swap(i,j int){
+    h[i],h[j]=h[j],h[i]
+}
+func (h *MinHeap)Push(x interface{}){
+    *h=append(*h,x.(PointDist))
+}
+func (h *MinHeap)Pop()interface{}{
+    n:=len(*h)
+    x:=(*h)[n-1]
+    *h=(*h)[:n-1]
+    return x
+}
+
+func minCostConnectPoints(points [][]int) int {
+    m:=make(map[Point]map[Point]int,0)
+    visited:=make(map[Point]bool,0)
+    n:=len(points)
+    for i:=0;i<n;i++{
+        for j:=i+1;j<n;j++{
+            a:=Point{
+                x:points[i][0],
+                y:points[i][1],
+            }
+            b:=Point{
+                x:points[j][0],
+                y:points[j][1],
+            }
+            c:=distance(a,b)
+            if _,ok:=m[a];!ok{
+                m[a]=make(map[Point]int,0)
+            }
+            m[a][b]=c
+            if _,ok:=m[b];!ok{
+                m[b]=make(map[Point]int,0)
+            }
+            m[b][a]=c
+        }
+    }
+    h:=make(MinHeap,0)
+    heap.Init(&h)
+
+    initialPoint:=Point{
+        x:points[0][0],
+        y:points[0][1],
+    }
+    intialPointDist:=PointDist{
+        point: initialPoint,
+        dist: 0,
+    }
+
+    heap.Push(&h,intialPointDist)
+    minCost:=0
+    for h.Len()>0{
+        //fmt.Println("heap",h)
+        x:=heap.Pop(&h)
+        xPointDist:=x.(PointDist)
+        if visited[xPointDist.point]{
+            continue
+        }
+        visited[xPointDist.point]=true
+        minCost+=xPointDist.dist
+        for k,v:=range m[xPointDist.point]{
+            if visited[k]{
+                continue
+            }
+            heap.Push(&h,PointDist{
+                point:k,
+                dist:v,
+            })
+        }
+    }
+    return minCost
+    
+}

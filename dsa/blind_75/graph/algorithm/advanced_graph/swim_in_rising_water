@@ -1,0 +1,97 @@
+/*
+okay
+*/
+type Point struct {
+	x int
+	y int
+}
+
+type PointDist struct {
+	point Point
+	dist  int
+}
+
+type MinHeap []PointDist
+
+func (h MinHeap) Len() int           { return len(h) }
+func (h MinHeap) Less(i, j int) bool { return h[i].dist < h[j].dist }
+func (h MinHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+func (h *MinHeap) Push(x interface{}) {
+	*h = append(*h, x.(PointDist))
+}
+func (h *MinHeap) Pop() interface{} {
+	n := len(*h)
+	x := (*h)[n-1]
+	*h = (*h)[:n-1]
+	return x
+}
+func isValid(i, j, n int) bool {
+	if i < 0 || j < 0 || i >= n || j >= n {
+		return false
+	}
+	return true
+}
+
+func util(h *MinHeap, initI, initJ, initDist, endI, endJ, n int, grid [][]int, visited map[Point]int) {
+	if isValid(endI, endJ, n) {
+		newDist := max(initDist, grid[endI][endJ])
+		pointToBeAdded := Point{
+			x: endI,
+			y: endJ,
+		}
+		if visited[pointToBeAdded] > newDist {
+			pointDistToBeAdded := PointDist{
+				point: pointToBeAdded,
+				dist:  newDist,
+			}
+			//visited[pointToBeAdded]=newDist
+			heap.Push(h, pointDistToBeAdded)
+		}
+	}
+}
+
+func swimInWater(grid [][]int) int {
+	n := len(grid)
+	visited := make(map[Point]int, 0)
+
+	for i := 0; i < n; i++ {
+		for j := 0; j < n; j++ {
+			temp := Point{
+				x: i,
+				y: j,
+			}
+			visited[temp] = math.MaxInt32
+		}
+	}
+
+	h := make(MinHeap, 0)
+	heap.Init(&h)
+	heap.Push(&h, PointDist{
+		point: Point{
+			x: 0,
+			y: 0,
+		},
+		dist: grid[0][0],
+	})
+
+	retDist := 0
+
+	for h.Len() > 0 {
+		//fmt.Println("heap",h)
+		x := heap.Pop(&h)
+		xPointDist := x.(PointDist)
+		visited[xPointDist.point] = min(visited[xPointDist.point], xPointDist.dist)
+		i := xPointDist.point.x
+		j := xPointDist.point.y
+		distance := xPointDist.dist
+		if i == n-1 && j == n-1 {
+			retDist = distance
+			break
+		}
+		util(&h, i, j, distance, i, j+1, n, grid, visited)
+		util(&h, i, j, distance, i+1, j, n, grid, visited)
+		util(&h, i, j, distance, i-1, j, n, grid, visited)
+		util(&h, i, j, distance, i, j-1, n, grid, visited)
+	}
+	return retDist
+}

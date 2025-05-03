@@ -1,0 +1,56 @@
+type MaxHeap []int
+func (h MaxHeap)Len()int{return len(h)}
+func (h MaxHeap)Less(i int,j int)bool{ return h[i]<h[j]}
+func (h MaxHeap)Swap(i int,j int){ h[i],h[j]=h[j],h[i]}
+
+func (h *MaxHeap)Push(x interface{}){
+    *h=append(*h,x.(int))
+}
+
+func (h *MaxHeap)Pop()interface{}{
+    x:=(*h)[len(*h)-1]
+    *h=(*h)[:len(*h)-1]
+    return x
+}
+
+
+type KthLargest struct {
+    k int
+    h *MaxHeap
+}
+
+
+func Constructor(k int, nums []int) KthLargest {
+    maxHeap := make(MaxHeap,0)
+    heap.Init(&maxHeap)
+    for i:=0;i<len(nums);i++{
+        heap.Push(&maxHeap,nums[i])
+        if len(maxHeap)>k{
+            heap.Pop(&maxHeap)
+        }
+    }
+    kthLargest:=KthLargest{
+        k:k,
+        h: &maxHeap,
+    }
+    //fmt.Println("Constructor",kthLargest.k,*(kthLargest.h))
+    return kthLargest
+}
+
+
+func (this *KthLargest) Add(val int) int {
+    heap.Push(this.h,val)
+    //fmt.Println("Add",val,this.k,*(this.h))
+    if this.h.Len()>this.k{
+        heap.Pop(this.h)
+    }
+    //fmt.Println("Add Popped",val,this.k,*(this.h))
+    return (*(this.h))[0]
+}
+
+
+/**
+ * Your KthLargest object will be instantiated and called as such:
+ * obj := Constructor(k, nums);
+ * param_1 := obj.Add(val);
+ */

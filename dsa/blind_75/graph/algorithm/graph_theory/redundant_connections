@@ -1,0 +1,60 @@
+type Node struct {
+	parent *Node
+	val    int
+}
+
+type Graph map[int]*Node
+
+func findParent(node *Node) *Node {
+	prev := node
+	currNode := prev.parent
+	for prev != currNode {
+		prev = currNode
+		currNode = currNode.parent
+	}
+	return currNode
+}
+
+func findParentAndAttach(val1, val2 int, graph map[int]*Node) bool {
+	//fmt.Println("input",val1,val2,graph)
+	node1 := graph[val1]
+	node2 := graph[val2]
+
+	parentNode1 := findParent(node1)
+	parentNode2 := findParent(node2)
+
+	if parentNode1 == parentNode2 {
+		return false
+	}
+	parentNode2.parent = parentNode1
+	return true
+}
+
+func findRedundantConnection(edges [][]int) []int {
+	n := len(edges)
+	graph := make(Graph, 0)
+	for i := 1; i <= n; i++ {
+		graph[i] = &Node{val: i, parent: nil}
+	}
+	for i := 1; i <= n; i++ {
+		graph[i].parent = graph[i]
+	}
+
+	fmt.Println("graph", graph)
+
+	ret := []int{}
+	for i := 0; i < n; i++ {
+		fmt.Println("iter")
+		if !findParentAndAttach(edges[i][0], edges[i][1], graph) {
+			ret = edges[i]
+			break
+		}
+		// fmt.Println("iter",graph)
+	}
+
+	return ret
+	// create n nodes from 1 to n put them in a graph
+	// keep on iterating through the edges
+	// keep on populating the parent based on the union find
+	// return true for added and false for not added
+}

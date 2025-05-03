@@ -1,0 +1,37 @@
+func findItinerary(tickets [][]string) []string {
+	// 0. sort tickets lexicographically
+	sort.Slice(tickets, func(i, j int) bool {
+		if tickets[i][0] != tickets[j][0] {
+			return tickets[i][0] < tickets[j][0]
+		}
+		return tickets[i][1] < tickets[j][1]
+	})
+
+	// 1. build adjacency list
+	m := make(map[string][]string)
+	for _, t := range tickets {
+		m[t[0]] = append(m[t[0]], t[1])
+	}
+
+	// 2. this will hold the reverse-postorder
+	var itinerary []string
+
+	// 3. Hierholzer’s DFS
+	var dfs func(string)
+	dfs = func(curr string) {
+		for len(m[curr]) > 0 {
+			next := m[curr][0]
+			m[curr] = m[curr][1:]
+			dfs(next)
+		}
+		itinerary = append(itinerary, curr)
+	}
+
+	// 4. run and reverse
+	dfs("JFK")
+	for i, j := 0, len(itinerary)-1; i < j; i, j = i+1, j-1 {
+		itinerary[i], itinerary[j] = itinerary[j], itinerary[i]
+	}
+
+	return itinerary
+}

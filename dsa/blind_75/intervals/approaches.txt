@@ -1,2 +1,28 @@
 the trick here is to implement canMerge and merge function and sorting
 and then we simply have to run a for loop
+very simple approaches work here 
+
+in case boundaries are considered 
+
+func overlap(interval1 []int,interval2 []int)bool{
+    return (interval1[0]>=interval2[0]&&interval1[0]<=interval2[1]) || (interval2[0]>=interval1[0]&&interval2[0]<=interval1[1])
+}
+
+func mergeIntervals(interval1 []int,interval2 []int)[]int{
+    return []int{min(interval1[0],interval2[0]),max(interval1[1],interval2[1])}
+}
+
+in case boundaries are not considered
+
+func canMerge(interval1 []int, interval2 []int) bool {
+	if interval2[0] > interval1[0] && interval2[0] < interval1[1] || interval2[1] > interval1[0] && interval2[1] < interval1[1] {
+		return true
+	}
+    if interval1[0] > interval2[0] && interval1[0] < interval2[1] || interval1[1] > interval2[0] && interval1[1] < interval2[1] {
+		return true
+	}
+	if interval1[0] == interval2[0] && interval1[1] == interval2[1] {
+		return true
+	}
+	return false
+}

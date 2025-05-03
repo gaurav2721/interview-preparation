@@ -60,3 +60,13 @@ Algorithm
 Keyboard shortcuts to code quicker [For Mac]
 1. Command + E - to navigate to the end of the line 
 2. 
+
+- invert always invert 
+- intuition from edge cases 
+- can one or two problems help you solve the problem quickly 
+
+
+edgecases 
+- empty input , input of 1 ,2 size 
+- positive , negative , zero , duplicate
+- lowercase , upperCase , special characters

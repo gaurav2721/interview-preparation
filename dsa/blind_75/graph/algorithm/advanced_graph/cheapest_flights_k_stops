@@ -1,0 +1,127 @@
+/*
+At first I had thought of greedy solution
+*/
+/*
+This will use modified djiktra
+*/
+
+type Point struct {
+	stop int
+	val  int
+	dist int
+}
+
+type MinHeap []Point
+
+func (h MinHeap) Len() int           { return len(h) }
+func (h MinHeap) Less(i, j int) bool { return h[i].stop < h[j].stop }
+func (h MinHeap) Swap(i, j int) {
+	h[i], h[j] = h[j], h[i]
+}
+func (h *MinHeap) Push(x interface{}) {
+	*h = append(*h, x.(Point))
+}
+func (h *MinHeap) Pop() interface{} {
+	n := len(*h)
+	x := (*h)[n-1]
+	(*h) = (*h)[:n-1]
+	return x
+}
+
+func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
+	edges := make(map[int]map[int]int, 0)
+	visited := make([]int, n)
+	for i := 0; i < n; i++ {
+		visited[i] = math.MaxInt32
+	}
+	for _, flight := range flights {
+		u := flight[0]
+		v := flight[1]
+		w := flight[2]
+		if _, ok := edges[u]; !ok {
+			edges[u] = make(map[int]int, 0)
+		}
+		edges[u][v] = w
+	}
+
+	h := make(MinHeap, 0)
+	heap.Init(&h)
+	heap.Push(&h, Point{
+		stop: 0,
+		val:  src,
+		dist: 0,
+	})
+
+	for h.Len() > 0 {
+		x := heap.Pop(&h)
+		xpoint := x.(Point)
+		if xpoint.stop > k+1 {
+			break
+		}
+		visited[xpoint.val] = min(visited[xpoint.val], xpoint.dist)
+
+		if xpoint.stop <= k {
+			for node, distance := range edges[xpoint.val] {
+				if xpoint.dist+distance > visited[node] {
+					continue
+				}
+				heap.Push(&h, Point{
+					stop: xpoint.stop + 1,
+					val:  node,
+					dist: xpoint.dist + distance,
+				})
+			}
+		}
+	}
+
+	if visited[dst] == math.MaxInt32 {
+		return -1
+	}
+
+	return visited[dst]
+}
+
+func util(m map[int]map[int]int, visited map[int]bool, start, dst, k, cost int, minCost *int) {
+	//fmt.Println(visited,start,dst,k,cost,*minCost)
+	if visited[start] || k < 0 {
+		return
+	}
+
+	if start == dst {
+		*minCost = min(*minCost, cost)
+		return
+	}
+
+	visited[start] = true
+	for key, v := range m[start] {
+		cost += v
+		k--
+		util(m, visited, key, dst, k, cost, minCost)
+		cost -= v
+		k++
+	}
+	visited[start] = false
+	return
+}
+
+func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
+	m := make(map[int]map[int]int, 0)
+	for _, flight := range flights {
+		u := flight[0]
+		v := flight[1]
+		w := flight[2]
+		if _, ok := m[u]; !ok {
+			m[u] = make(map[int]int, 0)
+		}
+		m[u][v] = w
+	}
+	//fmt.Println("m",m)
+	visited := make(map[int]bool, 0)
+	cost := 0
+	minCost := math.MaxInt32
+	util(m, visited, src, dst, k+1, cost, &minCost)
+	if minCost == math.MaxInt32 {
+		return -1
+	}
+	return minCost
+}

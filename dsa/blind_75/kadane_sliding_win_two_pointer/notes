@@ -1,3 +1,18 @@
 1. you can have two pointers normal iteration,lengthWise, front and back , sliding and two arrays
 2. starting sliding window with 0,0 and 0,1 , also it is important to know if todo end++ operation in the beginning or at the last , look at minimum window substring
 3. Sliding can be of two type kadane or sliding that is "Longest Repeating Character Replacement which is derived from kadane itself"
+
+
+maxSoFar=nums[0]
+currSum=0 // currSum=0 indicates no element is There
+
+for _,num:=range nums{
+    if currSum<0{
+		currSum=0 // this means the start is reset
+	}
+	currSum+=num
+	if maxSoFar<currSum{
+		maxSoFar=currSum // here the end is incremented
+	}
+}
+return maxSoFar

@@ -1,0 +1,70 @@
+// an actual tree is created but if we visit a word once we dont visit it again
+type node struct {
+	word  string
+	level int
+}
+
+func permute(word string) []string {
+	rWord := []rune(word)
+	result := []string{}
+	n := len(rWord)
+	for i := 0; i < n; i++ {
+		for j := 'a'; j <= 'z'; j++ {
+			if rWord[i] != j {
+				temp := rWord[i]
+				rWord[i] = j
+				result = append(result, string(rWord))
+				rWord[i] = temp
+			}
+		}
+	}
+	return result
+}
+
+func ladderLength(beginWord string, endWord string, wordList []string) int {
+	m := make(map[string]bool, 0)
+	q := make([]node, 0)
+	finalLevel := 0
+	for _, val := range wordList {
+		m[val] = false
+	}
+
+	if _, ok := m[endWord]; !ok {
+		return finalLevel
+	}
+
+	possibleAdditions := permute(beginWord)
+	for _, val := range possibleAdditions {
+		if there, ok := m[val]; ok {
+			if !there {
+				q = append(q, node{word: val, level: 2})
+				m[val] = true
+			}
+		}
+	}
+
+	for len(q) > 0 {
+		front := q[0]
+		if len(q) > 1 {
+			q = q[1:]
+		} else {
+			q = make([]node, 0)
+		}
+		if front.word == endWord {
+			finalLevel = front.level
+			break
+		}
+
+		possibleAdditions := permute(front.word)
+		for _, val := range possibleAdditions {
+			if there, ok := m[val]; ok {
+				if !there {
+					newLevel := front.level + 1
+					q = append(q, node{word: val, level: newLevel})
+					m[val] = true
+				}
+			}
+		}
+	}
+	return finalLevel
+}

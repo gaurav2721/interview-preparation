@@ -1,0 +1,105 @@
+type Record struct {
+	tweet int
+	t     int
+}
+
+type MinHeap []Record
+
+func (h MinHeap) Len() int {
+	return len(h)
+}
+func (h MinHeap) Less(i, j int) bool {
+	return h[i].t < h[j].t
+}
+func (h MinHeap) Swap(i, j int) {
+	h[i], h[j] = h[j], h[i]
+}
+func (h *MinHeap) Push(x interface{}) {
+	*h = append(*h, x.(Record))
+}
+func (h *MinHeap) Pop() interface{} {
+	n := len(*h)
+	x := (*h)[n-1]
+	*h = (*h)[:n-1]
+	return x
+}
+
+type Twitter struct {
+	e     map[int]map[int]bool
+	t     map[int]map[int]int
+	clock int
+}
+
+func Constructor() Twitter {
+	return Twitter{
+		e:     make(map[int]map[int]bool, 0),
+		t:     make(map[int]map[int]int, 0),
+		clock: 0,
+	}
+}
+
+func (this *Twitter) PostTweet(userId int, tweetId int) {
+	this.clock++
+	if _, ok := this.t[userId]; !ok {
+		this.t[userId] = make(map[int]int, 0)
+	}
+	this.t[userId][tweetId] = this.clock
+}
+
+func (this *Twitter) GetNewsFeed(userId int) []int {
+	this.clock++
+	h := make(MinHeap, 0)
+	heap.Init(&h)
+	for followee, _ := range this.e[userId] {
+		for key, val := range this.t[followee] {
+			heap.Push(&h, Record{
+				tweet: key,
+				t:     val,
+			})
+			if len(h) > 10 {
+				heap.Pop(&h)
+			}
+		}
+	}
+	for key, val := range this.t[userId] {
+		heap.Push(&h, Record{
+			tweet: key,
+			t:     val,
+		})
+		if len(h) > 10 {
+			heap.Pop(&h)
+		}
+	}
+
+	result := make([]int, 0)
+	for len(h) > 0 {
+		x := heap.Pop(&h)
+		xrecord := x.(Record)
+		result = append([]int{xrecord.tweet}, result...)
+	}
+
+	return result
+
+}
+
+func (this *Twitter) Follow(followerId int, followeeId int) {
+	this.clock++
+	if _, ok := this.e[followerId]; !ok {
+		this.e[followerId] = make(map[int]bool, 0)
+	}
+	this.e[followerId][followeeId] = true
+}
+
+func (this *Twitter) Unfollow(followerId int, followeeId int) {
+	this.clock++
+	delete(this.e[followerId], followeeId)
+}
+
+/**
+ * Your Twitter object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.PostTweet(userId,tweetId);
+ * param_2 := obj.GetNewsFeed(userId);
+ * obj.Follow(followerId,followeeId);
+ * obj.Unfollow(followerId,followeeId);
+ */

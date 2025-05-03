@@ -1,0 +1,72 @@
+/*
+BFS + priority queue + visited array
+We are using a MinHeap here to basically figure out shortest path / djiktra algorithm
+*/
+type Record struct {
+	val int
+	t   int
+}
+
+type MinHeap []Record
+
+func (h MinHeap) Len() int { return len(h) }
+func (h MinHeap) Less(i, j int) bool {
+	return h[i].t < h[j].t
+}
+func (h MinHeap) Swap(i, j int) {
+	h[i], h[j] = h[j], h[i]
+}
+func (h *MinHeap) Push(x interface{}) {
+	*h = append(*h, x.(Record))
+}
+func (h *MinHeap) Pop() interface{} {
+	n := len(*h)
+	x := (*h)[n-1]
+	*h = (*h)[:n-1]
+	return x
+}
+
+func networkDelayTime(times [][]int, n int, k int) int {
+	e := make(map[int]map[int]int, 0)
+	h := make(MinHeap, 0)
+	heap.Init(&h)
+
+	for _, time := range times {
+		u := time[0]
+		v := time[1]
+		w := time[2]
+		if _, ok := e[u]; !ok {
+			e[u] = make(map[int]int, 0)
+		}
+		e[u][v] = w
+	}
+
+	visited := make(map[int]bool, n)
+	heap.Push(&h, Record{
+		val: k,
+		t:   0,
+	})
+
+	minTime := 0
+	for h.Len() > 0 {
+		x := heap.Pop(&h)
+		xrecord := x.(Record)
+
+		if visited[xrecord.val] {
+			continue
+		}
+		visited[xrecord.val] = true
+		minTime = xrecord.t
+		for k, v := range e[xrecord.val] {
+			heap.Push(&h, Record{
+				val: k,
+				t:   xrecord.t + v,
+			})
+		}
+	}
+	fmt.Println(visited)
+	if len(visited) == n {
+		return minTime
+	}
+	return -1
+}

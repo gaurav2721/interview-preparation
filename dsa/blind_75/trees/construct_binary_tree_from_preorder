@@ -1,0 +1,40 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+
+func search(inorder []int, a int) int {
+	index := 0
+	for i, val := range inorder {
+		if val == a {
+			index = i
+			break
+		}
+	}
+	return index
+}
+
+func buildTree(preorder []int, inorder []int) *TreeNode {
+	//fmt.Println(preorder,inorder)
+	if len(preorder) == 0 && len(inorder) == 0 {
+		return nil
+	}
+
+	root := &TreeNode{
+		Val: preorder[0],
+	}
+	index := search(inorder, preorder[0])
+	//fmt.Println("index",index)
+	leftInorder := inorder[:index]
+	rightInorder := inorder[index+1:]
+	leftPreorder := preorder[1 : 1+len(leftInorder)]
+	rightPreorder := preorder[1+len(leftInorder):]
+	root.Left = buildTree(leftPreorder, leftInorder)
+	root.Right = buildTree(rightPreorder, rightInorder)
+
+	return root
+}

@@ -1,0 +1,6 @@
+1. What you have to remember is usually divide and conquer , that is recursion
+2. BFS and DFS[pre-order,inorder,post-order, reverse pre, reverse in, reverse post] for eg , count good nodes 
+3. There are layer1 problems and layer2(layer2 problems use layer 1 problems as base) problems , layer3 problems  
+
+Special Problems
+1. Detecting if a tree is a BST

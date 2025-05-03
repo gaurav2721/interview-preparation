@@ -1,0 +1,42 @@
+/*
+The trick here is to know that while popping maxHeap pops out the maximum element , so that is what you get at last
+*/
+
+func distance(point []int) float64 {
+	x := point[0]
+	y := point[1]
+	distSq := x*x + y*y
+	dist := math.Sqrt(float64(distSq))
+	return dist
+}
+
+type MaxHeap [][]int
+
+func (h MaxHeap) Len() int { return len(h) }
+func (h MaxHeap) Less(i, j int) bool {
+	return distance(h[i]) > distance(h[j])
+}
+func (h MaxHeap) Swap(i, j int) {
+	h[i], h[j] = h[j], h[i]
+}
+func (h *MaxHeap) Push(x interface{}) {
+	*h = append(*h, x.([]int))
+}
+func (h *MaxHeap) Pop() interface{} {
+	n := len(*h)
+	x := (*h)[n-1]
+	*h = (*h)[:n-1]
+	return x
+}
+
+func kClosest(points [][]int, k int) [][]int {
+	h := make(MaxHeap, 0)
+	heap.Init(&h)
+	for _, point := range points {
+		heap.Push(&h, point)
+		if h.Len() > k {
+			heap.Pop(&h)
+		}
+	}
+	return h
+}

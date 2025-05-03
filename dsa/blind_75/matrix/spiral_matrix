@@ -1,6 +1,8 @@
 /*
 You can either adopt an approach to maintain a visited array
 and then to keep on parsing the outer layer
+
+, Approach to have 4 pointers , top,bottom,left,right
 */
 
 /*

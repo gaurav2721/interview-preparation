@@ -1,0 +1,24 @@
+func checkValidString(s string) bool {
+	minOpen := 0
+	maxOpen := 0
+	//n:=len(s)
+	for _, val := range s {
+		if val == '(' {
+			minOpen++
+			maxOpen++
+		} else if val == ')' {
+			minOpen--
+			maxOpen--
+		} else {
+			minOpen--
+			maxOpen++
+		}
+		if minOpen < 0 {
+			minOpen = 0
+		}
+	}
+	if maxOpen < 0 {
+		return false
+	}
+	return maxOpen == 0
+}

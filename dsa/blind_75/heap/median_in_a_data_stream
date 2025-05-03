@@ -1,0 +1,105 @@
+/*
+the trick here is to know peek is in the first element
+*/
+type MaxHeap []int
+
+func (h MaxHeap) Len() int { return len(h) }
+func (h MaxHeap) Less(i, j int) bool {
+	return h[i] > h[j]
+}
+func (h MaxHeap) Swap(i, j int) {
+	h[i], h[j] = h[j], h[i]
+}
+func (h *MaxHeap) Push(x interface{}) {
+	*h = append(*h, x.(int))
+}
+func (h *MaxHeap) Pop() interface{} {
+	n := len(*h)
+	x := (*h)[n-1]
+	*h = (*h)[:n-1]
+	return x
+}
+func (h *MaxHeap) Peek() interface{} {
+	x := (*h)[0]
+	return x
+}
+
+type MinHeap []int
+
+func (h MinHeap) Len() int { return len(h) }
+func (h MinHeap) Less(i, j int) bool {
+	return h[i] < h[j]
+}
+func (h MinHeap) Swap(i, j int) {
+	h[i], h[j] = h[j], h[i]
+}
+func (h *MinHeap) Push(x interface{}) {
+	*h = append(*h, x.(int))
+}
+func (h *MinHeap) Pop() interface{} {
+	n := len(*h)
+	x := (*h)[n-1]
+	*h = (*h)[:n-1]
+	return x
+}
+func (h *MinHeap) Peek() interface{} {
+	x := (*h)[0]
+	return x
+}
+
+type MedianFinder struct {
+	minHeap *MinHeap
+	maxHeap *MaxHeap
+}
+
+func Constructor() MedianFinder {
+	tempMinHeap := make(MinHeap, 0)
+	tempMaxHeap := make(MaxHeap, 0)
+	heap.Init(&tempMinHeap)
+	heap.Init(&tempMaxHeap)
+	return MedianFinder{
+		minHeap: &tempMinHeap,
+		maxHeap: &tempMaxHeap,
+	}
+}
+
+func (this *MedianFinder) AddNum(num int) {
+	if this.maxHeap.Len() == 0 {
+		heap.Push(this.maxHeap, num)
+		return
+	}
+
+	if num >= this.maxHeap.Peek().(int) {
+		heap.Push(this.minHeap, num)
+	} else {
+		heap.Push(this.maxHeap, num)
+	}
+
+	if this.minHeap.Len()-this.maxHeap.Len() > 1 {
+		x := heap.Pop(this.minHeap)
+		heap.Push(this.maxHeap, x.(int))
+	} else if this.maxHeap.Len()-this.minHeap.Len() > 1 {
+		x := heap.Pop(this.maxHeap)
+		heap.Push(this.minHeap, x.(int))
+	}
+
+	//fmt.Println("AddNum",*this.maxHeap,*this.minHeap)
+}
+
+func (this *MedianFinder) FindMedian() float64 {
+	//fmt.Println("FindMedian",*this.maxHeap,*this.minHeap)
+	if this.maxHeap.Len() == this.minHeap.Len() {
+		return (float64(this.minHeap.Peek().(int)) + float64(this.maxHeap.Peek().(int))) / 2
+	} else if this.maxHeap.Len() > this.minHeap.Len() {
+		return float64(this.maxHeap.Peek().(int))
+	} else {
+		return float64(this.minHeap.Peek().(int))
+	}
+}
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.AddNum(num);
+ * param_2 := obj.FindMedian();
+ */

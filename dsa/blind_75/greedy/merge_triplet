@@ -1,0 +1,16 @@
+func mergeTriplets(triplets [][]int, target []int) bool {
+	result := make(map[int]bool, 0)
+	n := len(triplets)
+	for i := 0; i < n; i++ {
+		if target[0] < triplets[i][0] || target[1] < triplets[i][1] || target[2] < triplets[i][2] {
+			continue
+		}
+
+		for i, v := range triplets[i] {
+			if v == target[i] {
+				result[i] = true
+			}
+		}
+	}
+	return len(result) == 3
+}

@@ -1,0 +1,21 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+
+func isSameTree(p,q *TreeNode)bool{
+    if p==nil&&q==nil{
+        return true
+    }else if p==nil||q==nil{
+        return false
+    }
+    return (p.Val==q.Val)&&isSameTree(p.Left,q.Left)&&isSameTree(p.Right,q.Right)
+}
+
+func isSubtree(root *TreeNode, subRoot *TreeNode) bool {
+    return isSameTree(root,subRoot) || root!=nil&&isSubtree(root.Left,subRoot) || root!=nil&&isSubtree(root.Right,subRoot)
+}

@@ -8,6 +8,8 @@ type Trie struct {
     end bool
     alpha map[byte]*Trie
 }
+
+addtionally
 */
 
 type Trie struct {

@@ -1,0 +1,85 @@
+1. First you will try to build a top down solution and memoize it 
+
+func isVisited(visited[] bool)bool{
+    for _,val:=range visited{
+        if val==false{
+            return false
+        }
+    }
+    return true 
+}
+
+func findLeft(nums []int,visited []bool,index int)int{
+    //n:=len(nums)
+    i:=index-1
+    if i==-1{
+        return 1
+    }
+    for i:=index-1;i>=0;i--{
+        if !visited[i]{
+            return nums[i]
+        }
+    }
+    return 1
+
+}
+
+func findRight(nums []int,visited []bool,index int)int{
+    n:=len(nums)
+    i:=index+1
+    if i==n{
+        return 1
+    }
+    for i:=index+1;i<n;i++{
+        if !visited[i]{
+            return nums[i]
+        }
+    }
+    return 1
+}
+
+func visitedToString(visited []bool)string{
+    stringVisited:=make([]string,len(visited))
+    for index,val:=range visited{
+        stringVisited[index]=strconv.FormatBool(val)
+    }
+    str:=strings.Join(stringVisited,"-")
+    return str
+}
+
+func util(nums []int,visited []bool,m map[string]int)int{
+    //fmt.Println(nums,visited)
+    str:=visitedToString(visited)
+    if _,ok:=m[str];ok{
+        return m[str]
+    }
+    if isVisited(visited){
+        return 0
+    }
+    maximum:=math.MinInt32
+    for index,val:=range visited{
+        if !val{
+            left:=findLeft(nums,visited,index)
+            right:=findRight(nums,visited,index)
+            prod:=nums[index]*left*right
+            //fmt.Println("prod",nums[index],left,right,prod)
+            visited[index]=true
+            prod+=util(nums,visited,m)
+            //fmt.Println("prod",nums[index],left,right,prod)
+            visited[index]=false
+            maximum=max(maximum,prod)
+        }
+    }
+    m[str]=maximum
+    //fmt.Println(maximum)
+    return maximum
+}
+
+func maxCoins(nums []int) int {
+    if len(nums)==1{
+        return nums[0]
+    }
+    visited:=make([]bool,len(nums))
+    m:=make(map[string]int,0)
+    return util(nums,visited,m)
+}

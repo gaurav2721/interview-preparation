@@ -1,0 +1,36 @@
+
+func util(candidates []int, result []int, target, index int) [][]int {
+	ret := make([][]int, 0)
+	n := len(candidates)
+	if target == 0 {
+		temp := make([]int, len(result))
+		copy(temp, result)
+		ret = append(ret, temp)
+		return ret
+	} else if target < 0 || index >= n {
+		return ret
+	}
+
+	for i := index; i < n; i++ {
+		if i > index && candidates[i] == candidates[i-1] {
+			continue
+		}
+		if target < candidates[i] {
+			break
+		}
+		result = append(result, candidates[i])
+		r1 := util(candidates, result, target-candidates[i], i+1)
+		ret = append(ret, r1...)
+		result = result[:len(result)-1]
+	}
+	return ret
+}
+
+func combinationSum2(candidates []int, target int) [][]int {
+	//fmt.Println(len(candidates))
+	sort.Ints(candidates)
+	result := make([]int, 0)
+	//m:=make(map[string][]int,0)
+	ret := util(candidates, result, target, 0)
+	return ret
+}

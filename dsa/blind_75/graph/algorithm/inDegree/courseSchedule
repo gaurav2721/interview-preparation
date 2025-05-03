@@ -1,0 +1,45 @@
+
+func canFinish(numCourses int, prerequisites [][]int) bool {
+	m := make(map[int][]int, 0)
+	inDegree := make([]int, numCourses)
+	//n:=len(prerequisites)
+	for _, val := range prerequisites {
+		inDegree[val[0]]++
+		if _, ok := m[val[1]]; !ok {
+			m[val[1]] = make([]int, 0)
+		}
+		m[val[1]] = append(m[val[1]], val[0])
+	}
+
+	q := make([]int, 0)
+	for i, val := range inDegree {
+		if val == 0 {
+			q = append(q, i)
+		}
+	}
+
+	for len(q) > 0 {
+		f := q[0]
+		if len(q) > 1 {
+			q = q[1:]
+		} else {
+			q = make([]int, 0)
+		}
+
+		forward := m[f]
+		for _, val := range forward {
+			inDegree[val]--
+			if inDegree[val] == 0 {
+				q = append(q, val)
+			}
+		}
+	}
+
+	for _, val := range inDegree {
+		if val > 0 {
+			return false
+		}
+	}
+
+	return true
+}

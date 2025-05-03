@@ -1,11 +1,15 @@
 Golang functionality
-1. when >>,<< operator is used with & or | that is bitwise AND and bitwise OR operator you can get to know the 
+1. when >>,<< operator is used with & or | that is bitwise AND and bitwise OR operator you can get to know the sum of two int without by finding the common thing by taking add <<1 to mutiply by two and then a=a^b to find out what is different and keep repeating loop till similar portion is zero 
+2. In XOR ,same values return in zero
+3. >>1 is similar to getting divided by 2 
 
 Libraries to remember 
 "math/bits"
 - “OnesCount” , gives you the number of bits which are there
 - Logb
 - Pow(a,b) for a^b
+- math.MaxInt32 - 214 748 364 7
+- math.MinInt32 - 214 748 364 8
 
 Algorithms 
 1. LCM*HCF = a*b

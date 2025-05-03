@@ -11,7 +11,7 @@ type Node struct{
 
 type Graph map[int]*Node
 
-For a undirected/directed graph with weights
+For a undirected/directed graph with weights , self-loop there are not 
 
 type Graph map[int]*Node
 

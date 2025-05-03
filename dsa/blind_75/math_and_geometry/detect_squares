@@ -1,0 +1,55 @@
+/*
+There is just one small tricks here which is to to ensure len_of_sq>0
+*/
+type DetectSquares struct {
+	mx map[int]map[int]int
+	my map[int]map[int]int
+}
+
+func Constructor() DetectSquares {
+	return DetectSquares{
+		mx: make(map[int]map[int]int, 0),
+		my: make(map[int]map[int]int, 0),
+	}
+}
+
+func (this *DetectSquares) Add(point []int) {
+	x := point[0]
+	y := point[1]
+	if _, ok := this.mx[x]; !ok {
+		this.mx[x] = make(map[int]int, 0)
+	}
+	if _, ok := this.my[y]; !ok {
+		this.my[y] = make(map[int]int, 0)
+	}
+	this.mx[x][y]++
+	this.my[y][x]++
+}
+
+func Len(a, b int) int {
+	if a > b {
+		return a - b
+	}
+	return b - a
+}
+
+func (this *DetectSquares) Count(point []int) int {
+	x := point[0]
+	y := point[1]
+	count := 0
+	for ax, _ := range this.my[y] {
+		l := Len(ax, x)
+		if l == 0 {
+			continue
+		}
+		count += this.mx[ax][y]*this.mx[x][y-l]*this.mx[ax][y-l] + this.mx[ax][y]*this.mx[x][y+l]*this.mx[ax][y+l]
+	}
+	return count
+}
+
+/**
+ * Your DetectSquares object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.Add(point);
+ * param_2 := obj.Count(point);
+ */

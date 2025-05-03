@@ -3,3 +3,142 @@
 1. NoSQL
 2. MySQL
 3. 
+
+
+At least 5 years of experience in backend development.
+Excellent collaboration and communication skills.
+Design and develop backend services and APIs ensuring high performance and scalability.
+Collaborate to define and implement innovative features.
+Architect robust backend systems for optimum efficiency.
+Implement message queues like SQS, RabbitMQ or Kafka.
+Knowledge of both relational (e.g., PostgreSQL, MySQL) and document-based databases (e.g., MongoDB).
+Uphold best engineering practices including effective code reviews and detailed documentation.
+Proficient understanding of type safety.
+Experience with message queues, relational and document-based databases.
+
+5+ years of experience as a Software Engineer, with at least 2 years in a Senior Software Engineer role.
+Expertise in Golang with a focus on building web-based backend systems, APIs, and services.
+Experience with cloud platforms like AWS or GCP.
+Strong experience with backend system design, microservices architecture, and API development.
+Excellent problem-solving and analytical skills
+Have a history of influencing others outside of your team
+Bachelor's degree in computer science or a related field
+
+Minimum 5 years experience as a backend developer
+Go/Golang and testing (Unit/E2E)
+MySQL
+HTTP API/JSON (swagger) & co
+Keeping up to date with best practices and new technologies
+Good knowledge of git and Github
+Full English proficiency - both writing and speaking
+Full Remote work experience
+Honest/Straightforward
+Benevolent
+Not taking things too seriously :D
+
+Your nice to have could be:
+
+Mature
+Docker
+Workers
+DDD/TDD
+Ops Knowledge (Elasticsearch, Terraform, Concourse)
+Cloud providers
+OSS Mindest/interest
+
+
+
+Bachelor's or Master's degree in Computer Science, Engineering, or a related field.
+Minimum of 10 years of professional experience in software engineering, with a significant focus on backend development.
+Proficiency in Go programming language.
+Strong understanding of backend architecture and best practices.
+Experience with SQL databases, particularly PostgreSQL.
+Familiarity with Kubernetes and Google Cloud Platform (GCP).
+Previous startup experience, demonstrating the ability to work independently in a fast-paced environment.
+Proven experience working remotely, with strong skills in asynchronous communication and self-management.
+Excellent problem-solving skills and attention to detail.
+Strong communication skills and the ability to work collaboratively in a team environment.
+
+Design, develop, and maintain backend services and systems to support Monerium's e-money services.
+Ensure backend systems are secure, scalable, and maintain high performance to handle increasing transaction volumes.
+Develop and implement best practices for backend architecture, including database design, system integration, and performance optimization.
+Troubleshoot and resolve issues related to backend functionality and performance.
+
+
+Key Responsibilities:
+
+• Contribute to the architecture and implementation of scalable software solutions using Golang, ensuring high performance and security for both fiat and cryptocurrency transactions.
+• Participate in the development of real-time, distributed systems with NATS, contributing to our ability to process millions of transactions quickly and reliably.
+• Assist in managing and orchestrating containerized applications with Kubernetes, supporting optimal deployment, scaling, and management across our cloud infrastructure.
+• Engage in best practice development in software architecture, with a focus on system resilience and idempotency.
+• Collaborate with the development team and cross-functional teams to support the definition, design, and delivery of new features, following industry standards and regulations for fiat and cryptocurrency transactions.
+• Contribute to a culture of innovation and continuous improvement within the team.
+
+Qualifications:
+
+• Proven experience (minimum 5 years) as a software developer, with a strong skill set in Golang, NATS, and Kubernetes.
+• A good understanding of software architecture, especially in creating systems for high availability, scalability, and security in payment processing.
+• Interest in the payment industry, particularly in the processing of both fiat and cryptocurrency.
+• Strong analytical and problem-solving skills, with a capacity for developing innovative and efficient solutions.
+• Bachelor’s degree in Computer Science, Engineering, or a related field is preferred.
+
+
+
+You will work on the backend platform supporting highly scalable mobile games, played by millions of people every day. You will work closely with client-developers & game designers starting from feature design to delivery, validation, and iteration.
+The responsibilities are cross-functional, ranging from infrastructure, API design & coding all the way to client-side integration(we are using Golang). To succeed in this role, you will need to have passion for everything you do. You love to write code that scales to millions of users, champion new tech initiatives & leverage existing solutions.
+
+This position is fully remote in any country within a European Time Zone (GMT+0 to GMT2+).
+
+7+ years of backend development experience
+Strong knowledge of computer science fundamentals
+Extreme fluency in Golang
+Mastery of SQL and NoSQL
+Background in high-scale systems
+Understanding of Unix-like environments
+Experience working in cross-functional agile teams
+
+
+You have at least 2+ years of experience in software engineering.
+You’ve designed, built, scaled and maintained production services, and know how to compose a service oriented architecture.
+You write high quality, well tested code to meet the needs of your customers.
+You’re passionate about building an open financial system that brings the world together.
+
+Nice to haves:
+
+You have gone through a rapid growth in your company (from startup to mid-size).
+You have experience with Blockchains (such as Bitcoin, Ethereum etc.)
+You have experience decomposing a large monolith into microservices.
+You’ve worked with Golang, Ruby, Docker, Sinatra, Rails, Postgres, MongoDB or Redshift.
+You’ve built financial, high reliability or security systems.
+You have Crypto-forward experience, including familiarity with onchain activity such as interacting with Ethereum addresses, using ENS, and engaging with dApps or blockchain-based services.
+
+
+Design & Build APIs: Design, develop, and maintain scalable, high-performance backend systems and customer facing APIs that support our inference and console experiences.
+Infrastructure Deployment: Provision and deploy services into our Kubernetes-based environment.
+Testing and Validation: Develop and implement automated testing frameworks and test suites to ensure software quality and reliability. Write tests at all levels and scopes of Groq’s systems using best practices and pragmatic, scalable testing philosophy.
+Monitoring and Observability: Ensure that we understand the performance and quality of our services running in production and can swiftly respond when needed.
+Cross Functional Collaboration: Collaborate with product, design, and other engineers to ship features from idea to production.
+
+Ideal candidates have:
+
+6+ years of software development experience
+3+ years writing software in Go as your primary language
+Passion for LLMs and knowledge of how to interact with them (constrained decoding, output safeguards, etc)
+Strong understanding of API design principles and RESTful architectures
+Familiarity with multi-region application deployment and associated challenges
+Experience with Kubernetes, Terraform, PubSub/Kafka/Pulsar, and Stytch.
+Experience with Bigquery, Honeycomb, Prometheus + Grafana
+Experience building customer facing RESTful APIs
+Familiarity with streaming architectures and real-time data processing building large data processing flows
+Experience shipping code to production daily
+
+OS Fundamentals
+
+- Golang
+- Microservices architecture
+- GraphQL
+- Node.js and Express.js (strong bonus)
+- MongoDB
+- GRPC service
+- HTTP service with Gin framework
+- CI/CD

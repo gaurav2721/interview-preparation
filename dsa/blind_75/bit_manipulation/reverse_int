@@ -1,0 +1,35 @@
+// what is critical here is we check if the number is positive or negative , check that we are not exceeding the maimum limit
+func reverse(t int) int {
+	var result int32 = 0
+
+	fmt.Println(math.MaxInt32)
+
+	// 2147483647
+	// 2147483641
+
+	var x int32 = int32(t)
+	negative := false
+	if x < 0 {
+		negative = true
+		x = -1 * x
+	}
+	for x > 0 {
+		//fmt.Println("x",x)
+		var rem int32 = x % 10
+		x = x / 10
+		//fmt.Println("x","rem",x,rem)
+		if result > ((math.MaxInt32 - rem) / 10) {
+			fmt.Println("exceed", "x", "rem", x, rem)
+			return 0
+		}
+		//fmt.Println("result",result)
+		result = result*10 + rem
+	}
+
+	if negative {
+		result = -1 * result
+	}
+
+	return int(result)
+
+}

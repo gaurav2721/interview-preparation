@@ -1,0 +1,68 @@
+// the trick here is to realize any region that is connected to the boundary will not get captured , invert always invert works here 
+type point struct{
+    i int
+    j int
+}
+
+func isValid(board [][]byte,i,j int, tempMap map[point]bool)bool{
+    m:=len(board)
+    n:=len(board[0])
+    if i<0||i>=m||j<0||j>=n||tempMap[point{i:i,j:j}]{
+        return false
+    }
+    return board[i][j]=='O'
+}
+
+func solve(board [][]byte)  {
+    m:=len(board)
+    n:=len(board[0])
+    tempMap:=make(map[point]bool,0)
+    q:=make([]point,0)
+    for i:=0;i<m;i++{
+        if board[i][0]=='O'{
+            q=append(q,point{i:i,j:0})
+        }
+        if board[i][n-1]=='O'{
+            q=append(q,point{i:i,j:n-1})
+        }
+    }
+
+    for j:=0;j<n;j++{
+        if board[0][j]=='O'{
+            q=append(q,point{i:0,j:j})
+        }
+        if board[m-1][j]=='O'{
+            q=append(q,point{i:m-1,j:j})
+        }
+    }
+
+    for len(q)>0{
+        f:=q[0]
+        if len(q)>1{
+            q=q[1:]
+        }else{
+            q=make([]point,0)
+        }
+        tempMap[f]=true
+        if isValid(board,f.i+1,f.j,tempMap){
+            q=append(q,point{i:f.i+1,j:f.j})
+        }
+        if isValid(board,f.i-1,f.j,tempMap){
+            q=append(q,point{i:f.i-1,j:f.j})
+        }
+        if isValid(board,f.i,f.j+1,tempMap){
+            q=append(q,point{i:f.i,j:f.j+1})
+        }
+        if isValid(board,f.i,f.j-1,tempMap){
+            q=append(q,point{i:f.i,j:f.j-1})
+        }
+    }
+
+    for i:=0;i<m;i++{
+        for j:=0;j<n;j++{
+            if _,ok:=tempMap[point{i:i,j:j}];!ok{
+                board[i][j]='X'
+            }
+        }
+    }
+}

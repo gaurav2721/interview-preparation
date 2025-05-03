@@ -1,0 +1,44 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+/*
+   The inspiration for this can come from the diameter problem
+    One pass DFS reduces some of the extra computation
+*/
+
+func maxSingularPath(root *TreeNode, sumTillNow int, maxTillNow *int) {
+	if root == nil {
+		*maxTillNow = max(*maxTillNow, sumTillNow)
+		return
+	}
+	sumTillNow += root.Val
+	*maxTillNow = max(*maxTillNow, sumTillNow)
+	maxSingularPath(root.Left, sumTillNow, maxTillNow)
+	maxSingularPath(root.Right, sumTillNow, maxTillNow)
+}
+
+func maxPathSum(root *TreeNode) int {
+	//fmt.Println("maxPathSum",root)
+	if root == nil {
+		return math.MinInt32
+	} else if root.Left == nil && root.Right == nil {
+		return root.Val
+	}
+
+	leftSingular := 0
+	maxSingularPath(root.Left, 0, &leftSingular)
+	rightSingular := 0
+	maxSingularPath(root.Right, 0, &rightSingular)
+
+	singularPath := max(max(root.Val+leftSingular, root.Val+rightSingular), root.Val+leftSingular+rightSingular)
+	left := maxPathSum(root.Left)
+	right := maxPathSum(root.Right)
+	//fmt.Println("values",root.Val,left,right,leftSingular,rightSingular,singularPath)
+
+	return max(max(left, right), singularPath)
+}

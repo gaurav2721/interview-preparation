@@ -1,0 +1,64 @@
+/*
+Heap and queue combination can be used to know which character has the maximum freq
+*/
+type MaxHeap []int
+
+func (h MaxHeap) Len() int { return len(h) }
+func (h MaxHeap) Less(i, j int) bool {
+	return h[i] > h[j]
+}
+func (h MaxHeap) Swap(i, j int) {
+	h[i], h[j] = h[j], h[i]
+}
+func (h *MaxHeap) Push(x interface{}) {
+	*h = append(*h, x.(int))
+}
+func (h *MaxHeap) Pop() interface{} {
+	n := len(*h)
+	x := (*h)[n-1]
+	(*h) = (*h)[:n-1]
+	return x
+}
+
+type record struct {
+	f int
+	t int
+}
+
+func leastInterval(tasks []byte, n int) int {
+	m := make(map[byte]int, 0)
+	h := make(MaxHeap, 0)
+	heap.Init(&h)
+
+	for _, task := range tasks {
+		m[task]++
+	}
+
+	for _, val := range m {
+		heap.Push(&h, val)
+	}
+
+	q := make([]record, 0)
+	t := 0
+	for len(h) > 0 || len(q) > 0 {
+		t++
+		if len(q) > 0 && t == q[0].t {
+			heap.Push(&h, q[0].f)
+			q = q[1:]
+		}
+		if len(h) > 0 {
+			x := heap.Pop(&h)
+			xf := x.(int)
+			xf--
+			if xf > 0 {
+				q = append(q, record{
+					f: xf,
+					t: t + n + 1,
+				})
+			}
+		}
+
+	}
+	return t
+
+}

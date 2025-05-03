@@ -1,0 +1,25 @@
+/*
+To change from O(n2) to O(n)
+we have to intuitively derive these 2 things
+
+If we start at station start and the first station that is not reachable is station i, then for all stations in [start, i), starting at those stations will not be able to reach i.
+
+If total gas >= total cost, then there is a starting station that can reach all stations.
+*/
+func canCompleteCircuit(gas []int, cost []int) int {
+	n := len(gas)
+	fuelLeft, globalFuelLeft, start := 0, 0, 0
+	for i := 0; i < n; i++ {
+		globalFuelLeft += gas[i] - cost[i]
+		fuelLeft += gas[i] - cost[i]
+		if fuelLeft < 0 {
+			start = i + 1
+			fuelLeft = 0
+		}
+	}
+
+	if globalFuelLeft < 0 {
+		return -1
+	}
+	return start
+}
