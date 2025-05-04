@@ -4,7 +4,9 @@ The time complexity of the below code is m*n*len(word)*number_of_words
 but since m , n is very less than len(word),num(words)
 so making tries with complexity (m*n)(m*n) and then search on it len(words)*nums(words) makes sense
 
-We basically make the tries from words array , and then do the dfs using tries
+# We basically make the tries from words array , and then do the dfs using tries
+
+The important thing to remember is you have to store the word in the trie , if you store it separately it adds an extra complexity that times thing out
 */
 type Trie struct {
 	end   bool
@@ -32,40 +34,47 @@ func (this *Trie) Insert(word string) {
 	temp.word = word
 }
 
-func dfs(board [][]byte, this *Trie, i int, j int, visited [][]bool, result map[string]bool) {
+func isValid(board [][]byte, i, j int) bool {
 	m := len(board)
 	n := len(board[0])
+	if i < 0 || i >= m || j < 0 || j >= n {
+		return false
+	}
+	return true
+}
+
+func dfs(board [][]byte, i, j int, word []byte, visited [][]bool, this *Trie, result map[string]bool) {
 	if this.end == true {
 		result[this.word] = true
 	}
-	if i < 0 || i >= m || j < 0 || j >= n || visited[i][j] {
+	if !isValid(board, i, j) || visited[i][j] {
 		return
 	}
-	c := board[i][j]
-	_, ok := this.alpha[c]
-	if !ok {
+	if _, ok := this.alpha[board[i][j]]; !ok {
 		return
 	}
 	visited[i][j] = true
-	dfs(board, this.alpha[c], i-1, j, visited, result)
-	dfs(board, this.alpha[c], i, j+1, visited, result)
-	dfs(board, this.alpha[c], i+1, j, visited, result)
-	dfs(board, this.alpha[c], i, j-1, visited, result)
+
+	dfs(board, i-1, j, word, visited, this.alpha[board[i][j]], result)
+	dfs(board, i, j+1, word, visited, this.alpha[board[i][j]], result)
+	dfs(board, i+1, j, word, visited, this.alpha[board[i][j]], result)
+	dfs(board, i, j-1, word, visited, this.alpha[board[i][j]], result)
+
 	visited[i][j] = false
-	return
 }
 
 func findWords(board [][]byte, words []string) []string {
-	m := len(board)
-	n := len(board[0])
 	trie := &Trie{
 		alpha: make(map[byte]*Trie, 0),
 	}
 	for _, word := range words {
 		trie.Insert(word)
 	}
-	//fmt.Println("trie",trie)
 
+	m := len(board)
+	n := len(board[0])
+
+	word := make([]byte, 0)
 	result := make(map[string]bool, 0)
 	for i := 0; i < m; i++ {
 		for j := 0; j < n; j++ {
@@ -73,13 +82,18 @@ func findWords(board [][]byte, words []string) []string {
 			for k := 0; k < m; k++ {
 				visited[k] = make([]bool, n)
 			}
-			dfs(board, trie, i, j, visited, result)
+			if _, ok := trie.alpha[board[i][j]]; !ok {
+				continue
+			}
+			dfs(board, i, j, word, visited, trie, result)
 		}
 	}
 
 	ret := make([]string, 0)
-	for k, _ := range result {
-		ret = append(ret, k)
+	for key, val := range result {
+		if val {
+			ret = append(ret, key)
+		}
 	}
 	return ret
 }

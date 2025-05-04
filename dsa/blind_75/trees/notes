@@ -4,3 +4,8 @@
 
 Special Problems
 1. Detecting if a tree is a BST
+2.
+
+Edge Cases 
+1. If the tree is completely skewed
+2. Empty or tree of size 1 

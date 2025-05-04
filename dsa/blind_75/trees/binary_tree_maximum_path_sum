@@ -11,6 +11,39 @@
     One pass DFS reduces some of the extra computation
 */
 
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+
+func maxSingularPath(root *TreeNode, maxi *int) int {
+	if root == nil {
+		return math.MinInt32
+	}
+	leftSingular := maxSingularPath(root.Left, maxi)
+	rightSingular := maxSingularPath(root.Right, maxi)
+	if leftSingular < 0 {
+		leftSingular = 0
+	}
+	if rightSingular < 0 {
+		rightSingular = 0
+	}
+	*maxi = max(*maxi, root.Val+leftSingular+rightSingular)
+	return root.Val + max(leftSingular, rightSingular)
+}
+
+func maxPathSum(root *TreeNode) int {
+	maxi := math.MinInt32
+	maxSingularPath(root, &maxi)
+	return maxi
+}
+
+/* -------------------------------------------------------------------------------------------------------------------------------*/
+
 func maxSingularPath(root *TreeNode, sumTillNow int, maxTillNow *int) {
 	if root == nil {
 		*maxTillNow = max(*maxTillNow, sumTillNow)

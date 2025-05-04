@@ -32,4 +32,7 @@ import “strings” s
 
     str=strconv.FormatBool(b)
 
+    val,err:=strconv.Atoi(str)
+    val:=strconv.Itoa(aInt)
+
 
