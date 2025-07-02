@@ -1,3 +1,44 @@
 /*
 You need to use a heap if you want to decrease the time complexity to O(nlogk) else it will be O(nlogn) after sorting
 */
+
+
+type MinHeap [][2]int
+func (h MinHeap)Len()int{return len(h)}
+func (h MinHeap)Less(i,j int)bool{return h[i][1]>h[j][1]}
+func (h MinHeap)Swap(i,j int){
+    h[i],h[j]=h[j],h[i]
+}
+func (h *MinHeap)Push(x interface{}){
+    *h=append(*h,x.([2]int))
+}
+func (h *MinHeap)Pop()interface{}{
+    n:=len(*h)
+    x:=(*h)[n-1]
+    (*h)=(*h)[:n-1]
+    return x
+}
+
+func topKFrequent(nums []int, k int) []int {
+    m:=make(map[int]int,0)
+    for _,num:=range nums{
+        m[num]++
+    }
+    //fmt.Println(m)
+    h:=make(MinHeap,0)
+    heap.Init(&h)
+    for k,v:=range m{
+        heap.Push(&h,[2]int{k,v})
+        //fmt.Println(h)
+    }
+    ret:=make([]int,0)
+    i:=0
+    for i<k{
+        x:=heap.Pop(&h)
+        xint:=x.([2]int)
+        //fmt.Println(xint)
+        ret=append(ret,xint[0])
+        i++
+    }
+    return ret
+}

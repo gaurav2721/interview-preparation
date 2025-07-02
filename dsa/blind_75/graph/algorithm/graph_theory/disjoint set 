@@ -1,0 +1,81 @@
+1) Union by rank with path compression
+
+type DSUByRank struct {
+	parent []int
+	rank   []int
+}
+
+func NewDSUByRank(n int) *DSUByRank {
+	parent := make([]int, n)
+	rank := make([]int, n)
+	for i := range parent {
+		parent[i] = i
+		rank[i] = 0
+	}
+	return &DSUByRank{parent, rank}
+}
+
+func (ds *DSUByRank) Find(x int) int {
+	if ds.parent[x] != x {
+		ds.parent[x] = ds.Find(ds.parent[x]) // Path compression
+	}
+	return ds.parent[x]
+}
+
+func (ds *DSUByRank) Union(x, y int) bool {
+	rootX := ds.Find(x)
+	rootY := ds.Find(y)
+	if rootX == rootY {
+		return false
+	}
+	if ds.rank[rootX] < ds.rank[rootY] {
+		ds.parent[rootX] = rootY
+	} else if ds.rank[rootX] > ds.rank[rootY] {
+		ds.parent[rootY] = rootX
+	} else {
+		ds.parent[rootY] = rootX
+		ds.rank[rootX]++
+	}
+	return true
+}
+
+
+2) Union by size with path compression
+
+type DSUBySize struct {
+	parent []int
+	size   []int
+}
+
+func NewDSUBySize(n int) *DSUBySize {
+	parent := make([]int, n)
+	size := make([]int, n)
+	for i := range parent {
+		parent[i] = i
+		size[i] = 1
+	}
+	return &DSUBySize{parent, size}
+}
+
+func (ds *DSUBySize) Find(x int) int {
+	if ds.parent[x] != x {
+		ds.parent[x] = ds.Find(ds.parent[x])
+	}
+	return ds.parent[x]
+}
+
+func (ds *DSUBySize) Union(x, y int) bool {
+	rootX := ds.Find(x)
+	rootY := ds.Find(y)
+	if rootX == rootY {
+		return false
+	}
+	if ds.size[rootX] < ds.size[rootY] {
+		ds.parent[rootX] = rootY
+		ds.size[rootY] += ds.size[rootX]
+	} else {
+		ds.parent[rootY] = rootX
+		ds.size[rootX] += ds.size[rootY]
+	}
+	return true
+}

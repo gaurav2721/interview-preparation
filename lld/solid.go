@@ -1,7 +1,7 @@
 package lld
 
 // Single Responsibility Principle :- a class should have only one reason to change(Marker , calculateInvoice and SaveInvoice) -> Marker and InvoiceDao object
-// Open for extension but closed for modification , (InvoiceDao) interface is inherited by (InvoiceFile) , (InvoiceDb)
+// Open for extension but closed for modification , (InvoiceDao) interface is inherited by (InvoiceFile) , (InvoiceDb) , Notification Service
 
 // Liskov substitution principle :- if class b is subtype of class A , then we should be able to replace object of class A with class B without breaking the program
 // Bike interface with two objects bike and cycle , but turnOnEngine will not be present in cycle , however increaseSpeed will be present in both

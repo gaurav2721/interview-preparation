@@ -1,0 +1,53 @@
+/*
+this was more of a recursion and backtracking problem
+*/
+func util(open, closed int, ret []rune, m map[string]int) {
+	if closed == 0 && open == 0 {
+		m[string(ret)]++
+		return
+	} else if closed > 0 && open == 0 {
+		temp := make([]rune, 0)
+		for i := 0; i < closed; i++ {
+			temp = append(temp, ')')
+		}
+		m[string(ret)+string(temp)]++
+		return
+	} else if closed == 0 && open > 0 {
+		return
+	}
+	if len(ret) == 0 {
+		ret = append(ret, '(')
+		open--
+		util(open, closed, ret, m)
+		return
+	}
+	if closed > open {
+		ret = append(ret, ')')
+		closed--
+		util(open, closed, ret, m)
+		ret = ret[:len(ret)-1]
+		closed++
+	}
+	if open > 0 {
+		ret = append(ret, '(')
+		open--
+		util(open, closed, ret, m)
+		ret = ret[:len(ret)-1]
+		open++
+	}
+	return
+}
+
+func generateParenthesis(n int) []string {
+	m := make(map[string]int, 0)
+	ret := make([]rune, 0)
+	result := make([]string, 0)
+	util(n, n, ret, m)
+	for k, _ := range m {
+		result = append(result, k)
+	}
+	sort.Slice(result, func(i, j int) bool {
+		return result[i] < result[j]
+	})
+	return result
+}

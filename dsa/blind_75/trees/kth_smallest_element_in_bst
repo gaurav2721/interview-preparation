@@ -1,39 +1,34 @@
-/**
- * Definition for a binary tree node.
- * type TreeNode struct {
- *     Val int
- *     Left *TreeNode
- *     Right *TreeNode
- * }
- */
+	/*
+	 One approach here is to use the stack ,
+	 or then get the sorted array , in inorder traversal and return x
+	*/
+	func kthSmallest(root *TreeNode, k int) int {
+		// stack to hold the path
+		stack := make([]*TreeNode, 0)
+		cur := root
+		count := 0
 
-func kthSmallest(root *TreeNode, k int) int {
-	// stack to hold the path
-	stack := make([]*TreeNode, 0)
-	cur := root
-	count := 0
+		// Continue as long as there is a node to process or items on the stack
+		for cur != nil || len(stack) > 0 {
+			// 1) Go as far left as possible, pushing nodes onto stack
+			for cur != nil {
+				stack = append(stack, cur)
+				cur = cur.Left
+			}
 
-	// Continue as long as there is a node to process or items on the stack
-	for cur != nil || len(stack) > 0 {
-		// 1) Go as far left as possible, pushing nodes onto stack
-		for cur != nil {
-			stack = append(stack, cur)
-			cur = cur.Left
+			// 2) Pop the top node, “visit” it
+			node := stack[len(stack)-1]
+			stack = stack[:len(stack)-1]
+
+			count++
+			if count == k {
+				return node.Val
+			}
+
+			// 3) Now explore its right subtree
+			cur = node.Right
 		}
 
-		// 2) Pop the top node, “visit” it
-		node := stack[len(stack)-1]
-		stack = stack[:len(stack)-1]
-
-		count++
-		if count == k {
-			return node.Val
-		}
-
-		// 3) Now explore its right subtree
-		cur = node.Right
+		// If k is out of range, you could panic or return a sentinel
+		return -1
 	}
-
-	// If k is out of range, you could panic or return a sentinel
-	return -1
-}

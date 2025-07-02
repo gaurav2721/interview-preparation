@@ -1,0 +1,19 @@
+func util(nums []int,start,end int)int{
+    //n:=len(nums)
+    if start==end{
+        return nums[start]
+    }else if end==start+1{
+        return min(nums[start],nums[end])
+    }
+    mid:=(start+end)/2
+    if nums[mid]>nums[end]{
+        return util(nums,mid,end)
+    }else{
+        return util(nums,start,mid)
+    }
+}
+
+func findMin(nums []int) int {
+    n:=len(nums)
+    return util(nums,0,n-1)
+}

@@ -1,10 +1,14 @@
 1. What you have to remember is usually divide and conquer , that is recursion
-2. BFS and DFS[pre-order,inorder,post-order, reverse pre, reverse in, reverse post] for eg , count good nodes 
-3. There are layer1 problems and layer2(layer2 problems use layer 1 problems as base) problems , layer3 problems  
+2. BFS
+        (marker for eg and right view and level based approach for eg check binary tree level order traversal ) and 
+   DFS
+        [pre-order,inorder,post-order, reverse pre, reverse in, reverse post , using a for loop and stack - kth smallest element] for eg , count good nodes 
+3. There are layer1 problems and layer2(layer2 problems use layer 1 problems as base) problems , layer3 problems 
+    1. For eg depth of binary tree -> diameter of the tree -> binary tree maximum path sum
 
 Special Problems
 1. Detecting if a tree is a BST
-2.
+2. Serializing and deserializing a binary tree
 
 Edge Cases 
 1. If the tree is completely skewed

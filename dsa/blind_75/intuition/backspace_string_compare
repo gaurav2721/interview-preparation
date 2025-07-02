@@ -1,0 +1,41 @@
+func backspaceCompare(s, t string) bool {
+    i, j := len(s)-1, len(t)-1
+
+    for i >= 0 || j >= 0 {
+        i = getNextValidCharIndex(s, i)
+        j = getNextValidCharIndex(t, j)
+
+        if i >= 0 && j >= 0 {
+            if s[i] != t[j] {
+                return false
+            }
+        } else if i >= 0 || j >= 0 {
+            // One is exhausted before the other
+            return false
+        }
+
+        i--
+        j--
+    }
+
+    return true
+}
+
+func getNextValidCharIndex(str string, index int) int {
+    backspaceCount := 0
+
+    for index >= 0 {
+        if str[index] == '#' {
+            backspaceCount++
+        } else {
+            if backspaceCount > 0 {
+                backspaceCount--
+            } else {
+                break
+            }
+        }
+        index--
+    }
+
+    return index
+}

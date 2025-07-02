@@ -1,9 +1,6 @@
 Graph is collection of vertices and edges (v,e)
-
-For an undirected/directed graph use an adjacency list / adjacency matrix
-
-Assuming all the val of nodes are unique
-
+for unweighted undirected graph , adjacency list is enough ---> map[int]map[int]bool or map[int][]int or [][]int
+or you can use the following format as well
 type Node struct{
     val int,
     edges map[int]bool
@@ -11,8 +8,8 @@ type Node struct{
 
 type Graph map[int]*Node
 
-For a undirected/directed graph with weights , self-loop there are not 
-
+For an weighteddirected graph use an adjacency list
+Assuming all the val of nodes are unique
 type Graph map[int]*Node
 
 type Node struct{
@@ -24,6 +21,20 @@ type Edges struct{
     weight int
     destination_node *Node
 }
+For a undirected/directed graph with weights , self-loop there are not 
+
+Instead of having a child nodes we can have a parent node and a value 
+
+Various algorithms :
+1. BFS - network time delay, rotten oranges , level based traversal , level []int, null based levels , In BFS be extra careful with where you are adding visited condition
+2. DFS []
+3. To detect a cycle in a graph we can use dfs , make sure we dont go back to the parent and use a visited array to mark the nodes as visited and no visited node should get repeated again
+3. Topological Sort
+4. Union Find  - We find the parent of the node and make sure to establish the connection between the nodes
+5. disjoint set - Union by rank with path compression and union by size with path compression
+
+
+Using visited array in dfs to mark cycle as visited[i]=1 and visited[i]=2 to mark as visited
 
 
 

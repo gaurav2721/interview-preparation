@@ -1,0 +1,67 @@
+1. Use multiple tools for eg ChatGPT , WinSurf and cursor , switch models 
+2. Use test driven development - unitesting as well as integration testing , using interface and microservices architecture 
+3. Write a comprehensive plan put it in Readme.md and review and accept changes , keep a section for ideas for later 
+4. Think about 
+5. Ask the ai to ingest readable and standard errors and add logging 
+6. Write about instructions in the cursor 
+7. If there is a new feature , get a small reference implementation 
+8. Small files and modular code is your helper
+9. Use screenshots to demonstrate a bug , get inspiration from other websites 
+10. Refactor frequently , ask llm to identify code that can be refactored quickly 
+
+Use version control to have workable version , 
+If there is loop / layers of improper implementation or wrong thinking  , you can either git reset --hard HEAD , or i
+You can use ai as a designer, as a devops engineer, documentation(download the entire documentation), as a teacher 
+
+You need to act as a 
+1. SDE
+2. DevOps Engineer 
+3. Product Manager 
+4. Product Owner ,
+5. Designer,
+6. Documentation Guy 
+
+Generic Instructions 
+1. Ask questions to clarify context 
+
+SDE Lifecycle 
+1. Requirement Gathering From Customers
+    a) Understanding the general vision/feature set for the product 
+    b) Create the PRD
+    c) Create Future list of features 
+    d) Create TRD
+    e) Create a ./Document folders 
+    f) Ask the LLM to refer to these 
+    g) ask LLM to create a clear and detailed plan in markdown, it needs to ask clarifying questions , critique its own plan and regenerate, add this to instructions.md which you can frequently refer to 
+    h) Also ask the user that if he wants instruction set so that other ai can code it up at the relevant time 
+    i) Chain of thought is encouraged 
+    j) ask the user for starting new chats when context becomes too large for llm to handle
+    k) resync / index code frequently 
+
+2. Test Driven Development
+    - Functional Tests 
+    - Integration Tests 
+    - Unitests
+
+3. Development 
+    1. Do development section by section such that it writes test first , then the code , then runs the test and update the code until tests pass
+    2. Add Logs for debugging 
+    3. Add errors for better debuggability 
+    4. Do error handling 
+    5. Maintain OOPS and SOLID principles to maintain modularity 
+    6. Version Control - keep on committing the code as each test is passing 
+    7. If you have larger code base and you have a feature to implement you can try creating a standalone feature in a seperate repo , then refer to that project and ask LLM to use the new repo to integrate feature into the larger codebase 
+
+4. Review 
+    1. The testcases should pass 
+    2. Bug Fixes - Use different models , run the query upto 6 times , if it does not work , reset to previous working build and try again , repeat this process 3 times , you can also guess causes from multiple models , mix and match the responses from one model to another , to see if that works
+    3. Code should follow OOPS , SOLID and all low level design principles 
+    4. Code should be moduler,readable, extensible , have less redundancy
+
+For manual use ---> This is to be done when user is not satified with LLMs answer 
+1. Ask the LLM to explain the things of the project 
+2. In case the LLM is unable to fix the bug after multiple attempts , write a report with all the files listed , what they do and problem encountered
+3. Suggest alternatives to the user as well
+4. Prioritize technical details over generic 
+
+

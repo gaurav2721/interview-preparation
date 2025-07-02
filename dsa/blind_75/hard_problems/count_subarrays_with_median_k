@@ -1,0 +1,35 @@
+func countSubarrays(nums []int, k int) int {
+    n := len(nums)
+    
+    // Convert array as per relation with k
+    kIndex := -1
+    for i := 0; i < n; i++ {
+        if nums[i] == k {
+            kIndex = i
+            nums[i] = 0
+        } else if nums[i] < k {
+            nums[i] = -1
+        } else {
+            nums[i] = 1
+        }
+    }
+
+    count := 0
+    freq := map[int]int{0: 1}
+    balance := 0
+
+    // Traverse left to right, up to kIndex
+    for i := kIndex - 1; i >= 0; i-- {
+        balance += nums[i]
+        freq[balance]++
+    }
+
+    balance = 0
+    // Include k and traverse to right
+    for i := kIndex; i < n; i++ {
+        balance += nums[i]
+        count += freq[-balance] + freq[1 - balance]
+    }
+
+    return count
+}

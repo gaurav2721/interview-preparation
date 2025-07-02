@@ -1,0 +1,39 @@
+import "math"
+
+func IsValid(x, y, m, n int) bool {
+	return x >= 0 && y >= 0 && x < m && y < n
+}
+
+func wallsAndGates(rooms [][]int) {
+	m := len(rooms)
+	if m == 0 {
+		return
+	}
+	n := len(rooms[0])
+	queue := make([][2]int, 0)
+
+	// Push all gates into the queue
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			if rooms[i][j] == 0 {
+				queue = append(queue, [2]int{i, j})
+			}
+		}
+	}
+
+	directions := [][2]int{{-1, 0}, {0, 1}, {1, 0}, {0, -1}}
+
+	for len(queue) > 0 {
+		cell := queue[0]
+		queue = queue[1:]
+		x, y := cell[0], cell[1]
+
+		for _, d := range directions {
+			newX, newY := x+d[0], y+d[1]
+			if IsValid(newX, newY, m, n) && rooms[newX][newY] == math.MaxInt32 {
+				rooms[newX][newY] = rooms[x][y] + 1
+				queue = append(queue, [2]int{newX, newY})
+			}
+		}
+	}
+}

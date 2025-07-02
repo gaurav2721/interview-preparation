@@ -1,0 +1,119 @@
+// 7 2 5 10 8
+// 7 - 2 5 10 8
+
+func MaxElement(nums []int,start int,end int)int{
+    maximum:=math.MinInt32
+    for i:=start;i<=end;i++{
+        maximum=max(maximum,nums[i])
+    }
+    return maximum
+}
+
+// replace Sum(nums, l, r) with:
+func subarraySum(prefix []int, l, r int) int {
+    // sum of nums[l] through nums[r], inclusive
+    return prefix[r+1] - prefix[l]
+}
+
+func util(nums []int,startIndex,k int,dp [][]int,prefix []int)int{
+    //fmt.Println("start",nums,startIndex,k)
+    n:=len(nums)
+    if k==n-startIndex{
+        ret:= MaxElement(nums,startIndex,n-1)
+        //fmt.Println("end 1",nums,startIndex,k,ret)
+        return ret
+    }else if k==1{
+        ret:= subarraySum(prefix,startIndex,n-1)
+        //fmt.Println("end 2",nums,startIndex,k,ret)
+        return ret
+    }
+
+    if dp[startIndex][k]>=0{
+        return dp[startIndex][k]
+    }
+    minSum:=math.MaxInt32
+    for i:=startIndex;i<=n-k;i++{
+        localMax:=max(subarraySum(prefix,startIndex,i),util(nums,i+1,k-1,dp,prefix))
+        minSum=min(minSum,localMax)
+    }
+    dp[startIndex][k]=minSum
+    //fmt.Println("end 3",nums,startIndex,k,minSum)
+    return minSum
+}
+
+func splitArray(nums []int, k int) int {
+    n:=len(nums)
+    dp:=make([][]int,n)
+    for i:=0;i<n;i++{
+        dp[i]=make([]int,k+1)
+        for j:=0;j<k+1;j++{
+            dp[i][j]=-1
+        }
+    }
+
+prefix := make([]int, n+1)
+for i := 0; i < n; i++ {
+    prefix[i+1] = prefix[i] + nums[i]
+}
+
+    return util(nums,0,k,dp,prefix)
+}
+
+// import (
+//     "fmt"
+//     "math"
+// )
+
+// func MaxElement(nums []int, start, end int) int {
+//     maximum := math.MinInt32
+//     for i := start; i <= end; i++ {
+//         if nums[i] > maximum {
+//             maximum = nums[i]
+//         }
+//     }
+//     return maximum
+// }
+
+// func Sum(nums []int, start, end int) int {
+//     s := 0
+//     for i := start; i <= end; i++ {
+//         s += nums[i]
+//     }
+//     return s
+// }
+
+// func util(nums []int, startIndex, k int) int {
+//     n := len(nums)
+
+//     // if we need as many parts as there are elements left,
+//     // each part is a single element → largest sum = max element
+//     if k == n-startIndex {
+//         return MaxElement(nums, startIndex, n-1)
+//     }
+//     // if we only need 1 part, it’s the sum of everything left
+//     if k == 1 {
+//         return Sum(nums, startIndex, n-1)
+//     }
+
+//     minLargest := math.MaxInt32
+//     // first cut end at i, leaving at least (k-1) elems on the right
+//     for i := startIndex; i <= n-k; i++ {
+//         leftSum := Sum(nums, startIndex, i)
+//         rightMax := util(nums, i+1, k-1)
+//         // the “cost” of this split is the larger of the two
+//         curr := leftSum
+//         if rightMax > curr {
+//             curr = rightMax
+//         }
+//         if curr < minLargest {
+//             minLargest = curr
+//         }
+//     }
+
+//     return minLargest
+// }
+
+// func splitArray(nums []int, k int) int {
+//     return util(nums, 0, k)
+// }
+

@@ -1,6 +1,41 @@
 /*
 you have to decide if start=end or start<end during initialize
+also the hash approach which is the second approach here has time complexity of O(n)
 */
+
+func longestConsecutive(nums []int) int {
+	n := len(nums)
+	if n == 0 {
+		return 0
+	}
+	sort.Ints(nums)
+	maxLen := 0
+	m := make(map[int]bool, 0)
+	for i := 0; i < n; i++ {
+		m[nums[i]] = true
+	}
+	visited := make(map[int]bool, 0)
+
+	for i := 0; i < n; i++ {
+		k := nums[i]
+		if visited[k] {
+			continue
+		}
+		for m[k] {
+			k++
+		}
+		end := k
+		k--
+		for m[k] {
+			visited[k] = true
+			k--
+		}
+		start := k + 1
+		maxLen = max(maxLen, end-start)
+	}
+	return maxLen
+}
+
 func longestConsecutive(nums []int) int {
 	ret := 0
 	n := len(nums)
@@ -29,3 +64,98 @@ func longestConsecutive(nums []int) int {
 	}
 	return ret
 }
+
+func longestConsecutive(nums []int) int {
+	n := len(nums)
+	if n == 0 {
+		return 0
+	}
+	sort.Ints(nums)
+	maxLen := 0
+	m := make(map[int]bool, 0)
+	for i := 0; i < n; i++ {
+		m[nums[i]] = true
+	}
+	visited := make(map[int]bool, 0)
+
+	for i := 0; i < n; i++ {
+		k := nums[i]
+		if visited[k] {
+			continue
+		}
+		for m[k] {
+			k++
+		}
+		end := k
+		k--
+		for m[k] {
+			visited[k] = true
+			k--
+		}
+		start := k + 1
+		maxLen = max(maxLen, end-start)
+	}
+	return maxLen
+}
+
+func longestConsecutive(nums []int) int {
+	ret := 1
+	n := len(nums)
+	if n == 0 {
+		return 0
+	} else if n == 1 {
+		return 1
+	}
+
+	sort.Ints(nums)
+	small := nums[0]
+	count := 1
+	for i := 1; i < n; i++ {
+		if nums[i]-small == 1 {
+			count++
+			small = nums[i]
+		} else if nums[i] != small {
+			count = 1
+			small = nums[i]
+		}
+		ret = max(ret, count)
+	}
+
+	fmt.Println(ret)
+	return ret
+
+}
+
+func longestConsecutive(nums []int) int {
+	n := len(nums)
+	if n == 0 {
+		return 0
+	}
+	sort.Ints(nums)
+	maxLen := 0
+	m := make(map[int]bool, 0)
+	for i := 0; i < n; i++ {
+		m[nums[i]] = true
+	}
+	visited := make(map[int]bool, 0)
+
+	for i := 0; i < n; i++ {
+		k := nums[i]
+		if visited[k] {
+			continue
+		}
+		for m[k] {
+			k++
+		}
+		end := k
+		k--
+		for m[k] {
+			visited[k] = true
+			k--
+		}
+		start := k + 1
+		maxLen = max(maxLen, end-start)
+	}
+	return maxLen
+}
+

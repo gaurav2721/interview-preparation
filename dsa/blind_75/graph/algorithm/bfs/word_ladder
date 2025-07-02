@@ -1,70 +1,46 @@
-// an actual tree is created but if we visit a word once we dont visit it again
-type node struct {
-	word  string
+type Node struct {
+	val   string
 	level int
 }
 
-func permute(word string) []string {
-	rWord := []rune(word)
-	result := []string{}
-	n := len(rWord)
-	for i := 0; i < n; i++ {
-		for j := 'a'; j <= 'z'; j++ {
-			if rWord[i] != j {
-				temp := rWord[i]
-				rWord[i] = j
-				result = append(result, string(rWord))
-				rWord[i] = temp
-			}
-		}
-	}
-	return result
-}
-
 func ladderLength(beginWord string, endWord string, wordList []string) int {
-	m := make(map[string]bool, 0)
-	q := make([]node, 0)
-	finalLevel := 0
-	for _, val := range wordList {
-		m[val] = false
+	wordSet := make(map[string]bool)
+	for _, word := range wordList {
+		wordSet[word] = true
 	}
 
-	if _, ok := m[endWord]; !ok {
-		return finalLevel
+	if _, ok := wordSet[endWord]; !ok {
+		return 0
 	}
 
-	possibleAdditions := permute(beginWord)
-	for _, val := range possibleAdditions {
-		if there, ok := m[val]; ok {
-			if !there {
-				q = append(q, node{word: val, level: 2})
-				m[val] = true
-			}
-		}
-	}
+	queue := []Node{{val: beginWord, level: 1}}
+	visited := make(map[string]bool)
+	visited[beginWord] = true
 
-	for len(q) > 0 {
-		front := q[0]
-		if len(q) > 1 {
-			q = q[1:]
-		} else {
-			q = make([]node, 0)
-		}
-		if front.word == endWord {
-			finalLevel = front.level
-			break
-		}
+	for len(queue) > 0 {
+		node := queue[0]
+		queue = queue[1:]
 
-		possibleAdditions := permute(front.word)
-		for _, val := range possibleAdditions {
-			if there, ok := m[val]; ok {
-				if !there {
-					newLevel := front.level + 1
-					q = append(q, node{word: val, level: newLevel})
-					m[val] = true
+		word := []rune(node.val)
+		for i := 0; i < len(word); i++ {
+			original := word[i]
+			for c := 'a'; c <= 'z'; c++ {
+				if c == original {
+					continue
+				}
+				word[i] = c
+				newWord := string(word)
+				if newWord == endWord {
+					return node.level + 1
+				}
+				if wordSet[newWord] && !visited[newWord] {
+					visited[newWord] = true
+					queue = append(queue, Node{val: newWord, level: node.level + 1})
 				}
 			}
+			word[i] = original
 		}
 	}
-	return finalLevel
+
+	return 0
 }

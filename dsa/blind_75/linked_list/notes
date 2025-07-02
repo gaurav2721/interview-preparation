@@ -1,2 +1,23 @@
 1. Recursion , two pointer and three pointer approach , for eg the one used in reversing the linked list is important to see 
 2. Having a dummy head and dummyTail is another trick
+3. The thing to remember here is that edge cases are very important 
+4. slow and fast pointer approach , it some how works , as if there is a cycle one step at a time fast will approach slow, then reset slow to starting point and then fast will match the slow at meeting point
+5. 
+type LRUCache struct {
+    m map[int]*node
+    n int
+    d *deque
+}
+
+type deque struct{
+    dummyFront *node
+    dummyBack *node
+}
+
+type node struct{
+    next *node
+    prev *node
+    val int
+    key int
+}
+6. It is very important to write pseudo code and think of edgecases , especially in hard problems

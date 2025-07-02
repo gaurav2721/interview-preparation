@@ -1,0 +1,70 @@
+/*
+
+ */
+
+func moveForward(m map[byte]int, k int) bool {
+	totalChar := 0
+	maxVal := 0
+	for _, v := range m {
+		totalChar += v
+		if maxVal < v {
+			maxVal = v
+		}
+	}
+	return (totalChar - maxVal) <= k
+}
+
+func characterReplacement(s string, k int) int {
+	n := len(s)
+	maxLen := 1
+	start, end := 0, 0
+	m := make(map[byte]int, 0)
+	for start <= end && end < n {
+		m[s[end]]++
+		if moveForward(m, k) {
+			maxLen = max(maxLen, end-start+1)
+			end++
+		} else {
+			m[s[end]]--
+			m[s[start]]--
+			start++
+		}
+	}
+	return maxLen
+}
+
+func getMaxCount(m map[byte]int, maxChar byte) (byte, int) {
+	maxCount := 0
+	for k, v := range m {
+		if maxCount < v {
+			maxChar = k
+			maxCount = v
+		}
+	}
+	return maxChar, maxCount
+}
+
+func characterReplacement(s string, k int) int {
+	n := len(s)
+	start, end := 0, 0
+	m := make(map[byte]int, 0)
+	m[s[0]]++
+	maxLength := 1
+	maxChar := s[0]
+	maxCount := 1
+	end++
+	for start <= end && end < n {
+		m[s[end]]++
+		maxChar, maxCount = getMaxCount(m, maxChar)
+		if (end-start+1)-maxCount <= k {
+			maxLength = max(maxLength, end-start+1)
+			end++
+			continue
+		} else {
+			m[s[end]]--
+			m[s[start]]--
+			start++
+		}
+	}
+	return maxLength
+}

@@ -1,0 +1,98 @@
+/*this problem is not difficult why it is important is understanding the problem and dry running your code with testcases and few of your extra test cases*/
+func isDigitValid(digit byte) bool {
+	return (digit == '.') || (digit >= '1' && digit <= '9')
+}
+
+func isRowValid(board [][]byte, row int) bool {
+	ret := true
+	m := make(map[byte]bool, 0)
+	for i := 0; i < len(board[row]); i++ {
+		digit := board[row][i]
+		if digit == '.' {
+			continue
+		}
+		if isDigitValid(digit) {
+			if _, ok := m[digit]; !ok {
+				m[digit] = true
+			} else {
+				ret = false
+				break
+			}
+		} else {
+			ret = false
+			break
+		}
+	}
+	return ret
+}
+
+func isColValid(board [][]byte, column int) bool {
+	ret := true
+	m := make(map[byte]bool, 0)
+	for i := 0; i < len(board); i++ {
+		digit := board[i][column]
+		if digit == '.' {
+			continue
+		}
+		if isDigitValid(digit) {
+			if _, ok := m[digit]; !ok {
+				m[digit] = true
+			} else {
+				ret = false
+				break
+			}
+		} else {
+			ret = false
+			break
+		}
+	}
+	return ret
+}
+
+func isMatrixValid(board [][]byte, startRow, endRow, startCol, endCol int) bool {
+	ret := true
+	m := make(map[byte]bool, 0)
+	for i := startRow; i <= endRow; i++ {
+		for j := startCol; j <= endCol; j++ {
+			digit := board[i][j]
+			if digit == '.' {
+				continue
+			}
+			if isDigitValid(digit) {
+				if _, ok := m[digit]; !ok {
+					m[digit] = true
+				} else {
+					return false
+				}
+			} else {
+				return false
+			}
+		}
+	}
+	return ret
+}
+
+func isValidSudoku(board [][]byte) bool {
+	m := len(board)
+	n := len(board[0])
+	for i := 0; i < m; i++ {
+		if !isRowValid(board, i) {
+			return false
+		}
+	}
+	for j := 0; j < n; j++ {
+		if !isColValid(board, j) {
+			return false
+		}
+	}
+
+	for i := 0; i < m; i = i + 3 {
+		for j := 0; j < n; j = j + 3 {
+			if !isMatrixValid(board, i, i+2, j, j+2) {
+				return false
+			}
+		}
+	}
+
+	return true
+}

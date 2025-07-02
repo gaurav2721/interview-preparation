@@ -1,0 +1,77 @@
+/**
+ * Definition for a Node.
+ * type Node struct {
+ *     Val int
+ *     Next *Node
+ *     Random *Node
+ * }
+ */
+
+/**
+ * Definition for a Node.
+ * type Node struct {
+ *     Val int
+ *     Next *Node
+ *     Random *Node
+ * }
+ */
+
+func copyRandomList(head *Node) *Node {
+	// maybe we write init condition
+	temp := head
+	var ori *Node = nil
+	m := make(map[*Node]*Node, 0)
+	for temp != nil {
+		ori = &Node{
+			Val: temp.Val,
+		}
+		m[temp] = ori
+		temp = temp.Next
+	}
+
+	temp = head
+	for temp != nil {
+		tempOri := m[temp]
+		tempOri.Next = m[temp.Next]
+		tempOri.Random = m[temp.Random]
+		temp = temp.Next
+	}
+
+	return m[head]
+}
+
+func copyRandomList(head *Node) *Node {
+	if head == nil {
+		return nil
+	}
+	m := make(map[*Node]*Node, 0)
+	temp := &Node{
+		Val:    head.Val,
+		Next:   nil,
+		Random: head.Random,
+	}
+	newHead := temp
+	m[head] = temp
+
+	for head.Next != nil {
+		head = head.Next
+		newNode := &Node{
+			Val:    head.Val,
+			Next:   nil,
+			Random: head.Random,
+		}
+		temp.Next = newNode
+		temp = temp.Next
+		m[head] = temp
+	}
+
+	temp = newHead
+	for temp != nil {
+		if temp.Random != nil {
+			temp.Random = m[temp.Random]
+		}
+		temp = temp.Next
+	}
+
+	return newHead
+}

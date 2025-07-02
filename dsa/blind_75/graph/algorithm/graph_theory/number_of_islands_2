@@ -1,0 +1,95 @@
+type DisjointSet struct{
+    parent []int
+    size []int
+    n int
+}
+
+func CreateDisjointSet(n int)*DisjointSet{
+    parent:=make([]int,n)
+    size:=make([]int,n)
+    for i:=0;i<n;i++{
+        parent[i]=i
+        size[i]=1
+    }
+
+    return &DisjointSet{
+        parent : parent,
+        size : size,
+        n : n,
+    }
+}
+
+func (ds *DisjointSet)Find(index int)int{
+    if ds.parent[index]!=index{
+        ds.parent[index]=ds.Find(ds.parent[index])
+    }
+    return ds.parent[index]
+}
+
+func (ds *DisjointSet)UnionBySize(x,y int)bool{
+    parentX:=ds.Find(x)
+    parentY:=ds.Find(y)
+    if parentX==parentY{
+        return false
+    }
+
+    if ds.size[parentX]<ds.size[parentY]{
+        ds.parent[parentX]=parentY
+        ds.size[parentY]+=ds.size[parentX]
+    }else{
+        ds.parent[parentY]=parentX
+        ds.size[parentX]+=ds.size[parentY]
+    }
+    return true
+}
+
+func IsValid(x,y,m,n int)bool{
+    if x<0||y<0||x>=m||y>=n{
+        return false
+    }
+    return true
+}
+
+func ConvertVertexToIndex(adX,adY,n int)int{
+    return (adX*n+adY)
+}
+
+func numIslands2(m int, n int, positions [][]int) []int {
+    grid:=make([][]int,m)
+    for i:=0;i<m;i++{
+        grid[i]=make([]int,n)
+    }
+
+    diffX:=[]int{-1,0,1,0}
+    diffY:=[]int{0,1,0,-1}
+    ret:=make([]int,0)
+    count:=0
+    size:=m*n
+    ds:=CreateDisjointSet(size)
+    for i:=0;i<len(positions);i++{
+        x:=positions[i][0]
+        y:=positions[i][1]
+        if grid[x][y]==1{
+            ret=append(ret,count)
+            continue
+        }
+        grid[x][y]=1
+        count++
+        for j:=0;j<4;j++{
+            adX:=x+diffX[j]
+            adY:=y+diffY[j]
+            if IsValid(adX,adY,m,n){
+                if grid[adX][adY]==1{
+                    adIndex:=ConvertVertexToIndex(adX,adY,n)
+                    index:=ConvertVertexToIndex(x,y,n)
+                    if ds.Find(adIndex)!=ds.Find(index){
+                        count--
+                        ds.UnionBySize(adIndex,index)
+                    }
+                }
+            }
+        }
+        ret=append(ret,count)
+    }
+    return ret 
+}

@@ -19,6 +19,22 @@ select * from student where city not in ('delhi');
 String Operators
 upper and lower , will convert characters to upper case 
 
+Number Operators
+floor() -> round down to lower integers 
+ceil() -> round up to higher integers 
+round() -> round to nearest integer
+SELECT 
+  ROUND(SUM(LAT_N), 2) AS total_latitude,
+  ROUND(SUM(LONG_W), 2) AS total_longitude
+FROM STATION;
+
+SELECT CEIL(
+         ABS(
+           AVG(salary) - AVG(CAST(REPLACE(salary, '0', '') AS UNSIGNED))
+         )
+       ) AS error
+FROM EMPLOYEES;
+
 Other Operators
 in 
 is null , is not null
@@ -63,6 +79,7 @@ These perform an operation on a rows of a table and return a single value
 7. distint
 8. length
 
+
 1.count
 select count(name) from student 
 same for the otherss
@@ -76,6 +93,11 @@ Query the two cities in STATION with the shortest and longest CITY names, as wel
 select city,length(city) as l from station group by city,length(city) order by length(city),city limit 1;
 select city,length(city) as l from station group by city,length(city) order by length(city) desc,city limit 1;
 
+
+------------------------------->
+we are able to compute easily the difference between the max and min values of a column 
+
+select max(population)-min(population) from city ;
 
 
 

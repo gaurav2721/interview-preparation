@@ -1,0 +1,67 @@
+This does not work but the other one does so sometimes you have to manage to see even the smallest changes which can 
+cause unoptimization
+
+func dfs(grid [][]byte, x, y, m, n int) {
+	if x < 0 || x >= m || y < 0 || y >= n || grid[x][y] != '1' {
+		return
+	}
+
+	grid[x][y] = 'X' // mark as visited
+
+	dfs(grid, x-1, y, m, n)
+	dfs(grid, x, y+1, m, n)
+	dfs(grid, x+1, y, m, n)
+	dfs(grid, x, y-1, m, n)
+}
+
+func numIslands(grid [][]byte) int {
+	if len(grid) == 0 || len(grid[0]) == 0 {
+		return 0
+	}
+
+	m, n := len(grid), len(grid[0])
+	count := 0
+
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			if grid[i][j] == '1' {
+				count++
+				dfs(grid, i, j, m, n)
+			}
+		}
+	}
+	return count
+}
+
+
+func dfs(grid [][]byte, x, y, m, n int) {
+	if x < 0 || x >= m || y < 0 || y >= n || grid[x][y] != '1' {
+		return
+	}
+
+	grid[x][y] = 'X' // mark as visited
+
+	dfs(grid, x-1, y, m, n)
+	dfs(grid, x, y+1, m, n)
+	dfs(grid, x+1, y, m, n)
+	dfs(grid, x, y-1, m, n)
+}
+
+func numIslands(grid [][]byte) int {
+	if len(grid) == 0 || len(grid[0]) == 0 {
+		return 0
+	}
+
+	m, n := len(grid), len(grid[0])
+	count := 0
+
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			if grid[i][j] == '1' {
+				count++
+				dfs(grid, i, j, m, n)
+			}
+		}
+	}
+	return count
+}

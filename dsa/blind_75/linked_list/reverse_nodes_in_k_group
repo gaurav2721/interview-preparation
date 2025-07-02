@@ -1,0 +1,34 @@
+func reverseKGroup(head *ListNode, k int) *ListNode {
+    // 1) First, check whether we have k nodes to reverse
+    curr := head
+    for i := 0; i < k; i++ {
+        if curr == nil {
+            // fewer than k nodes: leave the remainder as-is
+            return head
+        }
+        curr = curr.Next
+    }
+
+    // 2) We have at least k nodes, so reverse exactly k of them
+    newHead, tail := reverseN(head, k)
+
+    // 3) Recurse on the rest, and hook up
+    tail.Next = reverseKGroup(curr, k)
+    return newHead
+}
+
+// reverseN reverses exactly n nodes of the list, returning
+// (newHead, newTail).  Assumes there are at least n nodes.
+func reverseN(head *ListNode, n int) (*ListNode, *ListNode) {
+    var prev *ListNode
+    curr := head
+    for i := 0; i < n; i++ {
+        next := curr.Next
+        curr.Next = prev
+        prev = curr
+        curr = next
+    }
+    // after the loop, prev is the new head of this segment,
+    // and head is the tail (its Next points at the remainder)
+    return prev, head
+}

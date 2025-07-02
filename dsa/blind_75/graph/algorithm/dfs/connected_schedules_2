@@ -1,0 +1,45 @@
+func findOrder(numCourses int, prerequisites [][]int) []int {
+    n:=numCourses
+    indegree:=make([]int,n)
+    graph:=make(map[int][]int,0)
+
+    for i:=0;i<len(prerequisites);i++{
+        u:=prerequisites[i][0]
+        v:=prerequisites[i][1]
+        if _,ok:=graph[v];!ok{
+            graph[v]=make([]int,0)
+        }
+        graph[v]=append(graph[v],u)
+        indegree[u]++
+    }
+
+    order:=make([]int,0)
+    queue:=make([]int,0)
+    for i:=0;i<n;i++{
+        if indegree[i]==0{
+            queue=append(queue,i)
+        }
+    }
+
+    //fmt.Println(indegree,queue)
+
+    for len(queue)>0{
+        top:=queue[0]
+        order=append(order,top)
+        queue=queue[1:]
+        for _,val:=range graph[top]{
+            indegree[val]--
+            if indegree[val]==0{
+                queue=append(queue,val)
+            }
+        }
+    }
+
+    for i:=0;i<n;i++{
+        if indegree[i]>0{
+            return []int{}
+        }
+    }
+
+    return order
+}

@@ -1,5 +1,6 @@
 Subquery 
-1. If there is a sql query nested in another sql query , usually there is a outer query and inner query .
+1. If there is a sql query nested in another sql query , usually there is a outer query and inner query .[outer means 
+it comes after select , outer query is after where ]
 2. used with CRUD statements for eg select , insert , update, delete for eg select colName,<sub_query> from tableName 
 3. it can be used with where select * from tableName where <sub_query>
 4. it can be used with 'from' for eg select * from <sub_query> as altName;
@@ -14,3 +15,17 @@ to find all the employees -> select name,salary from employee where salary > (su
     select min(age) as min_age from employee -> subquery 
     select emp.name from employee emp , (<sub_query>) as subquery where emp.age > subquery.min_age;
     select (select min(age) from employees) as avg_age,age from employee
+
+
+------------------->
+Outer sub query can be used with where clause
+
+SELECT 
+  max_table.max_salary AS maximum,
+  COUNT(e.employee_id) AS employee_count
+FROM 
+  employee e
+JOIN 
+  (SELECT MAX(salary * months) AS max_salary FROM employee) AS max_table
+ON 
+  e.salary * e.months = max_table.max_salary;

@@ -1,0 +1,45 @@
+type Solution struct {
+	a []Node
+}
+
+type Node struct {
+	val     int
+	currSum int
+}
+
+func Constructor(w []int) Solution {
+	a := make([]Node, 0)
+	currSum := 0
+	for _, val := range w {
+		currSum += val
+		a = append(a, Node{
+			val:     val,
+			currSum: currSum,
+		})
+	}
+
+	return Solution{
+		a: a,
+	}
+}
+
+func (this *Solution) PickIndex() int {
+	arr := this.a
+	target := rand.Intn(arr[len(arr)-1].currSum)
+	low, high := 0, len(arr)-1
+	for low < high {
+		mid := low + (high-low)/2
+		if target < arr[mid].currSum {
+			high = mid
+		} else {
+			low = mid + 1
+		}
+	}
+	return low
+}
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * obj := Constructor(w);
+ * param_1 := obj.PickIndex();
+ */

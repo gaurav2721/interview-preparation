@@ -1,0 +1,5 @@
+1. It is important to learn and remember a basic snippet for each code
+2. the condition to choose is something which is tricky refer to search in a rotated sorted array , koko eating bananas
+3. take care of edge cases like rotated sorted array 
+4. an important thing to remember is the behaviour or sort.Search , it starts from 0 , and tries to return the first index that satisfies the provided condition
+    which mean if the array is empty it returns 0 and if no index satisifes condition it returns n

@@ -1,0 +1,69 @@
+Game Engine
+
+Functional Requirement
+1. Taking a game and having the ability to play it through AI  
+
+Api Design
+1. func Initialize(game string)(Board,err)
+2. GameObject.RegisterPlayers(player1 Player,player2 Player)(error)
+3. Player1.Move(gameObject GameObject,move Move)(bool,error)
+
+While defining our api interfaces we will write some objects and we will have to define them later on 
+
+When you are defining functions ask yourself this question , what are the object and what jobs will they be doing that in the starting start with just simple
+functions
+splitting the code into functions to reduce redundancy and have lightly coupled code 
+create separate files for different classes and rearranging them in packages 
+Think about what are the apis that you are going to expose --> GameEngine
+Create packages 
+
+type Move struct{
+	row int
+	col int
+}
+
+type Player struct{
+	name string
+	id string
+}
+
+func (p Player)Move(board Board,move Move)(bool,error){
+	board.Move(p,move)
+}
+
+type Board interface{
+	func RegisterPlayer(player Player)(bool,error)
+	func Start()(bool,error)
+	func IsStarted(player Player)(bool)
+	func IsRegistered(player Player)(byte,bool)
+	func IsFinished()(bool,error)
+	func Move(player Player,move Move)(bool,error) // move should ideally check that is the player registered has the game started and is it the players chance
+}
+
+func Initialize(game string)(Board,error){
+	if game=="TickTacToe"{
+		return TickTackToe{players : make([]Player,0)},nil
+	}
+}
+
+type TickTackToe struct{
+	players []Player
+	isStarted bool
+	nextPlayer player
+}
+
+func (t *TickTacToe)RegisterPlayer(player Player)(bool,error){
+	if len(t.players)==2{
+		return false,fmt.Errorf("cannot register more that two elements")
+	}
+	players=append(players,player)
+}
+
+func (t *TickTackToe)Start()(bool,error){
+	t.isStarted=true
+	return true,nil
+}
+
+
+
+// start is also required 

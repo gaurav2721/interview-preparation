@@ -1,3 +1,42 @@
+After 1st revision ----------------------------------------------------------------------------------------------------------------->
+
+Space Complexity
+1. O(1) -> Max Product subarray , stock buy sell with cooldown [State machine thinking]
+2. 1-D array -> Word break
+    a. 2 1-D array - longest increasing subsequence
+    b. 
+3. 2-D array - LCS(Longest common subsequence)
+
+Length may be of size n,n+1,n+2,n+3
+iteration may be i:=0 to n , j := 0 to n or j:=0 to i [you may think about iterating from backward as well ]
+adding dummy values to cover edge cases 
+proxy design pattern to use maps
+
+1. Top-Down Approach
+    Recursion + memoization [f(n)=f(n-1)+f(n-2)]
+    a. right recursive function 
+    b. base cases + edge cases cover [we may have to separate out edge cases as well sometimes]
+    c. cover sub-cases scenario[this may have some logic]
+    d. return int,bool depending on scenario
+    e. then memoize(to optimize further see if there is some space or variable is getting repeated )
+2. Bottom up 
+    Iteration + memoization
+
+There can be a combination of both top down and bottom up for eg coin change 1 and 2 
+
+for eg to understand both Top Down and Bottom Up DP Word Break is a good problem
+
+One of the inuitions for dp is ,it will be true or false and or a number
+
+Things to improve:
+1. Usually in recursion dont try to work with a variable outside the function that is variable which has not been passed as an argument
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------->
+
 Dynamic Programming 
 You can assign 2-D array ,iterate using i,j,l which is length of sub array /sub sequence , longest common subsequece is a good scenario
 You can assign a 2 single dimensional array , iterate from forward and backward , have a length of 1,2
@@ -13,17 +52,7 @@ Whenever you are asked to find all the combinations [coin change]
     4. use recursion and backtracking and memoize it 
 To optimize further , you need to see if some space is getting repeated for eg prev , curr 
 
-
-
-If you can break the problem into recursion then you can have the db store each state
-Also once you have cracked the recursion code then check 
 There can be an algorithm for coming up of with a function that can setup the values as well 
 
 
 
-Bottom up 
-1. build the problem from the simplest scenario
-2. f(n) = f(n-1) + f(n-2)
-
-Top Down
-1. 

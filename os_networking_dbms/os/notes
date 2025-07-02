@@ -1,0 +1,5 @@
+Semaphore : synchronization primitive helping synchronization accross multiple threads , using wait() decrement 
+    It is of 2 types :
+        1. Binary and Counting semaphore
+        2. Priorite Inversion - Higher priority thread waiting for resource occupied by lower priority thread , solution is to assign ,lower priority thread
+            high priority till resource is free up 

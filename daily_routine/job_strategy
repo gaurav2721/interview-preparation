@@ -1,0 +1,144 @@
+Absolutely, Gaurav. Here's a **4-month roadmap** to target **₹50–70+ LPA roles** using **Golang + Cloud + System Design + Blockchain**. This plan is **tailored to your experience** and assumes you're already skilled in Go and have a base in system/backend engineering.
+
+---
+
+## ✅ Goal: Land ₹50–70+ LPA role
+
+### Target Companies:
+
+* Fintech startups (e.g., Zerodha, CoinDCX)
+* Web3 firms (e.g., Polygon, Chainalysis)
+* Global SaaS/backend infra firms (e.g., Rippling, Stripe, Coinbase, Google Cloud)
+
+---
+
+## 🗓️ Month 1: **Cloud-Native Go & Kubernetes**
+
+### 🎯 Focus:
+
+* Solidify Go for infra-level work
+* Gain production-ready Kubernetes & Docker skills
+
+### 📚 Topics:
+
+* Go concurrency, context, interfaces, error wrapping, channels
+* REST/gRPC with Go (use `go-grpc`, `mux`, `echo`)
+* Dockerize a Go service
+* Write Helm charts
+* Create production-like Kubernetes deployments (GKE, Minikube)
+
+### 📦 Projects:
+
+* Build a microservice that:
+
+  * Exposes gRPC & REST endpoints
+  * Stores data in PostgreSQL/Redis
+  * Deploys to K8s with autoscaling
+
+### 🛠 Tools:
+
+* Docker, Helm, Skaffold
+* Kubernetes (Minikube/GKE)
+* Prometheus + Grafana for metrics
+* GitHub Actions for CI
+
+---
+
+## 🗓️ Month 2: **Distributed Systems + System Design**
+
+### 🎯 Focus:
+
+* Prepare for backend architect/system design interviews
+* Master scaling patterns & distributed concepts
+
+### 📚 Topics:
+
+* Load balancing, caching (CDN, Redis)
+* Database sharding, indexing, transactions
+* Event-driven architecture, Kafka
+* CAP theorem, consistency models
+* Horizontal scaling, fault tolerance
+* API gateway, rate limiting
+
+### 📘 Resources:
+
+* [System Design Primer GitHub](https://github.com/donnemartin/system-design-primer)
+* Grokking System Design + mock interviews
+* YouTube: Hussein Nasser, Tech Dummies Narayan
+
+### 🛠 Project:
+
+* Build a “YouTube Lite” system with:
+
+  * Video metadata service
+  * Upload service
+  * CDN layer simulation
+  * Redis caching
+  * Kafka-based async processing
+
+---
+
+## 🗓️ Month 3: **Blockchain & Web3 with Golang**
+
+### 🎯 Focus:
+
+* Add blockchain execution, smart contract interfacing
+* Optional: Use your Kalp SDK experience
+
+### 📚 Topics:
+
+* Ethereum architecture (EVM, gas, ABI)
+* Smart contracts (ERC-20, ERC-1155)
+* Go-Ethereum (geth), `go-ethereum/accounts/abi/bind`
+* How to sign & send transactions from Go
+* Interacting with Infura, Alchemy
+
+### 🔨 Project:
+
+* Go-based dApp backend:
+
+  * User connects wallet
+  * Sends transaction (ERC-20 transfer)
+  * Verifies via Etherscan API
+  * Logs events
+
+---
+
+## 🗓️ Month 4: **Interview Prep + Job Applications**
+
+### 🎯 Focus:
+
+* Polish resume
+* Crack interviews with live problem-solving
+
+### 📚 Activities:
+
+* LeetCode NeetCode150 (focus on 2-pointer, heap, sliding window, DP)
+* Low-level Go coding (goroutines, channels, mutex problems)
+* Mock 2 system design interviews/week
+* Prepare STAR-format stories (projects, leadership, failures)
+
+### 🎯 Apply to:
+
+* Global remote companies via:
+
+  * **Wellfound (AngelList)**
+  * **RemoteOK, Turing, Deel, Arc.dev**
+* Top Indian companies via:
+
+  * **Naukri Premium, LinkedIn Easy Apply**
+  * **Referrals through ex-colleagues or GitHub connections**
+
+---
+
+## 📄 Bonus: Resume & LinkedIn Tips
+
+* Showcase **Kubernetes, Golang, Web3, Cloud-native** keywords
+* Include links to GitHub repos and real deployment URLs
+* Example headline:
+
+  > “Golang Backend Engineer | Kubernetes | Web3 | Ex-MNC | 8 YOE | Open to Remote & India | Targeting ₹60–70 LPA+ Roles”
+
+---
+
+Let me know if you want this as a **Notion tracker** or **PDF**, or want me to tailor the project list further based on your **job target (India vs remote)**.

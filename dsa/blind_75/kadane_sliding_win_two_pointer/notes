@@ -1,6 +1,18 @@
 1. you can have two pointers normal iteration,lengthWise, front and back , sliding and two arrays
-2. starting sliding window with 0,0 and 0,1 , also it is important to know if todo end++ operation in the beginning or at the last , look at minimum window substring
+2. starting sliding window with 0,0 and 0,1 , also it is important to know if todo end++ operation in the beginning or at the last , look at minimum window substring , 
+	prefix and suffix traversal
 3. Sliding can be of two type kadane or sliding that is "Longest Repeating Character Replacement which is derived from kadane itself"
+
+1. Starting point 
+	1. (start,end((0,0)(0,1)) , end is included or not included
+		1. kadane - start is reset
+		2. lengthwise iteration
+		3. start++ and end++ - normal iteration
+			1. where are we going to do end++ in the beiginning or in the end - Minimum window substring
+			2. 
+	2. left,right(0,n-1)
+2. condition , look at kadane or "Longest Repeating Character Replacement" where only the condition changes 
+3. Two arrays in time complexity
 
 
 maxSoFar=nums[0]

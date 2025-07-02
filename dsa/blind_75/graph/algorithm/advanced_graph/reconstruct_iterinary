@@ -1,3 +1,5 @@
+/* This is called Heilholzers algorithm
+
 func findItinerary(tickets [][]string) []string {
 	// 0. sort tickets lexicographically
 	sort.Slice(tickets, func(i, j int) bool {

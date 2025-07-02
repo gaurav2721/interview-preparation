@@ -1,0 +1,33 @@
+/*
+    we are going to use a monotonically decreasing stack to store the next greater element
+    
+*/
+func nextGreaterElement(nums1 []int, nums2 []int) []int {
+    next := make(map[int]int)
+    stack := []int{}
+
+    // Traverse nums2 from right to left
+    for i := len(nums2) - 1; i >= 0; i-- {
+        num := nums2[i]
+        // Maintain monotonic decreasing stack
+        for len(stack) > 0 && stack[len(stack)-1] <= num {
+            stack = stack[:len(stack)-1]
+        }
+
+        if len(stack) == 0 {
+            next[num] = -1
+        } else {
+            next[num] = stack[len(stack)-1]
+        }
+
+        stack = append(stack, num)
+    }
+
+    // Build result for nums1
+    result := make([]int, len(nums1))
+    for i, num := range nums1 {
+        result[i] = next[num]
+    }
+
+    return result
+}

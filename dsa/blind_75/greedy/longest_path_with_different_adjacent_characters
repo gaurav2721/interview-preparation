@@ -1,0 +1,35 @@
+func longestPath(parent []int, s string) int {
+    n:=len(parent)
+    graph:=make([][]int,n)
+    for i:=1;i<n;i++{
+        child:=i
+        parentChild:=parent[i]
+        graph[parentChild]=append(graph[parentChild],child)
+        graph[child]=append(graph[child],parentChild)
+    }
+
+    res:=0
+    var dfs func(root int,parent int)int
+
+    dfs = func (node int,parent int)int{
+        max1,max2:=0,0
+
+        for _,child:=range graph[node]{
+            if child==parent{
+                continue
+            }
+            childPathLen:=dfs(child,node)
+            if s[child]!=s[node]{
+                if childPathLen>max1{
+                    max1,max2=childPathLen,max1
+                }else if childPathLen>max2{
+                    max2=childPathLen
+                }
+            }
+        }
+        res=max(1+max1+max2,res)
+        return max1+1
+    }
+    dfs(0,-1)
+    return res
+}

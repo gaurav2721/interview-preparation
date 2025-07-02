@@ -1,0 +1,37 @@
+/*
+This is a super important problem to think about edge cases
+*/
+func canFinish(piles []int, h int, val int) bool {
+	if val == 0 {
+		return false
+	}
+	total := 0
+	for _, pile := range piles {
+		if pile%val == 0 {
+			total += pile / val
+			continue
+		}
+		total += (pile / val) + 1
+	}
+	if total <= h {
+		return true
+	}
+	return false
+}
+
+func util(piles []int, start, end, h int) int {
+	if start == end {
+		return start
+	}
+	mid := (start + end) / 2
+	if canFinish(piles, h, mid) {
+		return util(piles, start, mid, h)
+	} else {
+		return util(piles, mid+1, end, h)
+	}
+}
+
+func minEatingSpeed(piles []int, h int) int {
+	sort.Slice(piles, func(i, j int) bool { return piles[i] <= piles[j] })
+	return util(piles, 0, piles[len(piles)-1], h)
+}

@@ -37,3 +37,63 @@ func coinChange(coins []int, amount int) int {
 	fmt.Println(ret)
 	return ret
 }
+
+func GetVal(m map[int]map[int]int, index, amount int) (int, bool) {
+	if val1, ok := m[index]; ok {
+		if val2, ok := val1[amount]; ok {
+			return val2, true
+		}
+	}
+	return 0, false
+}
+
+func SetVal(m map[int]map[int]int, index, amount, value int) {
+	if _, ok := m[index]; !ok {
+		m[index] = make(map[int]int)
+	}
+	m[index][amount] = value
+}
+
+/* This is one way to solve without using loop */
+func coinChange(coins []int, amount int) int {
+	sort.Ints(coins)
+	n := len(coins)
+	m := make(map[int]map[int]int)
+
+	var dfs func(index int, remaining int) int
+	dfs = func(index int, remaining int) int {
+		if remaining == 0 {
+			return 0
+		}
+		if remaining < 0 || index < 0 {
+			return -1
+		}
+		if val, ok := GetVal(m, index, remaining); ok {
+			return val
+		}
+
+		// Take the coin (if possible)
+		take := dfs(index, remaining-coins[index])
+		if take != -1 {
+			take += 1
+		}
+
+		// Don't take the coin
+		notTake := dfs(index-1, remaining)
+
+		// Compute result
+		result := -1
+		if take == -1 {
+			result = notTake
+		} else if notTake == -1 {
+			result = take
+		} else {
+			result = min(take, notTake)
+		}
+
+		SetVal(m, index, remaining, result)
+		return result
+	}
+
+	return dfs(n-1, amount)
+}

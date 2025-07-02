@@ -1,0 +1,66 @@
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+
+/*
+ The thing to learn here is that edge cases exist a lot
+*/
+func rev(l *ListNode) *ListNode {
+	if l == nil {
+		return nil
+	}
+	var prev *ListNode = nil
+	curr := l
+	for curr != nil {
+		next := curr.Next
+		curr.Next = prev
+		prev = curr
+		curr = next
+	}
+	return prev
+}
+
+func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+	revl1 := l1
+	revl2 := l2
+
+	var head *ListNode = nil
+	var prev *ListNode = nil
+	carry := 0
+	for revl1 != nil || revl2 != nil {
+		val := 0
+		if revl1 != nil {
+			val += revl1.Val
+		}
+		if revl2 != nil {
+			val += revl2.Val
+		}
+
+		head = &ListNode{
+			Val:  (val + carry) % 10,
+			Next: prev,
+		}
+		carry = (val + carry) / 10
+		prev = head
+		if revl1 != nil {
+			revl1 = revl1.Next
+		}
+		if revl2 != nil {
+			revl2 = revl2.Next
+		}
+	}
+
+	if carry > 0 {
+		prev := head
+		head = &ListNode{
+			Val:  carry,
+			Next: prev,
+		}
+	}
+
+	return rev(head)
+}

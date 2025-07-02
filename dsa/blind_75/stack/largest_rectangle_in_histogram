@@ -1,0 +1,33 @@
+/* The trick here is to find out previous smallest element for each element using a stack
+
+[3]int --> val,index_of_val,prev_smallest_element
+
+*/
+func largestRectangleArea(heights []int) int {
+	st := make([][3]int, 0)
+	maxArea := 0
+	for i, height := range heights {
+		//fmt.Println(st,maxArea)
+		for len(st) > 0 && st[len(st)-1][0] > height {
+			//fmt.Println("for",st,maxArea)
+			x := st[len(st)-1]
+			st = st[:len(st)-1]
+			nsex := i
+			psex := x[2]
+			maxArea = max(maxArea, x[0]*(nsex-psex-1))
+		}
+		if len(st) > 0 {
+			st = append(st, [3]int{height, i, st[len(st)-1][1]})
+		} else {
+			st = append(st, [3]int{height, i, -1})
+		}
+	}
+	nse := len(heights)
+	for len(st) > 0 {
+		x := st[len(st)-1]
+		st = st[:len(st)-1]
+		maxArea = max(maxArea, x[0]*(nse-x[2]-1))
+	}
+
+	return maxArea
+}

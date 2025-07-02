@@ -1,0 +1,40 @@
+/*
+1 approach is to keep all the elements in a hashmap and then run two loops and store the sorted triplets in the map to avoid conflicting triplets
+other approach is the sort the array , run a loop and build on top of two sum problem , to avoid triplets in the loop we will avoid adjacent equal elements
+*/
+func threeSum(nums []int) [][]int {
+	ret := make(map[[3]int]bool, 0)
+	m := make(map[int]int, 0)
+	for _, num := range nums {
+		m[num]++
+	}
+	n := len(nums)
+	for i := 0; i < n; i++ {
+		m[nums[i]]--
+		for j := i + 1; j < n; j++ {
+			m[nums[j]]--
+			num := -1 * (nums[i] + nums[j])
+			val, ok := m[num]
+			if ok && (val > 0) {
+				temp := make([]int, 3)
+				temp[0] = nums[i]
+				temp[1] = nums[j]
+				temp[2] = num
+				sort.Ints(temp)
+				ret[[3]int{temp[0], temp[1], temp[2]}] = true
+			}
+			m[nums[j]]++
+		}
+		m[nums[i]]++
+	}
+
+	retArray := make([][]int, 0)
+	for k, _ := range ret {
+		temp := make([]int, 3)
+		temp[0] = k[0]
+		temp[1] = k[1]
+		temp[2] = k[2]
+		retArray = append(retArray, temp)
+	}
+	return retArray
+}

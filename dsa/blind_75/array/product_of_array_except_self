@@ -1,0 +1,24 @@
+func productExceptSelf(nums []int) []int {
+	n := len(nums)
+	ret := make([]int, 0)
+	if n == 0 {
+		return ret
+	}
+	left := make([]int, n)
+	left[0] = 1
+	right := make([]int, n)
+	right[n-1] = 1
+
+	for i := 1; i < n; i++ {
+		left[i] = nums[i-1] * left[i-1]
+	}
+	for i := n - 2; i >= 0; i-- {
+		right[i] = right[i+1] * nums[i+1]
+	}
+
+	for i := 0; i < n; i++ {
+		num := left[i] * right[i]
+		ret = append(ret, num)
+	}
+	return ret
+}

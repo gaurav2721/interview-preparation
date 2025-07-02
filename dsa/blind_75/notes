@@ -1,3 +1,55 @@
+After 1st Revision --------------------------------------------------------------------------------------------------------------------------->
+
+In case , you are having trouble coming up with a solution
+1. Hmm , that is interesting I am kind of stuck here could you please give me some hint here , am I missing something
+2. You may not be looking at the problem from a fresh lens, think slow
+3. Appraaches that you may not think about - two pointers, sliding window , math , bit manipulation , intervals , 
+5. atleast return the sample values
+6. you can ask them if you can google 
+7. ask specifically if that answers your question
+
+
+
+Ds
+1. Hashmap
+2. Array ,  Strings
+3. Linked List , Doubly Linked List 
+4. stacks , queues , deques
+5. 
+
+Algorithm 
+1. greedy 
+2. divide and conquer / binary search
+3. recursion 
+4. backtracking 
+5. Sliding Window && Two pointer && Counter && Bit Manipilation
+
+Keyboard shortcuts to code quicker [For Mac]
+1. Command + E - to navigate to the end of the line 
+2. 
+
+Extra tricks
+- invert always invert 
+- intuition from edge cases 
+- can one or two problems help you solve the problem quickly [layer 1 , layer 2]
+- Saving on spaces can be by using negative number if all the numbers are positive or use some extreme value , using the first row,col in matrix , isFirstRowZero -> Set Matrix Zeroes , proxy design pattern to use maps , or you can have sum[i to j] for a subarray from i to j index instead of 
+- function as a variable
+
+
+
+edgecases 
+- empty input , input of 1 ,2 size  , 
+- positive , negative , zero , duplicate , prefix and suffix of zeroes 
+- lowercase , upperCase , special characters
+
+weaknesses 
+- ability to think of edge cases 
+- ability to know time complexity and space complexity
+- ability to write code snippets quickly and in less time 
+
+
+
+1st Reading ------------------------------------------------------------------------------------------------------------------------------------>
 Following is the quick strategy that you can implement to clear DSA rounds 
 
 1. Repeat the problem
@@ -41,38 +93,3 @@ How to improve as a programmer
 5. Write code for humans/ that is code should be readable with proper naming , try , catch , comment logs 
 6. Debugging is also an important skill , unitests , attached debuggers
 7. You need to improve everyday (1% improvement)
-
-
-Ds
-1. Hashmap
-2. Array ,  Strings
-3. Linked List , Doubly Linked List 
-4. stacks , queues 
-5. 
-
-Algorithm 
-1. greedy 
-2. divide and conquer
-3. recursion 
-4. backtracking 
-5. Invert always invert 
-
-Keyboard shortcuts to code quicker [For Mac]
-1. Command + E - to navigate to the end of the line 
-2. 
-
-- invert always invert 
-- intuition from edge cases 
-- can one or two problems help you solve the problem quickly 
-
-
-
-edgecases 
-- empty input , input of 1 ,2 size 
-- positive , negative , zero , duplicate
-- lowercase , upperCase , special characters
-
-weaknesses 
-- ability to think of edge cases 
-- ability to know time complexity and space complexity
-- ability to write code snippets quickly and in less time 

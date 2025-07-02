@@ -1,0 +1,24 @@
+/* the intuition can be a decreasing deque and then we can take it from there */
+Time complexity is O(n)-> iteration + O(n)--> for removal from deque , O(k) -> space complexity for k size deque in worst case
+func maxSlidingWindow(nums []int, k int) []int {
+	n := len(nums)
+	ret := make([]int, 0)
+	dq := make([]int, 0)
+	for i := 0; i < n; i++ {
+		if len(dq) > 0 && dq[0] <= i-k {
+			dq = dq[1:]
+		}
+
+		for len(dq) > 0 && nums[dq[len(dq)-1]] < nums[i] {
+			dq = dq[:len(dq)-1]
+		}
+
+		dq = append(dq, i)
+
+		if i-k+1 >= 0 {
+			ret = append(ret, nums[dq[0]])
+		}
+	}
+
+	return ret
+}

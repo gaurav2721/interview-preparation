@@ -36,3 +36,36 @@
 		}
 		return false
 	})
+18. How to write function literal in golang , it is simple function variable 
+19. In order to run command we use "go test -v ./services/..."
+19. Golang following capitals whatever is capital it will be exported , the following table is same for member variable as well
+| Struct Exported? | Method Exported? | Can Access Outside Package? |
+| ---------------- | ---------------- | --------------------------- |
+| ❌ No             | ❌ No             | ❌ No                        |
+| ❌ No             | ✅ Yes            | ❌ No                        |
+| ✅ Yes            | ❌ No             | ❌ No (can't call method)    |
+| ✅ Yes            | ✅ Yes            | ✅ Yes                       |
+20. WaitGroup is pass by value 
+
+
+1. What is the problem with following , it is buffer overflow  
+   public int add (int a,int b){
+    int c = a + b;
+    return c;
+}
+	import "math"
+
+func AddExact(a, b int) (int, error) {
+    sum := a + b
+    if ((a^sum)&(b^sum)) < 0 {
+        return 0, fmt.Errorf("integer overflow")
+    }
+    return sum, nil
+}
+
+
+
+1. time.After can be used for some execution after some time 
+
+
+

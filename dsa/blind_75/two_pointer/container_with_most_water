@@ -1,0 +1,17 @@
+/*
+the reason this works is you within the two options you have you try to keep the width maximized and then compare heights
+also your brain always tells you to look at the next start and end dont do that look at the current start and end
+*/
+func maxArea(height []int) int {
+	maxArea := 0
+	for start, end := 0, len(height)-1; start < end; {
+		//fmt.Println(start,end,maxArea)
+		maxArea = max(maxArea, (end-start)*min(height[start], height[end]))
+		if height[start] < height[end] {
+			start++
+		} else {
+			end--
+		}
+	}
+	return maxArea
+}

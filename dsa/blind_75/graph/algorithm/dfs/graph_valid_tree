@@ -3,7 +3,99 @@
 
 /*
 For a graph to be a tree , it should not have any cycles and must be conected
+
+you can check this using union find and cycle detection and the fact that len(edges) == n-1 in a tree 
+
+
 */
+
+func FindParent(u int, parent []int) int {
+    if u == parent[u] {
+        return u // path compression
+    }
+    parent[u] = FindParent(parent[u], parent)
+    return parent[u]
+}
+
+func validTree(n int, edges [][]int) bool {
+    if len(edges) != n-1 {
+        return false
+    }
+
+    parent := make([]int, n)
+    for i := 0; i < n; i++ {
+        parent[i] = i
+    }
+
+    for _, edge := range edges {
+        u, v := edge[0], edge[1]
+        rootU := FindParent(u, parent)
+        rootV := FindParent(v, parent)
+        if rootU == rootV {
+            return false // cycle detected
+        }
+        parent[rootV] = rootU
+    }
+
+    return true // connected & acyclic
+}
+
+func dfs(start int,parent int,adList [][]bool,visited []bool)bool{
+    //fmt.Println(start,parent,visited)
+    if visited[start]{
+        return false
+    }
+
+    visited[start]=true
+    for child,val := range adList[start]{
+        if !val{
+            continue
+        }
+        if child==parent{
+            continue
+        }
+        isTree:=dfs(child,start,adList,visited)
+        if isTree==false{
+            return false
+        }
+    }
+
+    return true
+}
+
+func validTree(n int, edges [][]int) bool {
+    adList:=make([][]bool,n)
+    for i:=0;i<n;i++{
+        adList[i]=make([]bool,n)
+    }
+
+    for i:=0;i<len(edges);i++{
+        u:=edges[i][0]
+        v:=edges[i][1]
+        adList[u][v]=true
+        adList[v][u]=true
+    }
+
+    visited:=make([]bool,n)
+    isTree:=dfs(0,-1,adList,visited)
+
+    fmt.Println(isTree,visited)
+
+    if !isTree{
+        return false
+    }
+
+    for _,val:=range visited{
+        if !val{
+            isTree=false
+            break
+        }
+    }
+
+    return isTree
+
+}
+
 package main
 
 import "fmt"

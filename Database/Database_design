@@ -5,6 +5,8 @@ Name the database starting with _
 4. Make sure that the primary key does not contain any business data 
 5. Make sure to create database constraint , primary key , unique key and foreign key 
 
+Normalization means organizing data in entities such that it results in less redundancy and joins and high consistency[Used in write heavy systems] , 
+denormalization means organizing data in entities such that it result in high redundacy and joings , used in write heavy system
 
 
 One to one relationship -> Primary key to unique foreign key constraint
@@ -31,3 +33,4 @@ There are different type of models
     inheritance , polymorphism 
 
 6. 
+

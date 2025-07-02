@@ -1,0 +1,35 @@
+/*
+   the important thing to recognize here is that  we start the for loop from the last , because that way only we know what will be the speed of the car post
+   collide
+   and also using time to collide
+*/
+func canCollide(car1 [2]int, car2 [2]int, target int) bool {
+	t1 := float64(target-car1[0]) / float64(car1[1])
+	t2 := float64(target-car2[0]) / float64(car2[1])
+	if t1 <= t2 {
+		return true
+	}
+	return false
+}
+
+func carFleet(target int, position []int, speed []int) int {
+	n := len(position)
+	st := make([][2]int, 0)
+	arr := make([][2]int, 0)
+	for i := 0; i < n; i++ {
+		arr = append(arr, [2]int{position[i], speed[i]})
+	}
+	sort.Slice(arr, func(i, j int) bool {
+		return arr[i][0] < arr[j][0]
+	})
+	for i := n - 1; i >= 0; i-- {
+		if len(st) == 0 {
+			st = append(st, arr[i])
+			continue
+		}
+		if !canCollide(arr[i], st[len(st)-1], target) {
+			st = append(st, arr[i])
+		}
+	}
+	return len(st)
+}

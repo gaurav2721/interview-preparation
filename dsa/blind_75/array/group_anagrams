@@ -1,6 +1,8 @@
 /*
 In this example it is very important to come up with the data structure that allows us to club different anagrams
-for eg in this the key of map is of array type of size 6
+for eg in this the key of map is of array type of size 26
+
+else you have to keep the visited array, mapArray and then compare
 */
 func groupAnagrams(strs []string) [][]string {
 	mm := make(map[[26]int][]string)
@@ -22,5 +24,73 @@ func groupAnagrams(strs []string) [][]string {
 	for _, v := range mm {
 		ret = append(ret, v)
 	}
+	return ret
+}
+
+func createMap(s string) map[byte]int {
+	m := make(map[byte]int)
+	for i := 0; i < len(s); i++ {
+		m[s[i]]++
+	}
+	return m
+}
+
+func IsEqual(m map[byte]int, t map[byte]int) bool {
+	if len(m) != len(t) {
+		return false
+	}
+	for k, v := range m {
+		if t[k] != v {
+			return false
+		}
+	}
+	return true
+}
+
+func groupAnagrams(strs []string) [][]string {
+	ret := make([][]string, 0)
+	n := len(strs)
+	visited := make([]bool, n)
+	mapArray := make([]map[byte]int, n)
+	for i := 0; i < n; i++ {
+		mapArray[i] = createMap(strs[i])
+	}
+	for i := 0; i < n; i++ {
+		ret1 := make([]string, 0)
+		if visited[i] {
+			continue
+		}
+		m0 := mapArray[i]
+		ret1 = append(ret1, strs[i])
+		visited[i] = true
+		for j := i + 1; j < n; j++ {
+			if visited[j] {
+				continue
+			}
+			m1 := mapArray[j]
+			if IsEqual(m0, m1) {
+				ret1 = append(ret1, strs[j])
+				visited[j] = true
+			}
+		}
+		ret = append(ret, ret1)
+	}
+	// for len(strs)>0{
+	//     ret1:=make([]string,0)
+	//     m0:=createMap(strs[0])
+	//     ret1=append(ret1,strs[0])
+	//     strs=strs[1:]
+
+	//     for i:=0;i<len(strs);{
+	//         m1:=createMap(strs[i])
+	//         if IsEqual(m0,m1){
+	//             ret1=append(ret1,strs[i])
+	//             strs=append(strs[0:i],strs[i+1:]...)
+	//         }else{
+	//             i++
+	//         }
+	//     }
+	//     ret=append(ret,ret1)
+	// }
 	return ret
 }

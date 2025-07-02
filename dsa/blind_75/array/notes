@@ -18,3 +18,7 @@ slices
     a[:0] --> will result in empty slice
     a[1:1] --> will result in empty slice
     a[n:] --> will result in empty slice if n==len(a)
+
+3. It can be very helpful if we come up with a data structure that can be used as a key in the map for eg [2]int
+
+4. Important to note that brute force and increasing space complexity can solve a lot of problems 

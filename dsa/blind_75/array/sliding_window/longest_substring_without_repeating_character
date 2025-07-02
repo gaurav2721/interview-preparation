@@ -1,0 +1,22 @@
+func lengthOfLongestSubstring(s string) int {
+	n := len(s)
+	maxLen := 1
+	if n == 0 {
+		return 0
+	}
+	m := make(map[byte]int, 0)
+	start, end := 0, 0
+
+	for start <= end && end < n {
+		m[s[end]]++
+		for m[s[end]] > 1 && start < end {
+			m[s[start]]--
+			start++
+		}
+		maxLen = max(maxLen, end-start+1)
+		end++
+	}
+
+	return maxLen
+
+}

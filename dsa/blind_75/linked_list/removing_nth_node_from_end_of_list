@@ -35,3 +35,52 @@ func removeNthFromEnd(head *ListNode, n int) *ListNode {
 	}
 	return head
 }
+
+This is another way
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+ func removeNthFromEnd(head *ListNode, n int) *ListNode {
+    dummyStart:=&ListNode{
+        Val:-1,
+        Next:head,
+    }
+
+    temp:=head
+    for temp.Next!=nil{
+        temp=temp.Next
+    }
+
+    temp.Next=&ListNode{
+        Val:-1,
+        Next:nil,
+    }
+
+    n++
+    start:=dummyStart
+    end:=dummyStart
+    for n>0{
+        end=end.Next
+        n--
+    }
+
+    for end.Next!=nil{
+        start=start.Next
+        end=end.Next
+    }
+
+    temp=start.Next.Next
+    start.Next.Next=nil
+    start.Next=temp
+
+    end=dummyStart
+    for end.Next.Next!=nil{
+        end=end.Next
+    }
+    end.Next=nil
+    return dummyStart.Next
+}

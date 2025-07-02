@@ -1,0 +1,51 @@
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+
+/*
+n=len(lists)
+
+	if n==0{
+	    return nil
+	}
+
+	if all the elements of the list are nil{
+	    return nil
+	}
+
+run a for loop and find the min element
+while running this for loop avaoid the elements which are nil
+and then move that to the next
+*/
+func mergeKLists(lists []*ListNode) *ListNode {
+	n := len(lists)
+	if n == 0 {
+		return nil
+	}
+	empty := true
+	for _, l := range lists {
+		if l != nil {
+			empty = false
+		}
+	}
+	if empty {
+		return nil
+	}
+	var list *ListNode
+	min := math.MaxInt32
+	index := -1
+	for i, l := range lists {
+		if l != nil && l.Val < min {
+			min = l.Val
+			index = i
+		}
+	}
+	list = lists[index]
+	lists[index] = lists[index].Next
+	list.Next = mergeKLists(lists)
+	return list
+}

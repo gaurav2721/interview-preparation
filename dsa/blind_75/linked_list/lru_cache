@@ -1,0 +1,117 @@
+/*
+   important thing is the data structure
+   and the fact that everytime we access something we move to front
+*/
+type LRUCache struct {
+	m map[int]*node
+	n int
+	d *deque
+}
+
+type deque struct {
+	dummyFront *node
+	dummyBack  *node
+}
+
+func (d *deque) Add(a *node) {
+	//fmt.Println("Add",a,d.dummyFront,d.dummyBack)
+	//d.Print()
+	back := d.dummyFront.prev
+	back.next = a
+	a.prev = back
+	a.next = d.dummyFront
+	d.dummyFront.prev = a
+	//d.Print()
+}
+
+func (d *deque) Delete() {
+	//fmt.Println("Delete")
+	//d.Print()
+	back := d.dummyBack.next
+	d.dummyBack.next = back.next
+	back.next.prev = d.dummyBack
+	back.next = nil
+	back.prev = nil
+	//d.Print()
+}
+
+func (q *deque) MoveToFront(a *node) {
+	//fmt.Println("MoveToFront",a)
+	//q.Print()
+	back := a.prev
+	front := a.next
+	back.next = front
+	front.prev = back
+	a.next = nil
+	a.prev = nil
+	q.Add(a)
+}
+
+func (q *deque) Print() {
+	back := q.dummyBack
+	fmt.Print("[")
+	for back != nil {
+		fmt.Print(" ", back.val)
+		back = back.next
+	}
+	fmt.Println("]")
+}
+
+type node struct {
+	next *node
+	prev *node
+	val  int
+	key  int
+}
+
+func Constructor(capacity int) LRUCache {
+	tempFront := &node{val: -1, key: -1}
+	tempBack := &node{val: -1, key: -1}
+	tempFront.next = nil
+	tempFront.prev = tempBack
+	tempBack.prev = nil
+	tempBack.next = tempFront
+	return LRUCache{
+		m: make(map[int]*node, 0),
+		n: capacity,
+		d: &deque{
+			dummyFront: tempFront,
+			dummyBack:  tempBack,
+		},
+	}
+}
+
+func (this *LRUCache) Get(key int) int {
+	//fmt.Println("Get",key)
+	if this.m[key] != nil {
+		this.d.MoveToFront(this.m[key])
+		return this.m[key].val
+	}
+	return -1
+}
+
+func (this *LRUCache) Put(key int, value int) {
+	//If existing
+	if this.m[key] != nil {
+		this.m[key].val = value
+		this.d.MoveToFront(this.m[key])
+		return
+	}
+	if len(this.m) == this.n {
+		delete(this.m, this.d.dummyBack.next.key)
+		this.d.Delete()
+	}
+	node := node{
+		key: key,
+		val: value,
+	}
+	this.d.Add(&node)
+	this.m[key] = &node
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * obj := Constructor(capacity);
+ * param_1 := obj.Get(key);
+ * obj.Put(key,value);
+ */

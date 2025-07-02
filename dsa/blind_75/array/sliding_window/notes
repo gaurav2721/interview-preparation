@@ -1,0 +1,5 @@
+1. sometimes we can start,end:=0,0 , but may we first increment end++ and then do that operation or do the vice versa
+2. there start and end both slide but how they slide and under which conditions they slide it is completely different for eg longest_substring, best_time_to_buy_sell_stock
+, longest repeating character replacement
+3. end and start can move separately , or together , or start and only move forward and then end , for start can be reset to end 
+4. using and thinking of deque is a good approach to have 

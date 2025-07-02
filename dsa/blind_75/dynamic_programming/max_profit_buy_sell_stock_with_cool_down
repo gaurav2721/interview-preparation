@@ -1,5 +1,60 @@
-// At first we might think of writing a recursion logic then going ahead with memoization
-// this works but it has a time complexity of O(n2) and same space complexty O(n2)
+
+/*
+The first approach uses recursion and states and memoization
+*/
+/*
+At first we might think of writing a recursion logic then going ahead with memoization
+this works but it has a time complexity of O(n2) and same space complexty O(n2)
+*/
+
+type State int
+
+const (
+	free State = iota
+	hold
+	cooldown
+)
+
+func util(prices []int, index int, currentState State, m map[int]map[int]int) int {
+	//fmt.Println(prices,index,currentState)
+	if index >= len(prices) {
+		return 0
+	}
+
+	profit := math.MinInt32
+
+	if val, ok := m[index]; ok {
+		if val1, ok := val[int(currentState)]; ok {
+			return val1
+		}
+	}
+
+	if currentState == free {
+		profit = max(profit, util(prices, index+1, hold, m)-prices[index])
+		profit = max(profit, util(prices, index+1, free, m))
+	} else if currentState == cooldown {
+		profit = max(profit, util(prices, index+1, free, m))
+	} else {
+		profit = max(profit, util(prices, index+1, cooldown, m)+prices[index])
+		profit = max(profit, util(prices, index+1, hold, m))
+	}
+
+	if _, ok := m[index]; !ok {
+		m[index] = make(map[int]int, 0)
+	}
+	m[index][int(currentState)] = profit
+
+	return profit
+}
+
+func maxProfit(prices []int) int {
+	m := make(map[int]map[int]int, 0)
+	return util(prices, 0, free, m)
+}
+
+/*
+2nd approach uses dp and states
+*/
 
 func maxProfitUtil(prices []int, index int, dp []int) int {
 	//fmt.Println("maxProfitUtil",index)

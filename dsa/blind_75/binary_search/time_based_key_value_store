@@ -1,0 +1,57 @@
+type TimeMap struct {
+    store map[string]map[int]string
+    sortedStore map[string][]int
+}
+
+
+func Constructor() TimeMap {
+    return TimeMap{
+        store : make(map[string]map[int]string,0),
+        sortedStore : make(map[string][]int,0),
+    }
+}
+
+
+func (this *TimeMap) Set(key string, value string, timestamp int)  {
+    if _,ok:=this.store[key];!ok{
+        this.store[key]=make(map[int]string,0)
+    }
+    if _,ok:=this.sortedStore[key];!ok{
+        this.sortedStore[key]=make([]int,0)
+    }
+    this.store[key][timestamp]=value
+    this.sortedStore[key]=append(this.sortedStore[key],timestamp)
+    //sort.Slice(this.sortedStore[key],func(i,j int)bool{return this.sortedStore[key][i]<this.sortedStore[key][j]})
+}
+
+
+func (this *TimeMap) Get(key string, timestamp int) string {
+    if len(this.sortedStore[key])==0{
+        return ""
+    }
+    index:=sort.Search(len(this.sortedStore[key]),func(i int)bool{
+        return timestamp<=this.sortedStore[key][i]
+    })
+    // if index<0{
+    //     return ""
+    // }
+
+    if index>=len(this.sortedStore[key]){
+        index=len(this.sortedStore[key])-1
+    }
+    if this.sortedStore[key][index]>timestamp{
+        index=index-1
+    }
+    if index<0{
+        return ""
+    }
+    return this.store[key][this.sortedStore[key][index]]
+}
+
+
+/**
+ * Your TimeMap object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.Set(key,value,timestamp);
+ * param_2 := obj.Get(key,timestamp);
+ */

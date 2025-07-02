@@ -1,0 +1,82 @@
+/*
+Bottom Approach : slightly less intuitive but works since we need total once
+
+Time Complexity : O(n*(sum/2))
+Space Complexity : O(sum/2)
+*/
+func canPartition(nums []int) bool {
+	total := 0
+	for _, num := range nums {
+		total += num
+	}
+	if total%2 != 0 {
+		return false
+	}
+	target := total / 2
+
+	dp := make([]bool, target+1)
+	dp[0] = true // Zero sum is always possible
+
+	for _, num := range nums {
+		for j := target; j >= num; j-- {
+			//fmt.Println(dp,"beging dp[j]",j,dp[j])
+			dp[j] = dp[j] || dp[j-num]
+			//fmt.Println(dp,"end dp[j]",j,dp[j])
+		}
+	}
+
+	return dp[target]
+}
+
+/*
+Top-Down approach
+
+Time complexity = O(n*(sum/2))
+Space complexity =  O(n*(sum/2))
+
+*/
+
+func sum(nums []int) int {
+	total := 0
+	for _, num := range nums {
+		total += num
+	}
+	return total
+}
+
+func canPartition(nums []int) bool {
+	total := sum(nums)
+	if total%2 != 0 {
+		return false
+	}
+	m := make(map[int]map[int]bool)
+
+	var util func(index int, result int) bool
+	util = func(index int, result int) bool {
+		if result > total/2 {
+			return false
+		}
+		if index == len(nums) {
+			return result == total-result
+		}
+
+		if _, ok := m[index]; ok {
+			if val, ok2 := m[index][result]; ok2 {
+				return val
+			}
+		}
+
+		inc := util(index+1, result+nums[index])
+		exc := util(index+1, result)
+
+		ret := inc || exc
+		if _, ok := m[index]; !ok {
+			m[index] = make(map[int]bool)
+		}
+		m[index][result] = ret
+		return ret
+	}
+
+	return util(0, 0)
+}
+
